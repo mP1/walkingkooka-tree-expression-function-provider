@@ -21,6 +21,8 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
+import java.util.Set;
+
 /**
  * A provider of {@link ExpressionFunction functions}.
  */
@@ -30,4 +32,10 @@ public interface ExpressionFunctionProvider {
      * Returns the {@link ExpressionFunction} for the given {@link FunctionExpressionName}.
      */
     ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name);
+
+
+    /**
+     * Returns all known {@link ExpressionFunctionInfo}.
+     */
+    Set<ExpressionFunctionInfo> expressionFunctionInfos();
 }
