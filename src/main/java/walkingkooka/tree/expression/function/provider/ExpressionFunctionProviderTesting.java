@@ -33,7 +33,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     default void testFunctionWithNullFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.createExpressionProvider()
+                () -> this.createExpressionFunctionProvider()
                         .function(null)
         );
     }
@@ -42,7 +42,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     default void testExpressionFunctionInfosNotEmpty() {
         this.checkNotEquals(
                 Sets.empty(),
-                this.createExpressionProvider().expressionFunctionInfos()
+                this.createExpressionFunctionProvider().expressionFunctionInfos()
         );
     }
 
@@ -50,7 +50,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     default void testExpressionFunctionInfosReadOnly() {
         assertThrows(
                 UnsupportedOperationException.class,
-                () -> this.createExpressionProvider()
+                () -> this.createExpressionFunctionProvider()
                         .expressionFunctionInfos()
                         .clear()
         );
@@ -75,5 +75,5 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
         );
     }
 
-    T createExpressionProvider();
+    T createExpressionFunctionProvider();
 }
