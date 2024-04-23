@@ -17,9 +17,25 @@
 
 package walkingkooka.tree.expression.function.provider;
 
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.function.ExpressionFunction;
+
+import java.util.Set;
 
 public final class ExpressionFunctionProviders implements PublicStaticHelper {
+
+    /**
+     * {@see BasicExpressionFunctionProvider}
+     */
+    public static ExpressionFunctionProvider basic(final AbsoluteUrl baseUrl,
+                                                   final Set<ExpressionFunction<?, ExpressionEvaluationContext>> functions) {
+        return BasicExpressionFunctionProvider.with(
+                baseUrl,
+                functions
+        );
+    }
 
     /**
      * {@see FakeExpressionFunctionProvider}
