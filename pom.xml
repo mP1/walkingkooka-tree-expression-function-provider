@@ -294,49 +294,49 @@
                 </executions>
             </plugin>
 
-<!--            <plugin>-->
-<!--                <groupId>walkingkooka</groupId>-->
-<!--                <artifactId>walkingkooka-gwt-archive-maker-maven-plugin</artifactId>-->
-<!--                <version>1.0-SNAPSHOT</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>build walkingkooka-tree-expression-function-provider-gwt JAR</id>-->
-<!--                        <phase>integration-test</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>build</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <input>target/walkingkooka-tree-expression-function-provider-1.0-SNAPSHOT-temp.jar</input>-->
-<!--                            <output>target/walkingkooka-tree-expression-function-provider-gwt-1.0-SNAPSHOT.jar</output>-->
-<!--                            <pom-file>gwt-pom.xml</pom-file>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
+            <plugin>
+                <groupId>walkingkooka</groupId>
+                <artifactId>walkingkooka-gwt-archive-maker-maven-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <id>build walkingkooka-tree-expression-function-provider-gwt JAR</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <configuration>
+                            <input>target/walkingkooka-tree-expression-function-provider-1.0-SNAPSHOT-temp.jar</input>
+                            <output>target/walkingkooka-tree-expression-function-provider-gwt-1.0-SNAPSHOT.jar</output>
+                            <pom-file>gwt-pom.xml</pom-file>
+                        </configuration>
+                    </execution>
 
-<!--                </executions>-->
-<!--            </plugin>-->
+                </executions>
+            </plugin>
 
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-install-plugin</artifactId>-->
-<!--                <version>3.1.0</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>install walkingkooka:walkingkooka-tree-expression-function-provider-gwt</id>-->
-<!--                        <phase>integration-test</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>install-file</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <groupId>walkingkooka</groupId>-->
-<!--                            <artifactId>walkingkooka-tree-expression-function-provider-gwt</artifactId>-->
-<!--                            <version>1.0-SNAPSHOT</version>-->
-<!--                            <packaging>jar</packaging>-->
-<!--                            <file>target/walkingkooka-tree-expression-function-provider-gwt-1.0-SNAPSHOT.jar</file>-->
-<!--                            <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>install walkingkooka:walkingkooka-tree-expression-function-provider-gwt</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <configuration>
+                            <groupId>walkingkooka</groupId>
+                            <artifactId>walkingkooka-tree-expression-function-provider-gwt</artifactId>
+                            <version>1.0-SNAPSHOT</version>
+                            <packaging>jar</packaging>
+                            <file>target/walkingkooka-tree-expression-function-provider-gwt-1.0-SNAPSHOT.jar</file>
+                            <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -408,29 +408,29 @@
                 </dependencies>
             </plugin>
 
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-deploy-plugin</artifactId>-->
-<!--                <version>3.0.0</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>deploy walkingkooka:walkingkooka-tree-expression-function-provider-gwt</id>-->
-<!--                        <phase>deploy</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>deploy-file</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <groupId>walkingkooka</groupId>-->
-<!--                            <artifactId>walkingkooka-tree-expression-function-provider-gwt</artifactId>-->
-<!--                            <version>1.0-SNAPSHOT</version>-->
-<!--                            <packaging>jar</packaging>-->
-<!--                            <file>target/walkingkooka-tree-expression-function-provider-gwt-1.0-SNAPSHOT.jar</file>-->
-<!--                            <url>https://maven-repo-254709.appspot.com</url>-->
-<!--                            <repositoryId>github-mp1-appengine-repo</repositoryId>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>deploy walkingkooka:walkingkooka-tree-expression-function-provider-gwt</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy-file</goal>
+                        </goals>
+                        <configuration>
+                            <groupId>walkingkooka</groupId>
+                            <artifactId>walkingkooka-tree-expression-function-provider-gwt</artifactId>
+                            <version>1.0-SNAPSHOT</version>
+                            <packaging>jar</packaging>
+                            <file>target/walkingkooka-tree-expression-function-provider-gwt-1.0-SNAPSHOT.jar</file>
+                            <url>https://maven-repo-254709.appspot.com</url>
+                            <repositoryId>github-mp1-appengine-repo</repositoryId>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
