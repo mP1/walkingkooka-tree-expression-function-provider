@@ -17,13 +17,44 @@
 
 package walkingkooka.tree.expression.function.provider;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionProvider> extends ClassTesting2<T> {
+
+    @Test
+    default void testFunctionWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createExpressionProvider()
+                        .function(null)
+        );
+    }
+
+    @Test
+    default void testExpressionFunctionInfosNotEmpty() {
+        this.checkNotEquals(
+                Sets.empty(),
+                this.createExpressionProvider().expressionFunctionInfos()
+        );
+    }
+
+    @Test
+    default void testExpressionFunctionInfosReadOnly() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createExpressionProvider()
+                        .expressionFunctionInfos()
+                        .clear()
+        );
+    }
 
     default void expressionFunctionAndCheck(final ExpressionFunctionProvider provider,
                                             final FunctionExpressionName name,
@@ -43,4 +74,6 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
                 () -> provider.toString()
         );
     }
+
+    T createExpressionProvider();
 }
