@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Miroslav Pokorny (github.com/mP1)
+ * Copyright 2024 Miroslav Pokorny (github.com/mP1)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,21 +17,20 @@
 
 package walkingkooka.tree.expression.function.provider;
 
-import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.function.ExpressionFunction;
 
-public final class ExpressionFunctionProviders implements PublicStaticHelper {
+import java.util.Set;
 
-    /**
-     * {@see FakeExpressionFunctionProvider}
-     */
-    public static ExpressionFunctionProvider fake() {
-        return new FakeExpressionFunctionProvider();
+public class FakeExpressionFunctionProvider implements ExpressionFunctionProvider{
+    @Override
+    public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
+        throw new UnsupportedOperationException();
     }
 
-    /**
-     * Stop creation
-     */
-    private ExpressionFunctionProviders() {
+    @Override
+    public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
         throw new UnsupportedOperationException();
     }
 }
