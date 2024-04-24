@@ -21,6 +21,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.UrlPath;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -38,9 +39,11 @@ import java.util.stream.Collectors;
 final class BasicExpressionFunctionProvider implements ExpressionFunctionProvider {
 
     static BasicExpressionFunctionProvider with(final AbsoluteUrl baseUrl,
+                                                final CaseSensitivity nameCaseSensitivity,
                                                 final Set<ExpressionFunction<?, ExpressionEvaluationContext>> functions) {
         return new BasicExpressionFunctionProvider(
                 Objects.requireNonNull(baseUrl, "baseUrl"),
+                Objects.requireNonNull(nameCaseSensitivity, "nameCaseSensitivity"),
                 Sets.immutable(
                         Objects.requireNonNull(functions, "functions")
                 )
@@ -48,12 +51,15 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
     }
 
     private BasicExpressionFunctionProvider(final AbsoluteUrl baseUrl,
+                                            final CaseSensitivity nameCaseSensitivity,
                                             final Set<ExpressionFunction<?, ExpressionEvaluationContext>> functions) {
         if(functions.isEmpty()) {
             throw new IllegalArgumentException("Functions cannot be empty");
         }
 
-        final Map<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction = Maps.sorted();
+        final Map<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction = Maps.sorted(
+                FunctionExpressionName.comparator(nameCaseSensitivity)
+        );
         for (final ExpressionFunction<?, ExpressionEvaluationContext> function : functions) {
             final FunctionExpressionName name = function.name()
                     .orElseThrow(

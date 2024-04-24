@@ -20,6 +20,8 @@ package walkingkooka.tree.expression.function.provider;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.HasCaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
@@ -32,9 +34,11 @@ public final class ExpressionFunctionProviders implements PublicStaticHelper {
      * {@see BasicExpressionFunctionProvider}
      */
     public static ExpressionFunctionProvider basic(final AbsoluteUrl baseUrl,
+                                                   final CaseSensitivity nameCaseSensitivity,
                                                    final Set<ExpressionFunction<?, ExpressionEvaluationContext>> functions) {
         return BasicExpressionFunctionProvider.with(
                 baseUrl,
+                nameCaseSensitivity,
                 functions
         );
     }
