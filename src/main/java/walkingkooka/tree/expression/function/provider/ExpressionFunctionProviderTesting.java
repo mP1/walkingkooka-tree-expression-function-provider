@@ -22,6 +22,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.Set;
 
@@ -63,6 +64,14 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
                 expected,
                 provider.function(name),
                 () -> name.toString()
+        );
+    }
+
+    default void expressionFunctionAndFail(final ExpressionFunctionProvider provider,
+                                           final FunctionExpressionName name) {
+        final UnknownExpressionFunctionException thrown = assertThrows(
+                UnknownExpressionFunctionException.class,
+                () -> provider.function(name)
         );
     }
 
