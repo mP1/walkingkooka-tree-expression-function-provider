@@ -24,6 +24,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.UrlPath;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 
@@ -82,6 +83,7 @@ public final class MergingExpressionFunctionProviderTest implements ExpressionFu
                         Sets.of(
                                 ExpressionFunctionProviders.basic(
                                         BASE_URL.appendPath(UrlPath.parse("1")),
+                                        CaseSensitivity.SENSITIVE,
                                         Sets.of(
                                                 FUNCTION1,
                                                 FUNCTION2
@@ -89,12 +91,14 @@ public final class MergingExpressionFunctionProviderTest implements ExpressionFu
                                 ),
                                 ExpressionFunctionProviders.basic(
                                         BASE_URL.appendPath(UrlPath.parse("2")),
+                                        CaseSensitivity.SENSITIVE,
                                         Sets.of(
                                                 FUNCTION1
                                         )
                                 ),
                                 ExpressionFunctionProviders.basic(
                                         BASE_URL.appendPath(UrlPath.parse("3")),
+                                        CaseSensitivity.SENSITIVE,
                                         Sets.of(
                                                 FUNCTION2
                                         )
@@ -172,12 +176,14 @@ public final class MergingExpressionFunctionProviderTest implements ExpressionFu
                         Sets.of(
                                 ExpressionFunctionProviders.basic(
                                         BASE_URL,
+                                        CaseSensitivity.SENSITIVE,
                                         Sets.of(
                                                 FUNCTION1
                                         )
                                 ),
                                 ExpressionFunctionProviders.basic(
                                         BASE_URL,
+                                        CaseSensitivity.SENSITIVE,
                                         Sets.of(
                                                 FUNCTION2
                                         )

@@ -23,6 +23,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -60,11 +61,26 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
             FUNCTION2
     );
 
+    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
+
     @Test
     public void testWithNullBaseUrlFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> BasicExpressionFunctionProvider.with(
+                        null,
+                        CASE_SENSITIVITY,
+                        FUNCTIONS
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullNameCaseSensitivityFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicExpressionFunctionProvider.with(
+                        BASE_URL,
                         null,
                         FUNCTIONS
                 )
@@ -77,6 +93,7 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
                 NullPointerException.class,
                 () -> BasicExpressionFunctionProvider.with(
                         BASE_URL,
+                        CASE_SENSITIVITY,
                         null
                 )
         );
@@ -88,6 +105,7 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
                 IllegalArgumentException.class,
                 () -> BasicExpressionFunctionProvider.with(
                         BASE_URL,
+                        CASE_SENSITIVITY,
                         Sets.empty()
                 )
         );
@@ -107,6 +125,33 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
         this.expressionFunctionAndCheck(
                 this.createExpressionFunctionProvider(),
                 NAME2,
+                FUNCTION2
+        );
+    }
+
+    @Test
+    public void testFunctionLookupDifferentCaseCaseSensitive() {
+        this.expressionFunctionAndFail(
+                this.createExpressionFunctionProvider(
+                        CaseSensitivity.SENSITIVE
+                ),
+                FunctionExpressionName.with(
+                        NAME2.value()
+                                .toUpperCase()
+                )
+        );
+    }
+
+    @Test
+    public void testFunctionLookupDifferentCaseCaseInsensitive() {
+        this.expressionFunctionAndCheck(
+                this.createExpressionFunctionProvider(
+                        CaseSensitivity.INSENSITIVE
+                ),
+                FunctionExpressionName.with(
+                        NAME2.value()
+                                .toUpperCase()
+                ),
                 FUNCTION2
         );
     }
@@ -138,8 +183,15 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
 
     @Override
     public BasicExpressionFunctionProvider createExpressionFunctionProvider() {
+        return this.createExpressionFunctionProvider(
+                CASE_SENSITIVITY
+        );
+    }
+
+    private BasicExpressionFunctionProvider createExpressionFunctionProvider(final CaseSensitivity caseSensitivity) {
         return BasicExpressionFunctionProvider.with(
                 BASE_URL,
+                caseSensitivity,
                 FUNCTIONS
         );
     }
