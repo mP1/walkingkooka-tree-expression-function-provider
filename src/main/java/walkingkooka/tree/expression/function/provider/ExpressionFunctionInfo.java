@@ -20,6 +20,7 @@ package walkingkooka.tree.expression.function.provider;
 import walkingkooka.Cast;
 import walkingkooka.naming.HasName;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -28,9 +29,11 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public final class ExpressionFunctionInfo implements HasName<FunctionExpressionName>,
-        Comparable<ExpressionFunctionInfo> {
+        Comparable<ExpressionFunctionInfo>,
+        HateosResource<FunctionExpressionName> {
 
     public static ExpressionFunctionInfo with(final AbsoluteUrl url,
                                               final FunctionExpressionName name) {
@@ -153,5 +156,17 @@ public final class ExpressionFunctionInfo implements HasName<FunctionExpressionN
                 ExpressionFunctionInfo.class
         );
         FunctionExpressionName.with("hello"); // trigger static init and json marshall/unmarshall registry
+    }
+
+    // HateosResource...................................................................................................
+
+    @Override
+    public String hateosLinkId() {
+        return this.name.value();
+    }
+
+    @Override
+    public Optional<FunctionExpressionName> id() {
+        return Optional.of(this.name);
     }
 }
