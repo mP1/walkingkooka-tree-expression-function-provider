@@ -22,6 +22,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -29,10 +30,13 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ExpressionFunctionInfoTest implements ClassTesting2<ExpressionFunctionInfo>,
         HashCodeEqualsDefinedTesting2<ExpressionFunctionInfo>,
+        HateosResourceTesting<ExpressionFunctionInfo, FunctionExpressionName>,
         JsonNodeMarshallingTesting<ExpressionFunctionInfo>,
         ComparableTesting2<ExpressionFunctionInfo> {
 
@@ -136,5 +140,29 @@ public final class ExpressionFunctionInfoTest implements ClassTesting2<Expressio
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
+    }
+
+    // HateosResource...................................................................................................
+
+    @Test
+    public void testHateosId() {
+        this.hateosLinkIdAndCheck(
+                NAME.value()
+        );
+    }
+
+    @Test
+    public void testId() {
+        this.idAndCheck(
+                Optional.of(NAME)
+        );
+    }
+
+    @Override
+    public ExpressionFunctionInfo createHateosResource() {
+        return ExpressionFunctionInfo.with(
+                URL,
+                NAME
+        );
     }
 }
