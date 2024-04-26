@@ -19,6 +19,7 @@ package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.ListTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.Url;
@@ -28,7 +29,7 @@ import walkingkooka.tree.expression.FunctionExpressionName;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class ExpressionFunctionInfoListTest implements ListTesting2<ExpressionFunctionInfoList, ExpressionFunctionInfo>,
+public final class ExpressionFunctionInfoListTest implements ImmutableListTesting<ExpressionFunctionInfoList, ExpressionFunctionInfo>,
         ClassTesting<ExpressionFunctionInfoList> {
 
     private final static ExpressionFunctionInfo INFO1 = ExpressionFunctionInfo.with(
@@ -97,6 +98,26 @@ public final class ExpressionFunctionInfoListTest implements ListTesting2<Expres
         this.removeFails(
                 list,
                 list.get(0)
+        );
+    }
+
+    @Test
+    public void testSwap() {
+        this.swapAndCheck(
+                ExpressionFunctionInfoList.with(
+                        Lists.of(
+                                INFO1,
+                                INFO2
+                        )
+                ),
+                1,
+                0,
+                ExpressionFunctionInfoList.with(
+                        Lists.of(
+                                INFO2,
+                                INFO1
+                        )
+                )
         );
     }
 
