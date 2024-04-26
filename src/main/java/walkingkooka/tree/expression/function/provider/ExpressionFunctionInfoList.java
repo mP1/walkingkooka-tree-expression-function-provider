@@ -32,7 +32,7 @@ public final class ExpressionFunctionInfoList extends AbstractList<ExpressionFun
         Lists.registerImmutableType(ExpressionFunctionInfoList.class);
     }
 
-    static ExpressionFunctionInfoList with(final List<ExpressionFunctionInfo> infos) {
+    public static ExpressionFunctionInfoList with(final List<ExpressionFunctionInfo> infos) {
         Objects.requireNonNull(infos, "infos");
 
         return infos instanceof ExpressionFunctionInfoList ?
