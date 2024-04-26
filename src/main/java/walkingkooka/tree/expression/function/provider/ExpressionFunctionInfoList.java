@@ -26,7 +26,7 @@ import java.util.Objects;
 /**
  * {@link List} that holds multiple {@link ExpressionFunctionInfo} and is the container for an API returning all functions.
  */
-final class ExpressionFunctionInfoList extends AbstractList<ExpressionFunctionInfo> {
+public final class ExpressionFunctionInfoList extends AbstractList<ExpressionFunctionInfo> {
 
     static {
         Lists.registerImmutableType(ExpressionFunctionInfoList.class);
