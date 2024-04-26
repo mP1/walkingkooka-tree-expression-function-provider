@@ -119,6 +119,6 @@ public final class ExpressionFunctionInfoListTest implements ListTesting2<Expres
 
     @Override
     public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
+        return JavaVisibility.PUBLIC;
     }
 }
