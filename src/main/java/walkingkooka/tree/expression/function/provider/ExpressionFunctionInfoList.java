@@ -19,7 +19,6 @@ package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.collect.list.ImmutableList;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.tree.xml.XmlNode;
 
 import java.util.AbstractList;
 import java.util.List;
