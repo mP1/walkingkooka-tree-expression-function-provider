@@ -29,11 +29,6 @@ import java.util.Objects;
  */
 public final class ExpressionFunctionInfoList extends AbstractList<ExpressionFunctionInfo>
         implements ImmutableList<ExpressionFunctionInfo> {
-
-    static {
-        Lists.registerImmutableType(ExpressionFunctionInfoList.class);
-    }
-
     public static ExpressionFunctionInfoList with(final List<ExpressionFunctionInfo> infos) {
         Objects.requireNonNull(infos, "infos");
 
@@ -69,10 +64,6 @@ public final class ExpressionFunctionInfoList extends AbstractList<ExpressionFun
     }
 
     private final ExpressionFunctionInfo[] infos;
-
-    static {
-        Lists.registerImmutableType(ExpressionFunctionInfoList.class);
-    }
 
     // ImmutableList....................................................................................................
 
