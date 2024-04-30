@@ -18,6 +18,7 @@
 package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.collect.list.ImmutableList;
+import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.collect.list.Lists;
 
 import java.util.AbstractList;
@@ -28,7 +29,7 @@ import java.util.Objects;
  * {@link List} that holds multiple {@link ExpressionFunctionInfo} and is the container for an API returning all functions.
  */
 public final class ExpressionFunctionInfoList extends AbstractList<ExpressionFunctionInfo>
-        implements ImmutableList<ExpressionFunctionInfo> {
+        implements ImmutableListDefaults<ExpressionFunctionInfoList, ExpressionFunctionInfo> {
     public static ExpressionFunctionInfoList with(final List<ExpressionFunctionInfo> infos) {
         Objects.requireNonNull(infos, "infos");
 
@@ -68,8 +69,8 @@ public final class ExpressionFunctionInfoList extends AbstractList<ExpressionFun
     // ImmutableList....................................................................................................
 
     @Override
-    public ImmutableList<ExpressionFunctionInfo> setElements(final List<ExpressionFunctionInfo> nodes) {
-        final ImmutableList<ExpressionFunctionInfo> copy = with(nodes);
+    public ExpressionFunctionInfoList setElements(final List<ExpressionFunctionInfo> nodes) {
+        final ExpressionFunctionInfoList copy = with(nodes);
         return this.equals(copy) ?
                 this :
                 copy;
