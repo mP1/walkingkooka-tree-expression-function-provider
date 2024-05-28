@@ -17,18 +17,12 @@
 
 package walkingkooka.tree.expression.function.provider;
 
-import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.HasExpressionFunction;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 
-import java.util.Set;
+public final class ExpressionFunctionProviderTest {
 
-/**
- * A provider of {@link ExpressionFunction functions}.
- */
-public interface ExpressionFunctionProvider extends HasExpressionFunction {
+    // this is the test, want to enforce that this class compiles.
+    abstract class TestExpressionEvaluationContextExpressionFunctionProvider implements ExpressionEvaluationContext, ExpressionFunctionProvider {
 
-    /**
-     * Returns all known {@link ExpressionFunctionInfo}.
-     */
-    Set<ExpressionFunctionInfo> expressionFunctionInfos();
+    }
 }
