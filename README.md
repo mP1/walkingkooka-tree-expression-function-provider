@@ -8,3 +8,7 @@
 ## Background
 
 Minimal glue that defines a provider for ExpressionFunctions.
+
+Ideally `ExpressionFunctionProvider` would live in [walkingkooka-tree](https://github.com/mP1/walkingkooka-tree) together
+with `ExpressionFunction` but this is NOT possible because of a dependency on [walkingkooka-net](https://github.com/mP1/walkingkooka-net) which contains `AbsoluteUrl`.
+In short its a chicken and egg problem.
