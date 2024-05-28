@@ -44,7 +44,7 @@ public final class ExpressionFunctionInfoList extends AbstractList<ExpressionFun
         );
 
         if (copy.length == 0) {
-            throw new IllegalArgumentException("Expected several function got 0");
+            throw new IllegalArgumentException("Expected several expressionFunction got 0");
         }
 
         return new ExpressionFunctionInfoList(copy);

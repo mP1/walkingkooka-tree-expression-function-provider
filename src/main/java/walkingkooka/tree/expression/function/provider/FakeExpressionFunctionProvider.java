@@ -21,11 +21,12 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
+import java.util.Optional;
 import java.util.Set;
 
 public class FakeExpressionFunctionProvider implements ExpressionFunctionProvider{
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
+    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
         throw new UnsupportedOperationException();
     }
 

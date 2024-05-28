@@ -23,12 +23,12 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -72,10 +72,10 @@ final class MergingExpressionFunctionProvider implements ExpressionFunctionProvi
                 infos.add(info);
 
                 final FunctionExpressionName name = info.name();
-                final ExpressionFunction<?, ExpressionEvaluationContext> function = provider.function(name);
+                final Optional<ExpressionFunction<?, ExpressionEvaluationContext>> function = provider.expressionFunction(name);
                 nameToFunction.put(
                         name,
-                        function
+                        function.orElseThrow(() -> new IllegalStateException("Missing expressionFunction " + name)) // shouldnt happen
                 );
 
                 List<ExpressionFunctionInfo> infoForName = nameToInfos.get(name);
@@ -119,14 +119,12 @@ final class MergingExpressionFunctionProvider implements ExpressionFunctionProvi
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
+    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
         Objects.requireNonNull(name, "name");
 
-        final ExpressionFunction<?, ExpressionEvaluationContext> function = this.nameToFunction.get(name);
-        if (null == function) {
-            throw new UnknownExpressionFunctionException(name);
-        }
-        return function;
+        return Optional.ofNullable(
+                this.nameToFunction.get(name)
+        );
     }
 
     private final Map<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction;

@@ -20,7 +20,9 @@ package walkingkooka.tree.expression.function.provider;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -31,8 +33,16 @@ public interface ExpressionFunctionProvider {
     /**
      * Returns the {@link ExpressionFunction} for the given {@link FunctionExpressionName}.
      */
-    ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name);
+    Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name);
 
+    /**
+     * Helper that invokes {@link #function(FunctionExpressionName)} and throws a {@link UnknownExpressionFunctionException}
+     * if none was found.
+     */
+    default ExpressionFunction<?, ExpressionEvaluationContext> functionOrFail(final FunctionExpressionName name) {
+        return this.expressionFunction(name)
+                .orElseThrow(() -> new UnknownExpressionFunctionException(name));
+    }
 
     /**
      * Returns all known {@link ExpressionFunctionInfo}.

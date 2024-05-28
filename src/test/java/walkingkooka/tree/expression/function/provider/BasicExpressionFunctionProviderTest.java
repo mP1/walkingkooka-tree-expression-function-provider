@@ -131,7 +131,7 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
 
     @Test
     public void testFunctionLookupDifferentCaseCaseSensitive() {
-        this.expressionFunctionAndFail(
+        this.expressionFunctionAndCheck(
                 this.createExpressionFunctionProvider(
                         CaseSensitivity.SENSITIVE
                 ),
