@@ -36,10 +36,10 @@ public interface ExpressionFunctionProvider {
     Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name);
 
     /**
-     * Helper that invokes {@link #function(FunctionExpressionName)} and throws a {@link UnknownExpressionFunctionException}
+     * Helper that invokes {@link #expressionFunction(FunctionExpressionName)} and throws a {@link UnknownExpressionFunctionException}
      * if none was found.
      */
-    default ExpressionFunction<?, ExpressionEvaluationContext> functionOrFail(final FunctionExpressionName name) {
+    default ExpressionFunction<?, ExpressionEvaluationContext> expressionFunctionOrFail(final FunctionExpressionName name) {
         return this.expressionFunction(name)
                 .orElseThrow(() -> new UnknownExpressionFunctionException(name));
     }
