@@ -29,6 +29,7 @@ import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -93,14 +94,12 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
+    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
         Objects.requireNonNull(name, "name");
 
-        final ExpressionFunction<?, ExpressionEvaluationContext> function = this.nameToFunction.get(name);
-        if (null == function) {
-            throw new UnknownExpressionFunctionException(name);
-        }
-        return function;
+        return Optional.ofNullable(
+                this.nameToFunction.get(name)
+        );
     }
 
     private final Map<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction;

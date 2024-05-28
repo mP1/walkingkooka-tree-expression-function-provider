@@ -22,8 +22,8 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -35,7 +35,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
         assertThrows(
                 NullPointerException.class,
                 () -> this.createExpressionFunctionProvider()
-                        .function(null)
+                        .expressionFunction(null)
         );
     }
 
@@ -58,20 +58,31 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     }
 
     default void expressionFunctionAndCheck(final ExpressionFunctionProvider provider,
-                                            final FunctionExpressionName name,
-                                            final ExpressionFunction<?, ?> expected) {
-        this.checkEquals(
-                expected,
-                provider.function(name),
-                () -> name.toString()
+                                            final FunctionExpressionName name) {
+        this.expressionFunctionAndCheck(
+                provider,
+                name,
+                Optional.empty()
         );
     }
 
-    default void expressionFunctionAndFail(final ExpressionFunctionProvider provider,
-                                           final FunctionExpressionName name) {
-        final UnknownExpressionFunctionException thrown = assertThrows(
-                UnknownExpressionFunctionException.class,
-                () -> provider.function(name)
+    default void expressionFunctionAndCheck(final ExpressionFunctionProvider provider,
+                                            final FunctionExpressionName name,
+                                            final ExpressionFunction<?, ?> expected) {
+        this.expressionFunctionAndCheck(
+                provider,
+                name,
+                Optional.of(expected)
+        );
+    }
+
+    default void expressionFunctionAndCheck(final ExpressionFunctionProvider provider,
+                                            final FunctionExpressionName name,
+                                            final Optional<ExpressionFunction<?, ?>> expected) {
+        this.checkEquals(
+                expected,
+                provider.expressionFunction(name),
+                () -> name.toString()
         );
     }
 
