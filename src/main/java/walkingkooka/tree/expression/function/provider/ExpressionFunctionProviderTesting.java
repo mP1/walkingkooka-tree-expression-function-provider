@@ -87,6 +87,14 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     }
 
     default void expressionFunctionInfosAndCheck(final ExpressionFunctionProvider provider,
+                                                 final ExpressionFunctionInfo... expected) {
+        this.expressionFunctionInfosAndCheck(
+                provider,
+                Sets.of(expected)
+        );
+    }
+
+    default void expressionFunctionInfosAndCheck(final ExpressionFunctionProvider provider,
                                                  final Set<ExpressionFunctionInfo> expected) {
         this.checkEquals(
                 expected,
