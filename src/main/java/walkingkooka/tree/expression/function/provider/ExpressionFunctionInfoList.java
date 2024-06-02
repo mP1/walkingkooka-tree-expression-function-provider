@@ -17,9 +17,7 @@
 
 package walkingkooka.tree.expression.function.provider;
 
-import walkingkooka.collect.list.ImmutableList;
 import walkingkooka.collect.list.ImmutableListDefaults;
-import walkingkooka.collect.list.Lists;
 
 import java.util.AbstractList;
 import java.util.List;
