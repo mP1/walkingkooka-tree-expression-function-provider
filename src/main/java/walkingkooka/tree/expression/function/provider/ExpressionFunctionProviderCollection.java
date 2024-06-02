@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 /**
  * A {@link ExpressionFunctionProvider} that accepts several {@link ExpressionFunctionProvider} and provides a unified {@link ExpressionFunctionProvider}.
  */
-final class MergingExpressionFunctionProvider implements ExpressionFunctionProvider {
+final class ExpressionFunctionProviderCollection implements ExpressionFunctionProvider {
 
     static ExpressionFunctionProvider with(final Set<ExpressionFunctionProvider> providers) {
         final Set<ExpressionFunctionProvider> copy = Sets.immutable(
@@ -52,14 +52,14 @@ final class MergingExpressionFunctionProvider implements ExpressionFunctionProvi
                         .next();
                 break;
             default:
-                provider = new MergingExpressionFunctionProvider(copy);
+                provider = new ExpressionFunctionProviderCollection(copy);
                 break;
         }
 
         return provider;
     }
 
-    private MergingExpressionFunctionProvider(final Set<ExpressionFunctionProvider> providers) {
+    private ExpressionFunctionProviderCollection(final Set<ExpressionFunctionProvider> providers) {
 
 
         final Map<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction = Maps.sorted();

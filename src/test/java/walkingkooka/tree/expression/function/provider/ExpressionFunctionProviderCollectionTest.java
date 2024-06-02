@@ -33,8 +33,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class MergingExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<MergingExpressionFunctionProvider>,
-        ToStringTesting<MergingExpressionFunctionProvider> {
+public final class ExpressionFunctionProviderCollectionTest implements ExpressionFunctionProviderTesting<ExpressionFunctionProviderCollection>,
+        ToStringTesting<ExpressionFunctionProviderCollection> {
 
     private final static AbsoluteUrl BASE_URL = Url.parseAbsolute("https://example.com/base/");
 
@@ -59,7 +59,7 @@ public final class MergingExpressionFunctionProviderTest implements ExpressionFu
     public void testWithNullProvidersFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> MergingExpressionFunctionProvider.with(
+                () -> ExpressionFunctionProviderCollection.with(
                         null
                 )
         );
@@ -69,7 +69,7 @@ public final class MergingExpressionFunctionProviderTest implements ExpressionFu
     public void testWithEmptyProvidersFails() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> MergingExpressionFunctionProvider.with(
+                () -> ExpressionFunctionProviderCollection.with(
                         Sets.empty()
                 )
         );
@@ -79,7 +79,7 @@ public final class MergingExpressionFunctionProviderTest implements ExpressionFu
     public void testWithNameClassFails() {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> MergingExpressionFunctionProvider.with(
+                () -> ExpressionFunctionProviderCollection.with(
                         Sets.of(
                                 ExpressionFunctionProviders.basic(
                                         BASE_URL.appendPath(UrlPath.parse("1")),
@@ -118,7 +118,7 @@ public final class MergingExpressionFunctionProviderTest implements ExpressionFu
         final ExpressionFunctionProvider provider = ExpressionFunctionProviders.fake();
         assertSame(
                 provider,
-                MergingExpressionFunctionProvider.with(
+                ExpressionFunctionProviderCollection.with(
                         Sets.of(
                                 provider
                         )
@@ -170,9 +170,9 @@ public final class MergingExpressionFunctionProviderTest implements ExpressionFu
     }
 
     @Override
-    public MergingExpressionFunctionProvider createExpressionFunctionProvider() {
-        return (MergingExpressionFunctionProvider)
-                MergingExpressionFunctionProvider.with(
+    public ExpressionFunctionProviderCollection createExpressionFunctionProvider() {
+        return (ExpressionFunctionProviderCollection)
+                ExpressionFunctionProviderCollection.with(
                         Sets.of(
                                 ExpressionFunctionProviders.basic(
                                         BASE_URL,
@@ -198,7 +198,7 @@ public final class MergingExpressionFunctionProviderTest implements ExpressionFu
     }
 
     @Override
-    public Class<MergingExpressionFunctionProvider> type() {
-        return MergingExpressionFunctionProvider.class;
+    public Class<ExpressionFunctionProviderCollection> type() {
+        return ExpressionFunctionProviderCollection.class;
     }
 }
