@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.naming.HasName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.plugin.PluginInfoLike;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -31,8 +32,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class ExpressionFunctionInfo implements HasName<FunctionExpressionName>,
-        Comparable<ExpressionFunctionInfo>,
+public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFunctionInfo, FunctionExpressionName>,
         HateosResource<FunctionExpressionName> {
 
     public static ExpressionFunctionInfo with(final AbsoluteUrl url,
@@ -64,13 +64,6 @@ public final class ExpressionFunctionInfo implements HasName<FunctionExpressionN
 
     private final FunctionExpressionName name;
 
-    // Comparable.......................................................................................................
-
-    @Override
-    public int compareTo(final ExpressionFunctionInfo other) {
-        return this.name.compareTo(other.name);
-    }
-
     // Object...........................................................................................................
 
     @Override
@@ -100,52 +93,14 @@ public final class ExpressionFunctionInfo implements HasName<FunctionExpressionN
 
     // Json.............................................................................................................
 
-    private final static String URL_PROPERTY_STRING = "url";
-
-    private final static String NAME_PROPERTY_STRING = "name";
-
-    // @VisibleForTesting
-    final static JsonPropertyName URL_PROPERTY = JsonPropertyName.with(URL_PROPERTY_STRING);
-
-    final static JsonPropertyName NAME_PROPERTY = JsonPropertyName.with(NAME_PROPERTY_STRING);
-
     static ExpressionFunctionInfo unmarshall(final JsonNode node,
                                              final JsonNodeUnmarshallContext context) {
-        AbsoluteUrl url = null;
-        FunctionExpressionName functionExpressionName = null;
-
-        for (final JsonNode child : node.objectOrFail().children()) {
-            final JsonPropertyName name = child.name();
-
-            switch (name.value()) {
-                case URL_PROPERTY_STRING:
-                    url = context.unmarshall(
-                            child,
-                            AbsoluteUrl.class
-                    );
-                    break;
-                case NAME_PROPERTY_STRING:
-                    functionExpressionName = context.unmarshall(
-                            child,
-                            FunctionExpressionName.class
-                    );
-                    break;
-                default:
-                    JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
-                    break;
-            }
-        }
-
-        return with(
-                url,
-                functionExpressionName
+        return PluginInfoLike.unmarshall(
+                node,
+                context,
+                FunctionExpressionName.class,
+                ExpressionFunctionInfo::with
         );
-    }
-
-    private JsonNode marshall(final JsonNodeMarshallContext context) {
-        return JsonNode.object()
-                .set(URL_PROPERTY, context.marshall(this.url))
-                .set(NAME_PROPERTY, context.marshall(this.name));
     }
 
     static {
@@ -156,17 +111,5 @@ public final class ExpressionFunctionInfo implements HasName<FunctionExpressionN
                 ExpressionFunctionInfo.class
         );
         FunctionExpressionName.with("hello"); // trigger static init and json marshall/unmarshall registry
-    }
-
-    // HateosResource...................................................................................................
-
-    @Override
-    public String hateosLinkId() {
-        return this.name.value();
-    }
-
-    @Override
-    public Optional<FunctionExpressionName> id() {
-        return Optional.of(this.name);
     }
 }
