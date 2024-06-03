@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Miroslav Pokorny (github.com/mP1)
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,130 +17,55 @@
 
 package walkingkooka.tree.expression.function.provider;
 
-import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
-import walkingkooka.collect.set.Sets;
+import walkingkooka.plugin.ProviderCollection;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.function.Function;
 
 /**
- * A {@link ExpressionFunctionProvider} that accepts several {@link ExpressionFunctionProvider} and provides a unified {@link ExpressionFunctionProvider}.
+ * A {@link ExpressionFunctionProvider} view of a collection of {@link ExpressionFunctionProvider providers}.
  */
 final class ExpressionFunctionProviderCollection implements ExpressionFunctionProvider {
 
-    static ExpressionFunctionProvider with(final Set<ExpressionFunctionProvider> providers) {
-        final Set<ExpressionFunctionProvider> copy = Sets.immutable(
+    static ExpressionFunctionProviderCollection with(final Set<ExpressionFunctionProvider> providers) {
+        return new ExpressionFunctionProviderCollection(
                 Objects.requireNonNull(providers, "providers")
         );
-
-        ExpressionFunctionProvider provider;
-
-        switch (providers.size()) {
-            case 0:
-                throw new IllegalArgumentException("Providers cannot be empty");
-            case 1:
-                provider = providers.iterator()
-                        .next();
-                break;
-            default:
-                provider = new ExpressionFunctionProviderCollection(copy);
-                break;
-        }
-
-        return provider;
     }
 
     private ExpressionFunctionProviderCollection(final Set<ExpressionFunctionProvider> providers) {
-
-
-        final Map<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction = Maps.sorted();
-        final Set<ExpressionFunctionInfo> infos = Sets.sorted();
-
-        final Map<FunctionExpressionName, List<ExpressionFunctionInfo>> nameToInfos = Maps.sorted();
-
-        for (final ExpressionFunctionProvider provider : providers) {
-            for (final ExpressionFunctionInfo info : provider.expressionFunctionInfos()) {
-                infos.add(info);
-
-                final FunctionExpressionName name = info.name();
-                final Optional<ExpressionFunction<?, ExpressionEvaluationContext>> function = provider.expressionFunction(name);
-                nameToFunction.put(
-                        name,
-                        function.orElseThrow(() -> new IllegalStateException("Missing expressionFunction " + name)) // shouldnt happen
-                );
-
-                List<ExpressionFunctionInfo> infoForName = nameToInfos.get(name);
-                if (null == infoForName) {
-                    infoForName = Lists.array();
-                    nameToInfos.put(
-                            name,
-                            infoForName
-                    );
-                }
-                infoForName.add(info);
-            }
-        }
-
-        // check for names mapped to multiple functions.
-        final StringBuilder m = new StringBuilder();
-        String separator = "";
-
-        for (final Entry<FunctionExpressionName, List<ExpressionFunctionInfo>> nameAndInfo : nameToInfos.entrySet()) {
-            final List<ExpressionFunctionInfo> infosForName = nameAndInfo.getValue();
-            if (infosForName.size() > 1) {
-                m.append(separator);
-                separator = ", ";
-
-                m.append(
-                        nameAndInfo.getKey() +
-                                " (" +
-                                infosForName.stream()
-                                        .map(i -> i.url().toString())
-                                        .collect(Collectors.joining(", ")) +
-                                ")"
-                );
-            }
-        }
-        if (m.length() > 0) {
-            throw new IllegalArgumentException(m.toString()); // Custom Exception holding name to infos ?
-        }
-
-        this.nameToFunction = nameToFunction;
-        this.expressionFunctionInfos = Sets.readOnly(infos);
-    }
-
-    @Override
-    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
-        Objects.requireNonNull(name, "name");
-
-        return Optional.ofNullable(
-                this.nameToFunction.get(name)
+        this.providers = ProviderCollection.with(
+                Function.identity(), // inputToName
+                ExpressionFunctionProvider::expressionFunction,
+                ExpressionFunctionProvider::expressionFunctionInfos,
+                ExpressionFunction.class.getSimpleName(),
+                providers
         );
     }
 
-    private final Map<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction;
+    @Override
+    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName selector) {
+        Objects.requireNonNull(selector, "selector");
+
+        return this.providers.get(selector);
+    }
 
     @Override
     public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
-        return this.expressionFunctionInfos;
+        return this.providers.infos();
     }
 
-    private final Set<ExpressionFunctionInfo> expressionFunctionInfos;
+    private final ProviderCollection<FunctionExpressionName, ExpressionFunctionInfo, ExpressionFunctionProvider,
+            FunctionExpressionName,
+            ExpressionFunction<?, ExpressionEvaluationContext>> providers;
 
     @Override
     public String toString() {
-        return this.nameToFunction.keySet()
-                .stream()
-                .map(Object::toString)
-                .collect(Collectors.joining(", "));
+        return this.providers.toString();
     }
 }
