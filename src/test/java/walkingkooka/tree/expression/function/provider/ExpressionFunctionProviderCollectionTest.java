@@ -30,7 +30,6 @@ import walkingkooka.tree.expression.function.FakeExpressionFunction;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ExpressionFunctionProviderCollectionTest implements ExpressionFunctionProviderTesting<ExpressionFunctionProviderCollection>,
@@ -107,24 +106,12 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
                 )
         );
         this.checkEquals(
-                "testfunction1 (https://example.com/base/1/testfunction1, https://example.com/base/2/testfunction1), testfunction2 (https://example.com/base/1/testfunction2, https://example.com/base/3/testfunction2)",
+                "Found multiple ExpressionFunction for testfunction1(https://example.com/base/2/testfunction1, https://example.com/base/1/testfunction1), testfunction2(https://example.com/base/3/testfunction2, https://example.com/base/1/testfunction2)",
                 thrown.getMessage(),
                 "message"
         );
     }
 
-    @Test
-    public void testWithOneDoesntWrap() {
-        final ExpressionFunctionProvider provider = ExpressionFunctionProviders.fake();
-        assertSame(
-                provider,
-                ExpressionFunctionProviderCollection.with(
-                        Sets.of(
-                                provider
-                        )
-                )
-        );
-    }
 
     @Test
     public void testFunctionLookup1() {
@@ -171,8 +158,7 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
 
     @Override
     public ExpressionFunctionProviderCollection createExpressionFunctionProvider() {
-        return (ExpressionFunctionProviderCollection)
-                ExpressionFunctionProviderCollection.with(
+        return ExpressionFunctionProviderCollection.with(
                         Sets.of(
                                 ExpressionFunctionProviders.basic(
                                         BASE_URL,
