@@ -23,6 +23,7 @@ import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
+import walkingkooka.plugin.PluginInfoLikeTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -34,87 +35,36 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ExpressionFunctionInfoTest implements ClassTesting2<ExpressionFunctionInfo>,
-        HashCodeEqualsDefinedTesting2<ExpressionFunctionInfo>,
-        HateosResourceTesting<ExpressionFunctionInfo, FunctionExpressionName>,
-        JsonNodeMarshallingTesting<ExpressionFunctionInfo>,
-        ComparableTesting2<ExpressionFunctionInfo> {
-
-    private final static AbsoluteUrl URL = Url.parseAbsolute("http://example.com");
-
-    private final static FunctionExpressionName NAME = FunctionExpressionName.with("test-sine");
+public final class ExpressionFunctionInfoTest implements PluginInfoLikeTesting<ExpressionFunctionInfo, FunctionExpressionName> {
 
     @Test
-    public void testWithNullUrlFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> ExpressionFunctionInfo.with(
-                        null,
-                        NAME
-                )
-        );
-    }
+    public void testParseInvalidCharacterInNameFails() {
+        final String text = "https://example.com/123 test-function-!-name";
 
-    @Test
-    public void testWithNullNameFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> ExpressionFunctionInfo.with(
-                        URL,
-                        null
-                )
-        );
-    }
-
-    // equals...........................................................................................................
-
-    @Test
-    public void testEqualsDifferentUrl() {
-        this.checkNotEquals(
-                ExpressionFunctionInfo.with(
-                        Url.parseAbsolute("http://example.com/different"),
-                        NAME
-                )
-        );
-    }
-
-    @Test
-    public void testEqualsDifferentName() {
-        this.checkNotEquals(
-                ExpressionFunctionInfo.with(
-                        URL,
-                        FunctionExpressionName.with("different-123")
-                )
+        this.parseStringInvalidCharacterFails(
+                text,
+                text.indexOf('!')
         );
     }
 
     @Override
-    public ExpressionFunctionInfo createObject() {
+    public FunctionExpressionName createName(final String name) {
+        return FunctionExpressionName.with(name);
+    }
+
+    @Override
+    public ExpressionFunctionInfo createPluginInfoLike(final AbsoluteUrl url,
+                                                       final FunctionExpressionName name) {
         return ExpressionFunctionInfo.with(
-                URL,
-                NAME
-        );
-    }
-
-    // Comparable.......................................................................................................
-
-    @Test
-    public void testCompareLess() {
-        this.compareToAndCheckLess(
-                ExpressionFunctionInfo.with(
-                        URL,
-                        FunctionExpressionName.with("xyz-456")
-                )
+                url,
+                name
         );
     }
 
     @Override
-    public ExpressionFunctionInfo createComparable() {
-        return this.createObject();
+    public ExpressionFunctionInfo parseString(final String text) {
+        return ExpressionFunctionInfo.parse(text);
     }
-
-
-    // json.............................................................................................................
 
     @Override
     public ExpressionFunctionInfo unmarshall(final JsonNode json,
@@ -126,43 +76,7 @@ public final class ExpressionFunctionInfoTest implements ClassTesting2<Expressio
     }
 
     @Override
-    public ExpressionFunctionInfo createJsonNodeMarshallingValue() {
-        return this.createObject();
-    }
-
-    // ClassTesting.....................................................................................................
-
-    @Override
     public Class<ExpressionFunctionInfo> type() {
         return ExpressionFunctionInfo.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
-    // HateosResource...................................................................................................
-
-    @Test
-    public void testHateosId() {
-        this.hateosLinkIdAndCheck(
-                NAME.value()
-        );
-    }
-
-    @Test
-    public void testId() {
-        this.idAndCheck(
-                Optional.of(NAME)
-        );
-    }
-
-    @Override
-    public ExpressionFunctionInfo createHateosResource() {
-        return ExpressionFunctionInfo.with(
-                URL,
-                NAME
-        );
     }
 }

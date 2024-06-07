@@ -35,6 +35,14 @@ import java.util.Optional;
 public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFunctionInfo, FunctionExpressionName>,
         HateosResource<FunctionExpressionName> {
 
+    public static ExpressionFunctionInfo parse(final String text) {
+        return PluginInfoLike.parsePluginInfoLike(
+                text,
+                FunctionExpressionName::with,
+                ExpressionFunctionInfo::with
+        );
+    }
+
     public static ExpressionFunctionInfo with(final AbsoluteUrl url,
                                               final FunctionExpressionName name) {
         return new ExpressionFunctionInfo(
