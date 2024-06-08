@@ -96,7 +96,7 @@ public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFu
 
     @Override
     public String toString() {
-        return this.url + " " + this.name;
+        return PluginInfoLike.toString(this);
     }
 
     // Json.............................................................................................................
