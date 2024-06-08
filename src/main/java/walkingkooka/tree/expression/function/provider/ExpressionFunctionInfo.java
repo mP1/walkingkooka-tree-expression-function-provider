@@ -36,7 +36,7 @@ public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFu
         HateosResource<FunctionExpressionName> {
 
     public static ExpressionFunctionInfo parse(final String text) {
-        return PluginInfoLike.parsePluginInfoLike(
+        return PluginInfoLike.parse(
                 text,
                 FunctionExpressionName::with,
                 ExpressionFunctionInfo::with
