@@ -20,6 +20,7 @@ package walkingkooka.tree.expression.function.provider;
 import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -34,7 +35,19 @@ import java.util.Set;
 /**
  * A read only {@link Set} of {@link ExpressionFunctionInfo} sorted by {@link FunctionExpressionName}.
  */
-public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunctionInfo> {
+public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunctionInfo>
+        implements PluginInfoSetLike<ExpressionFunctionInfo, FunctionExpressionName> {
+
+    /**
+     * Parses the given text into a {@link ExpressionFunctionInfo}
+     */
+    public static ExpressionFunctionInfoSet parse(final String text) {
+        return PluginInfoSetLike.parse(
+                text,
+                ExpressionFunctionInfo::parse,
+                ExpressionFunctionInfoSet::with
+        );
+    }
 
     /**
      * Factory that creates a {@link ExpressionFunctionInfoSet} with the provided {@link ExpressionFunctionInfo}.
