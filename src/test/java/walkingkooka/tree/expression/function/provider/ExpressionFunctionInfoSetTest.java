@@ -21,14 +21,27 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
 import walkingkooka.net.http.server.hateos.HateosResourceSetTesting;
+import walkingkooka.plugin.PluginInfoSetLikeTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public final class ExpressionFunctionInfoSetTest implements HateosResourceSetTesting<ExpressionFunctionInfoSet, ExpressionFunctionInfo, FunctionExpressionName>,
+public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTesting<ExpressionFunctionInfoSet, ExpressionFunctionInfo, FunctionExpressionName>,
         ClassTesting<ExpressionFunctionInfoSet> {
+
+    // parse............................................................................................................
+
+    @Override
+    public ExpressionFunctionInfoSet parseString(final String text) {
+        return ExpressionFunctionInfoSet.parse(text);
+    }
+
+    @Override
+    public void testParseStringEmptyFails() {
+        throw new UnsupportedOperationException();
+    }
 
     // Set..............................................................................................................
 
