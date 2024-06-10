@@ -101,6 +101,10 @@ public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFu
 
     // Json.............................................................................................................
 
+    static void register() {
+        // helps force registry of json marshaller
+    }
+
     static ExpressionFunctionInfo unmarshall(final JsonNode node,
                                              final JsonNodeUnmarshallContext context) {
         return PluginInfoLike.unmarshall(

@@ -83,6 +83,8 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
     // json.............................................................................................................
 
     static {
+        ExpressionFunctionInfo.register(); // helps force registry of json marshaller
+
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(ExpressionFunctionInfoSet.class),
                 ExpressionFunctionInfoSet::unmarshall,
