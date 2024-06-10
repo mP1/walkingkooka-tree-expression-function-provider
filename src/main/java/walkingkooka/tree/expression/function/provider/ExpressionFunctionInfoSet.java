@@ -105,4 +105,11 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
                 )
         );
     }
+
+    // toString.........................................................................................................
+
+    @Override
+    public String toString() {
+        return PluginInfoSetLike.toString(this);
+    }
 }
