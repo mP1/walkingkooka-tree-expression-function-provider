@@ -38,6 +38,10 @@ import java.util.Set;
 public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunctionInfo>
         implements PluginInfoSetLike<ExpressionFunctionInfo, FunctionExpressionName> {
 
+    static {
+        Sets.registerImmutableType(ExpressionFunctionInfoSet.class);
+    }
+
     /**
      * Parses the given text into a {@link ExpressionFunctionInfo}
      */
