@@ -1,0 +1,92 @@
+/*
+ * Copyright 2024 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package walkingkooka.tree.expression.function.provider;
+
+import walkingkooka.plugin.PluginInfoSetLike;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.function.ExpressionFunction;
+
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+/**
+ * A {@link ExpressionFunctionProvider} that wraps a view of new {@link FunctionExpressionName} to a wrapped {@link ExpressionFunctionProvider}.
+ */
+final class MappedExpressionFunctionProvider implements ExpressionFunctionProvider {
+
+    static MappedExpressionFunctionProvider with(final Set<ExpressionFunctionInfo> infos,
+                                                 final ExpressionFunctionProvider provider) {
+        Objects.requireNonNull(infos, "infos");
+        Objects.requireNonNull(provider, "provider");
+
+        return new MappedExpressionFunctionProvider(
+                infos,
+                provider
+        );
+    }
+
+
+    private MappedExpressionFunctionProvider(final Set<ExpressionFunctionInfo> infos,
+                                             final ExpressionFunctionProvider provider) {
+        this.nameMapper = PluginInfoSetLike.nameMapper(
+                infos,
+                provider.expressionFunctionInfos()
+        );
+        this.provider = provider;
+        this.infos = PluginInfoSetLike.viewFilter(
+                infos,
+                provider.expressionFunctionInfos()
+        );
+    }
+
+    @Override
+    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
+        Objects.requireNonNull(name, "name");
+
+        return this.nameMapper.apply(name)
+                .flatMap(this.provider::expressionFunction);
+    }
+
+    /**
+     * A function that maps incoming {@link FunctionExpressionName} to the target provider after mapping them across using the {@link walkingkooka.net.AbsoluteUrl}.
+     */
+    private final Function<FunctionExpressionName, Optional<FunctionExpressionName>> nameMapper;
+
+    /**
+     * The original wrapped {@link ExpressionFunctionProvider}.
+     */
+    private final ExpressionFunctionProvider provider;
+
+    @Override
+    public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
+        return this.infos;
+    }
+
+    private final Set<ExpressionFunctionInfo> infos;
+
+    @Override
+    public String toString() {
+        return this.infos.stream()
+                .map(ExpressionFunctionInfo::toString)
+                .collect(Collectors.joining(","));
+    }
+}
