@@ -52,7 +52,7 @@ final class MappedExpressionFunctionProvider implements ExpressionFunctionProvid
                 provider.expressionFunctionInfos()
         );
         this.provider = provider;
-        this.infos = PluginInfoSetLike.viewFilter(
+        this.infos = PluginInfoSetLike.merge(
                 infos,
                 provider.expressionFunctionInfos()
         );
