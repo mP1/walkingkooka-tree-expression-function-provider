@@ -43,7 +43,33 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
 
     private final static FunctionExpressionName ORIGINAL_NAME = FunctionExpressionName.with("original-function-123");
 
-    private final static ExpressionFunction<?, ExpressionEvaluationContext> FUNCTION = ExpressionFunctions.fake();
+    private final static ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
+        return new FakeExpressionFunction() {
+            @Override
+            public Optional<FunctionExpressionName> name() {
+                return Optional.of(name);
+            }
+
+            @Override
+            public int hashCode() {
+                return name.hashCode();
+            }
+
+            @Override
+            public boolean equals(final Object other) {
+                return this == other || other instanceof ExpressionFunction && this.equals0((ExpressionFunction<?, ?>) other);
+            }
+
+            private boolean equals0(final ExpressionFunction<?, ?> other) {
+                return this.name().equals(other.name());
+            }
+
+            @Override
+            public String toString() {
+                return name.toString();
+            }
+        };
+    };
 
     @Test
     public void testWithNullViewFails() {
@@ -71,7 +97,7 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
     public void testExpressionFunction() {
         this.expressionFunctionAndCheck(
                 NAME,
-                FUNCTION
+                function(NAME)
         );
     }
 
@@ -115,7 +141,7 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
                     public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
                         return Optional.ofNullable(
                                 name.equals(ORIGINAL_NAME) ?
-                                        FUNCTION :
+                                        function(ORIGINAL_NAME) :
                                         null
                         );
                     }

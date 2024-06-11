@@ -63,7 +63,12 @@ final class MappedExpressionFunctionProvider implements ExpressionFunctionProvid
         Objects.requireNonNull(name, "name");
 
         return this.nameMapper.apply(name)
-                .flatMap(this.provider::expressionFunction);
+                .flatMap(this.provider::expressionFunction)
+                .map(
+                        f -> f.setName(
+                                Optional.of(name)
+                        )
+                );
     }
 
     /**
