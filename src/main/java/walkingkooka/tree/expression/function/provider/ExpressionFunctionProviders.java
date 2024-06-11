@@ -23,6 +23,7 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
+import java.util.Objects;
 import java.util.Set;
 
 public final class ExpressionFunctionProviders implements PublicStaticHelper {
@@ -52,6 +53,17 @@ public final class ExpressionFunctionProviders implements PublicStaticHelper {
      */
     public static ExpressionFunctionProvider fake() {
         return new FakeExpressionFunctionProvider();
+    }
+
+    /**
+     * {@see MappedExpressionFunctionProvider}
+     */
+    public static ExpressionFunctionProvider mapped(final Set<ExpressionFunctionInfo> infos,
+                                                    final ExpressionFunctionProvider provider) {
+        return MappedExpressionFunctionProvider.with(
+                infos,
+                provider
+        );
     }
 
     /**
