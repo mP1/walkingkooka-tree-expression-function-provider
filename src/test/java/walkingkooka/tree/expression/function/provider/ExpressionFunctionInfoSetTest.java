@@ -28,8 +28,20 @@ import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTesting<ExpressionFunctionInfoSet, ExpressionFunctionInfo, FunctionExpressionName>,
         ClassTesting<ExpressionFunctionInfoSet> {
+
+    @Test
+    public void testImmutableSet() {
+        final ExpressionFunctionInfoSet set = this.createSet();
+
+        assertSame(
+                set,
+                Sets.immutable(set)
+        );
+    }
 
     // parse............................................................................................................
 
