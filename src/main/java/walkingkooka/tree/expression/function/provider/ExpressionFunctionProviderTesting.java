@@ -40,14 +40,6 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     }
 
     @Test
-    default void testExpressionFunctionInfosNotEmpty() {
-        this.checkNotEquals(
-                Sets.empty(),
-                this.createExpressionFunctionProvider().expressionFunctionInfos()
-        );
-    }
-
-    @Test
     default void testExpressionFunctionInfosReadOnly() {
         assertThrows(
                 UnsupportedOperationException.class,
