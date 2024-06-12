@@ -45,7 +45,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
                 UnsupportedOperationException.class,
                 () -> this.createExpressionFunctionProvider()
                         .expressionFunctionInfos()
-                        .clear()
+                        .add(ExpressionFunctionInfo.parse("https://example.com/" + this.getClass().getName() + " " + this.getClass().getSimpleName()))
         );
     }
 
