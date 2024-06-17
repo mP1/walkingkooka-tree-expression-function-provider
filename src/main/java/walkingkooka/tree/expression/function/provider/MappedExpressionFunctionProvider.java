@@ -18,6 +18,7 @@
 package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.plugin.PluginInfoSetLike;
+import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -90,8 +91,9 @@ final class MappedExpressionFunctionProvider implements ExpressionFunctionProvid
 
     @Override
     public String toString() {
-        return this.infos.stream()
-                .map(ExpressionFunctionInfo::toString)
-                .collect(Collectors.joining(","));
+        return CharacterConstant.COMMA.toSeparatedString(
+                this.infos,
+                ExpressionFunctionInfo::toString
+        );
     }
 }
