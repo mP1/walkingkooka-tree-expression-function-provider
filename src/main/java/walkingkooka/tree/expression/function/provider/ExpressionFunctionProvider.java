@@ -23,7 +23,7 @@ import walkingkooka.tree.expression.function.HasExpressionFunction;
 import java.util.Set;
 
 /**
- * A provider of {@link ExpressionFunction functions}.
+ * A provider supports listing available {@link ExpressionFunctionInfo} and fetching implementations by {@link walkingkooka.tree.expression.FunctionExpressionName}.
  */
 public interface ExpressionFunctionProvider extends HasExpressionFunction {
 
