@@ -18,6 +18,7 @@
 
 <module>
     <inherits name="walkingkooka.j2cl.java.util.locale.Locale"/>
+    <inherits name="walkingkooka.tree.Tree"/>
     <inherits name="walkingkooka.plugin.Plugin"/>
     <source path=""/>
 </module>
