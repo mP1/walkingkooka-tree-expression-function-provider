@@ -49,10 +49,10 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
     }
 
     @Override
-    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName selector) {
-        Objects.requireNonNull(selector, "selector");
+    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
+        Objects.requireNonNull(name, "name");
 
-        return this.providers.get(selector);
+        return this.providers.get(name);
     }
 
     @Override
