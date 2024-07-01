@@ -24,7 +24,7 @@
     <scm>
         <connection>scm:git:https://github.com/mP1/walkingkooka-tree-expression-function-provider.git</connection>
         <developerConnection>scm:git:git@github.com:mP1/walkingkooka-tree-expression-function-provider.git</developerConnection>
-        <url>https://github.com/mP1/walkingkooka-tree</url>
+        <url>https://github.com/mP1/walkingkooka-walkingkooka-tree-expression-function-provider</url>
         <tag>HEAD</tag>
     </scm>
     <issueManagement>
