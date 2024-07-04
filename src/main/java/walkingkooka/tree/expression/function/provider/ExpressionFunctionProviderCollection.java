@@ -17,6 +17,7 @@
 
 package walkingkooka.tree.expression.function.provider;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderCollection;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -41,7 +42,7 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
     private ExpressionFunctionProviderCollection(final Set<ExpressionFunctionProvider> providers) {
         this.providers = ProviderCollection.with(
                 Function.identity(), // inputToName
-                ExpressionFunctionProvider::expressionFunction,
+                (p, n, v) -> p.expressionFunction(n),
                 ExpressionFunctionProvider::expressionFunctionInfos,
                 ExpressionFunction.class.getSimpleName(),
                 providers
@@ -52,7 +53,10 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
     public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
         Objects.requireNonNull(name, "name");
 
-        return this.providers.get(name);
+        return this.providers.get(
+                name,
+                Lists.empty()
+        );
     }
 
     @Override
