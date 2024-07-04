@@ -18,19 +18,15 @@
 package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.Cast;
-import walkingkooka.naming.HasName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.PluginInfoLike;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
-import java.util.Optional;
 
 public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFunctionInfo, FunctionExpressionName>,
         HateosResource<FunctionExpressionName> {
