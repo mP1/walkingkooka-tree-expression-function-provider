@@ -19,6 +19,7 @@ package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.plugin.ProviderTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -28,7 +29,8 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionProvider> extends ClassTesting2<T> {
+public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionProvider> extends ProviderTesting<T>,
+        ClassTesting2<T> {
 
     @Test
     default void testFunctionWithNullFails() {
