@@ -29,8 +29,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionProvider> extends ProviderTesting<T>,
-        ClassTesting2<T> {
+public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionProvider> extends ProviderTesting<T> {
 
     @Test
     default void testFunctionWithNullFails() {
