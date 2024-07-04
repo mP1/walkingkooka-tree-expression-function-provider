@@ -18,7 +18,6 @@
 package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.plugin.Provider;
-import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.HasExpressionFunction;
 
 import java.util.Set;

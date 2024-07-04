@@ -20,7 +20,6 @@ package walkingkooka.tree.expression.function.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
-import walkingkooka.net.http.server.hateos.HateosResourceSetTesting;
 import walkingkooka.plugin.PluginInfoSetLikeTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;

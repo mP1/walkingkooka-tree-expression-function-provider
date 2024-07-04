@@ -20,7 +20,6 @@ package walkingkooka.tree.expression.function.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderTesting;
-import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 

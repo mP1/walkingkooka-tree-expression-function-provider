@@ -23,7 +23,6 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
-import java.util.Objects;
 import java.util.Set;
 
 public final class ExpressionFunctionProviders implements PublicStaticHelper {
