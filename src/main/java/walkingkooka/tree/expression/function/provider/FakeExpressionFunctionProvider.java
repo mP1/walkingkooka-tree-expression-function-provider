@@ -26,7 +26,7 @@ import java.util.Set;
 
 public class FakeExpressionFunctionProvider implements ExpressionFunctionProvider{
     @Override
-    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
         throw new UnsupportedOperationException();
     }
 

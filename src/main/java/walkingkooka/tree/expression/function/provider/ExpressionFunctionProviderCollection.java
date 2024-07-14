@@ -46,9 +46,9 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
         this.providers = ProviderCollection.with(
                 new ProviderCollectionProviderGetter<>() {
                     @Override
-                    public Optional<ExpressionFunction<?, ?>> get(final ExpressionFunctionProvider provider,
-                                                                  final FunctionExpressionName name,
-                                                                  final List<?> values) {
+                    public ExpressionFunction<?, ?> get(final ExpressionFunctionProvider provider,
+                                                        final FunctionExpressionName name,
+                                                        final List<?> values) {
                         return Cast.to(
                                 provider.expressionFunction(
                                         name
@@ -57,8 +57,8 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
                     }
 
                     @Override
-                    public Optional<ExpressionFunction<?, ?>> get(final ExpressionFunctionProvider provider,
-                                                                  final PluginSelectorLike<FunctionExpressionName> selector) {
+                    public ExpressionFunction<?, ?> get(final ExpressionFunctionProvider provider,
+                                                        final PluginSelectorLike<FunctionExpressionName> selector) {
                         throw new UnsupportedOperationException();
                     }
                 },
@@ -69,7 +69,7 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
     }
 
     @Override
-    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
         Objects.requireNonNull(name, "name");
 
         return Cast.to(

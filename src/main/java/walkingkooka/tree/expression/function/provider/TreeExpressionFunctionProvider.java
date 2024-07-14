@@ -70,7 +70,7 @@ final class TreeExpressionFunctionProvider implements ExpressionFunctionProvider
     private final Set<ExpressionFunctionInfo> infos;
 
     @Override
-    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
         Objects.requireNonNull(name, "name");
 
         final ExpressionFunction function;
@@ -86,11 +86,10 @@ final class TreeExpressionFunctionProvider implements ExpressionFunctionProvider
                 function = ExpressionFunctions.typeName();
                 break;
             default:
-                function = null;
-                break;
+                throw new IllegalArgumentException("Unknown function " + name);
         }
 
-        return Optional.ofNullable(function);
+        return function;
     }
 
     @Override

@@ -49,43 +49,23 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
         );
     }
 
-    default void expressionFunctionAndCheck(final FunctionExpressionName name) {
-        this.expressionFunctionAndCheck(
+    default void expressionFunctionFails(final FunctionExpressionName name) {
+        this.expressionFunctionFails(
                 this.createExpressionFunctionProvider(),
                 name
         );
     }
 
-    default void expressionFunctionAndCheck(final ExpressionFunctionProvider provider,
-                                            final FunctionExpressionName name) {
-        this.expressionFunctionAndCheck(
-                provider,
-                name,
-                Optional.empty()
+    default void expressionFunctionFails(final ExpressionFunctionProvider provider,
+                                         final FunctionExpressionName name) {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> provider.expressionFunction(name)
         );
     }
 
     default void expressionFunctionAndCheck(final FunctionExpressionName name,
                                             final ExpressionFunction<?, ?> expected) {
-        this.expressionFunctionAndCheck(
-                this.createExpressionFunctionProvider(),
-                name,
-                Optional.of(expected)
-        );
-    }
-
-    default void expressionFunctionAndCheck(final ExpressionFunctionProvider provider,
-                                            final FunctionExpressionName name,
-                                            final ExpressionFunction<?, ?> expected) {
-        this.expressionFunctionAndCheck(
-                provider,
-                name,
-                Optional.of(expected)
-        );
-    }
-
-    default void expressionFunctionAndCheck(final FunctionExpressionName name,
-                                            final Optional<ExpressionFunction<?, ?>> expected) {
         this.expressionFunctionAndCheck(
                 this.createExpressionFunctionProvider(),
                 name,
@@ -95,7 +75,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
 
     default void expressionFunctionAndCheck(final ExpressionFunctionProvider provider,
                                             final FunctionExpressionName name,
-                                            final Optional<ExpressionFunction<?, ?>> expected) {
+                                            final ExpressionFunction<?, ?> expected) {
         this.checkEquals(
                 expected,
                 provider.expressionFunction(name),
