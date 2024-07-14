@@ -59,16 +59,15 @@ final class MappedExpressionFunctionProvider implements ExpressionFunctionProvid
     }
 
     @Override
-    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
         Objects.requireNonNull(name, "name");
 
-        return this.nameMapper.apply(name)
-                .flatMap(this.provider::expressionFunction)
-                .map(
-                        f -> f.setName(
-                                Optional.of(name)
-                        )
-                );
+        return this.provider.expressionFunction(
+                this.nameMapper.apply(name)
+                        .orElseThrow(() -> new IllegalArgumentException("Unknown function " + name))
+        ).setName(
+                Optional.of(name)
+        );
     }
 
     /**

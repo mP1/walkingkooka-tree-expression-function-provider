@@ -101,8 +101,8 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
     }
 
     @Test
-    public void testExpressionFunctionUnknown() {
-        this.expressionFunctionAndCheck(
+    public void testExpressionFunctionUnknownFails() {
+        this.expressionFunctionFails(
                 FunctionExpressionName.with("unknown")
         );
     }
@@ -137,12 +137,11 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
                 new FakeExpressionFunctionProvider() {
 
                     @Override
-                    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
-                        return Optional.ofNullable(
-                                name.equals(ORIGINAL_NAME) ?
-                                        function(ORIGINAL_NAME) :
-                                        null
-                        );
+                    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
+                        if(false == name.equals(ORIGINAL_NAME)) {
+                            throw new IllegalArgumentException("Unknown function " + name);
+                        }
+                        return function(ORIGINAL_NAME);
                     }
 
                     @Override

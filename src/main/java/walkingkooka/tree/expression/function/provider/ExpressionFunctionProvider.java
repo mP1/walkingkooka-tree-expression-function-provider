@@ -18,6 +18,9 @@
 package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.plugin.Provider;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.HasExpressionFunction;
 
 import java.util.Set;
@@ -25,8 +28,12 @@ import java.util.Set;
 /**
  * A provider supports listing available {@link ExpressionFunctionInfo} and fetching implementations by {@link walkingkooka.tree.expression.FunctionExpressionName}.
  */
-public interface ExpressionFunctionProvider extends Provider,
-        HasExpressionFunction {
+public interface ExpressionFunctionProvider extends Provider {
+
+    /**
+     * Getter that attempts to return a {@link ExpressionFunction} with the given {@link FunctionExpressionName} or throws an {@link IllegalArgumentException}.
+     */
+    ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name);
 
     /**
      * Returns all known {@link ExpressionFunctionInfo}.

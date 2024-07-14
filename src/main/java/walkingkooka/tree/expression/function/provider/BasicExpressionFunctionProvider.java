@@ -93,12 +93,14 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
     }
 
     @Override
-    public Optional<ExpressionFunction<?, ExpressionEvaluationContext>> expressionFunction(final FunctionExpressionName name) {
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
         Objects.requireNonNull(name, "name");
 
-        return Optional.ofNullable(
-                this.nameToFunction.get(name)
-        );
+        final ExpressionFunction<?, ExpressionEvaluationContext> function = this.nameToFunction.get(name);
+        if(null == function) {
+            throw new IllegalArgumentException("Unknown function " + name);
+        }
+        return function;
     }
 
     private final Map<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction;
