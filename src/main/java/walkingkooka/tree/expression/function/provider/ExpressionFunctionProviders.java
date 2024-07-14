@@ -57,6 +57,13 @@ public final class ExpressionFunctionProviders implements PublicStaticHelper {
     }
 
     /**
+     * {@see EmptyExpressionFunctionProvider}
+     */
+    public static ExpressionFunctionProvider empty() {
+        return EmptyExpressionFunctionProvider.INSTANCE;
+    }
+
+    /**
      * {@see TreeExpressionFunctionProvider}
      */
     public static ExpressionFunctionProvider expressionFunctions() {
