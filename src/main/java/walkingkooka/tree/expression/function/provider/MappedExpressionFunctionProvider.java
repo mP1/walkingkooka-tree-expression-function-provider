@@ -22,6 +22,7 @@ import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -64,7 +65,7 @@ final class MappedExpressionFunctionProvider implements ExpressionFunctionProvid
 
         return this.provider.expressionFunction(
                 this.nameMapper.apply(name)
-                        .orElseThrow(() -> new IllegalArgumentException("Unknown function " + name))
+                        .orElseThrow(() -> new UnknownExpressionFunctionException(name))
         ).setName(
                 Optional.of(name)
         );

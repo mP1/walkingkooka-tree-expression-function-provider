@@ -21,9 +21,9 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -49,7 +49,7 @@ final class EmptyExpressionFunctionProvider implements ExpressionFunctionProvide
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
         Objects.requireNonNull(name, "name");
 
-        throw new IllegalArgumentException("Unknown function " + name);
+        throw new UnknownExpressionFunctionException(name);
     }
 
     @Override

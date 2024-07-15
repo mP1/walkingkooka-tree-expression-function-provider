@@ -23,7 +23,6 @@ import walkingkooka.plugin.ProviderTesting;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -59,7 +58,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     default void expressionFunctionFails(final ExpressionFunctionProvider provider,
                                          final FunctionExpressionName name) {
         assertThrows(
-                IllegalArgumentException.class,
+                RuntimeException.class,
                 () -> provider.expressionFunction(name)
         );
     }
