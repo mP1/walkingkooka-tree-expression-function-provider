@@ -23,9 +23,9 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctions;
+import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -86,7 +86,7 @@ final class TreeExpressionFunctionProvider implements ExpressionFunctionProvider
                 function = ExpressionFunctions.typeName();
                 break;
             default:
-                throw new IllegalArgumentException("Unknown function " + name);
+                throw new UnknownExpressionFunctionException(name);
         }
 
         return function;
