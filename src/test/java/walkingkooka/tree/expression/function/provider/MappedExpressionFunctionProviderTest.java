@@ -22,6 +22,8 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -68,7 +70,9 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
                 return name.toString();
             }
         };
-    };
+    }
+
+    private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
     public void testWithNullViewFails() {
@@ -96,6 +100,7 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
     public void testExpressionFunction() {
         this.expressionFunctionAndCheck(
                 NAME,
+                CONTEXT,
                 function(NAME)
         );
     }
@@ -103,7 +108,8 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
     @Test
     public void testExpressionFunctionUnknownFails() {
         this.expressionFunctionFails(
-                FunctionExpressionName.with("unknown")
+                FunctionExpressionName.with("unknown"),
+                CONTEXT
         );
     }
 
@@ -137,7 +143,8 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
                 new FakeExpressionFunctionProvider() {
 
                     @Override
-                    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
+                    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name,
+                                                                                                 final ProviderContext context) {
                         if(false == name.equals(ORIGINAL_NAME)) {
                             throw new IllegalArgumentException("Unknown function " + name);
                         }
