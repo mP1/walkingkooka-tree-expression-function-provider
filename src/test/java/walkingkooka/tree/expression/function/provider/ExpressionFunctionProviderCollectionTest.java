@@ -23,6 +23,8 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.UrlPath;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -53,6 +55,8 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
             return Optional.of(NAME2);
         }
     };
+
+    private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
     public void testWithNullProvidersFails() {
@@ -118,6 +122,7 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
         this.expressionFunctionAndCheck(
                 this.createExpressionFunctionProvider(),
                 NAME1,
+                CONTEXT,
                 FUNCTION1
         );
     }
@@ -127,6 +132,7 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
         this.expressionFunctionAndCheck(
                 this.createExpressionFunctionProvider(),
                 NAME2,
+                CONTEXT,
                 FUNCTION2
         );
     }

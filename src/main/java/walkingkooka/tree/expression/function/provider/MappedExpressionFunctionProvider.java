@@ -18,6 +18,7 @@
 package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.plugin.PluginInfoSetLike;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -60,12 +61,15 @@ final class MappedExpressionFunctionProvider implements ExpressionFunctionProvid
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name,
+                                                                                 final ProviderContext context) {
         Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(context, "context");
 
         return this.provider.expressionFunction(
                 this.nameMapper.apply(name)
-                        .orElseThrow(() -> new UnknownExpressionFunctionException(name))
+                        .orElseThrow(() -> new UnknownExpressionFunctionException(name)),
+                context
         ).setName(
                 Optional.of(name)
         );

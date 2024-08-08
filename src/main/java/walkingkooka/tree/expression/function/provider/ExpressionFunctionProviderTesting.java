@@ -19,6 +19,8 @@ package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.ProviderTesting;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -30,11 +32,26 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionProvider> extends ProviderTesting<T> {
 
     @Test
-    default void testFunctionWithNullFails() {
+    default void testFunctionWithNullNameFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createExpressionFunctionProvider()
-                        .expressionFunction(null)
+                        .expressionFunction(
+                                null,
+                                ProviderContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testFunctionWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createExpressionFunctionProvider()
+                        .expressionFunction(
+                                FunctionExpressionName.with("ignore"),
+                                null
+                        )
         );
     }
 
@@ -48,36 +65,48 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
         );
     }
 
-    default void expressionFunctionFails(final FunctionExpressionName name) {
+    default void expressionFunctionFails(final FunctionExpressionName name,
+                                         final ProviderContext context) {
         this.expressionFunctionFails(
                 this.createExpressionFunctionProvider(),
-                name
+                name,
+                context
         );
     }
 
     default void expressionFunctionFails(final ExpressionFunctionProvider provider,
-                                         final FunctionExpressionName name) {
+                                         final FunctionExpressionName name,
+                                         final ProviderContext context) {
         assertThrows(
                 RuntimeException.class,
-                () -> provider.expressionFunction(name)
+                () -> provider.expressionFunction(
+                        name,
+                        context
+                )
         );
     }
 
     default void expressionFunctionAndCheck(final FunctionExpressionName name,
+                                            final ProviderContext context,
                                             final ExpressionFunction<?, ?> expected) {
         this.expressionFunctionAndCheck(
                 this.createExpressionFunctionProvider(),
                 name,
+                context,
                 expected
         );
     }
 
     default void expressionFunctionAndCheck(final ExpressionFunctionProvider provider,
                                             final FunctionExpressionName name,
+                                            final ProviderContext context,
                                             final ExpressionFunction<?, ?> expected) {
         this.checkEquals(
                 expected,
-                provider.expressionFunction(name),
+                provider.expressionFunction(
+                        name,
+                        context
+                ),
                 () -> name.toString()
         );
     }

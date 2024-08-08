@@ -19,6 +19,7 @@ package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctions;
@@ -50,6 +51,7 @@ public final class TreeExpressionFunctionProviderTest implements ExpressionFunct
     private void expressionFunctionAndCheck2(final ExpressionFunction<?, ?> function) {
         this.expressionFunctionAndCheck(
                 function.name().get(),
+                ProviderContexts.fake(),
                 function
         );
     }

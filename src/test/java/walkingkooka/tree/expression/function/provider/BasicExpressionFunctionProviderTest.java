@@ -22,6 +22,8 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -62,6 +64,8 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
     );
 
     private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
+
+    private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
     public void testWithNullBaseUrlFails() {
@@ -116,6 +120,7 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
         this.expressionFunctionAndCheck(
                 this.createExpressionFunctionProvider(),
                 NAME1,
+                CONTEXT,
                 FUNCTION1
         );
     }
@@ -125,6 +130,7 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
         this.expressionFunctionAndCheck(
                 this.createExpressionFunctionProvider(),
                 NAME2,
+                CONTEXT,
                 FUNCTION2
         );
     }
@@ -138,7 +144,8 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
                 FunctionExpressionName.with(
                         NAME2.value()
                                 .toUpperCase()
-                )
+                ),
+                CONTEXT
         );
     }
 
@@ -152,6 +159,7 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
                         NAME2.value()
                                 .toUpperCase()
                 ),
+                CONTEXT,
                 FUNCTION2
         );
     }

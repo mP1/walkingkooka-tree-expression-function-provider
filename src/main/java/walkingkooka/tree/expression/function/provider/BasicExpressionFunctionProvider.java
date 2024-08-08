@@ -21,6 +21,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.UrlPath;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -93,8 +94,10 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name) {
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name,
+                                                                                 final ProviderContext context) {
         Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(context, "context");
 
         final ExpressionFunction<?, ExpressionEvaluationContext> function = this.nameToFunction.get(name);
         if(null == function) {
