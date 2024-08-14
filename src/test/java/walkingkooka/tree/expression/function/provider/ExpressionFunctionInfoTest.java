@@ -20,11 +20,11 @@ package walkingkooka.tree.expression.function.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.PluginInfoLikeTesting;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public final class ExpressionFunctionInfoTest implements PluginInfoLikeTesting<ExpressionFunctionInfo, FunctionExpressionName> {
+public final class ExpressionFunctionInfoTest implements PluginInfoLikeTesting<ExpressionFunctionInfo, ExpressionFunctionName> {
 
     @Test
     public void testParseInvalidCharacterInNameFails() {
@@ -37,13 +37,13 @@ public final class ExpressionFunctionInfoTest implements PluginInfoLikeTesting<E
     }
 
     @Override
-    public FunctionExpressionName createName(final String name) {
-        return FunctionExpressionName.with(name);
+    public ExpressionFunctionName createName(final String name) {
+        return ExpressionFunctionName.with(name);
     }
 
     @Override
     public ExpressionFunctionInfo createPluginInfoLike(final AbsoluteUrl url,
-                                                       final FunctionExpressionName name) {
+                                                       final ExpressionFunctionName name) {
         return ExpressionFunctionInfo.with(
                 url,
                 name

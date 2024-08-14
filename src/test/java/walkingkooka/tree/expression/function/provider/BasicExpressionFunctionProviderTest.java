@@ -27,7 +27,7 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 
@@ -41,19 +41,19 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
 
     private final static AbsoluteUrl BASE_URL = Url.parseAbsolute("https://example.com/base/");
 
-    private final static FunctionExpressionName NAME1 = FunctionExpressionName.with("testfunction1");
+    private final static ExpressionFunctionName NAME1 = ExpressionFunctionName.with("testfunction1");
 
-    private final static FunctionExpressionName NAME2 = FunctionExpressionName.with("testfunction2");
+    private final static ExpressionFunctionName NAME2 = ExpressionFunctionName.with("testfunction2");
 
     private static final FakeExpressionFunction FUNCTION1 = new FakeExpressionFunction() {
         @Override
-        public Optional<FunctionExpressionName> name() {
+        public Optional<ExpressionFunctionName> name() {
             return Optional.of(NAME1);
         }
     };
     private static final FakeExpressionFunction FUNCTION2 = new FakeExpressionFunction() {
         @Override
-        public Optional<FunctionExpressionName> name() {
+        public Optional<ExpressionFunctionName> name() {
             return Optional.of(NAME2);
         }
     };
@@ -141,7 +141,7 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
                 this.createExpressionFunctionProvider(
                         CaseSensitivity.SENSITIVE
                 ),
-                FunctionExpressionName.with(
+                ExpressionFunctionName.with(
                         NAME2.value()
                                 .toUpperCase()
                 ),
@@ -155,7 +155,7 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
                 this.createExpressionFunctionProvider(
                         CaseSensitivity.INSENSITIVE
                 ),
-                FunctionExpressionName.with(
+                ExpressionFunctionName.with(
                         NAME2.value()
                                 .toUpperCase()
                 ),

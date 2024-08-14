@@ -24,7 +24,7 @@ import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
@@ -58,11 +58,11 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
             throw new IllegalArgumentException("Functions cannot be empty");
         }
 
-        final Map<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction = Maps.sorted(
-                FunctionExpressionName.comparator(nameCaseSensitivity)
+        final Map<ExpressionFunctionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction = Maps.sorted(
+                ExpressionFunctionName.comparator(nameCaseSensitivity)
         );
         for (final ExpressionFunction<?, ExpressionEvaluationContext> function : functions) {
-            final FunctionExpressionName name = function.name()
+            final ExpressionFunctionName name = function.name()
                     .orElseThrow(
                             () -> new IllegalArgumentException("Cannot add unnamed functions to provider")
                     );
@@ -78,7 +78,7 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
                 functions.stream()
                         .map(
                                 f -> {
-                                    final FunctionExpressionName name = f.name()
+                                    final ExpressionFunctionName name = f.name()
                                             .get();
                                     return ExpressionFunctionInfo.with(
                                             baseUrl.appendPath(
@@ -94,7 +94,7 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name,
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
                                                                                  final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(context, "context");
@@ -106,7 +106,7 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
         return function;
     }
 
-    private final Map<FunctionExpressionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction;
+    private final Map<ExpressionFunctionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction;
 
     @Override
     public Set<ExpressionFunctionInfo> expressionFunctionInfos() {

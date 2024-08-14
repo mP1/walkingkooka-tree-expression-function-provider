@@ -26,7 +26,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 
@@ -40,14 +40,14 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
 
     private final static AbsoluteUrl URL = Url.parseAbsolute("https://example.com/function123");
 
-    private final static FunctionExpressionName NAME = FunctionExpressionName.with("different-function-name-123");
+    private final static ExpressionFunctionName NAME = ExpressionFunctionName.with("different-function-name-123");
 
-    private final static FunctionExpressionName ORIGINAL_NAME = FunctionExpressionName.with("original-function-123");
+    private final static ExpressionFunctionName ORIGINAL_NAME = ExpressionFunctionName.with("original-function-123");
 
-    private final static ExpressionFunction<?, ExpressionEvaluationContext> function(final FunctionExpressionName name) {
+    private final static ExpressionFunction<?, ExpressionEvaluationContext> function(final ExpressionFunctionName name) {
         return new FakeExpressionFunction() {
             @Override
-            public Optional<FunctionExpressionName> name() {
+            public Optional<ExpressionFunctionName> name() {
                 return Optional.of(name);
             }
 
@@ -108,7 +108,7 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
     @Test
     public void testExpressionFunctionUnknownFails() {
         this.expressionFunctionFails(
-                FunctionExpressionName.with("unknown"),
+                ExpressionFunctionName.with("unknown"),
                 CONTEXT
         );
     }
@@ -143,7 +143,7 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
                 new FakeExpressionFunctionProvider() {
 
                     @Override
-                    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name,
+                    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
                                                                                                  final ProviderContext context) {
                         if(false == name.equals(ORIGINAL_NAME)) {
                             throw new IllegalArgumentException("Unknown function " + name);

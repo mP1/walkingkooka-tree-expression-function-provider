@@ -21,7 +21,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctions;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
@@ -50,7 +50,7 @@ final class TreeExpressionFunctionProvider implements ExpressionFunctionProvider
     }
 
     private static ExpressionFunctionInfo nameToExpressionFunctionInfo(final ExpressionFunction<?, ?> function) {
-        final FunctionExpressionName name = function.name()
+        final ExpressionFunctionName name = function.name()
                 .get();
 
         return ExpressionFunctionInfo.with(
@@ -71,7 +71,7 @@ final class TreeExpressionFunctionProvider implements ExpressionFunctionProvider
     private final Set<ExpressionFunctionInfo> infos;
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name,
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
                                                                                  final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(context, "context");

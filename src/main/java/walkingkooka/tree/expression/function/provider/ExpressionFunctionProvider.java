@@ -20,20 +20,20 @@ package walkingkooka.tree.expression.function.provider;
 import walkingkooka.plugin.Provider;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.util.Set;
 
 /**
- * A provider supports listing available {@link ExpressionFunctionInfo} and fetching implementations by {@link walkingkooka.tree.expression.FunctionExpressionName}.
+ * A provider supports listing available {@link ExpressionFunctionInfo} and fetching implementations by {@link walkingkooka.tree.expression.ExpressionFunctionName}.
  */
 public interface ExpressionFunctionProvider extends Provider {
 
     /**
-     * Getter that attempts to return a {@link ExpressionFunction} with the given {@link FunctionExpressionName} or throws an {@link IllegalArgumentException}.
+     * Getter that attempts to return a {@link ExpressionFunction} with the given {@link ExpressionFunctionName} or throws an {@link IllegalArgumentException}.
      */
-    ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name,
+    ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
                                                                           final ProviderContext context);
 
     /**

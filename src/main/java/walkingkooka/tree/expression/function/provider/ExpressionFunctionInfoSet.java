@@ -21,7 +21,7 @@ import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.PluginInfoSetLike;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -33,10 +33,10 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * A read only {@link Set} of {@link ExpressionFunctionInfo} sorted by {@link FunctionExpressionName}.
+ * A read only {@link Set} of {@link ExpressionFunctionInfo} sorted by {@link ExpressionFunctionName}.
  */
 public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunctionInfo>
-        implements PluginInfoSetLike<ExpressionFunctionInfo, FunctionExpressionName> {
+        implements PluginInfoSetLike<ExpressionFunctionInfo, ExpressionFunctionName> {
 
     static {
         Sets.registerImmutableType(ExpressionFunctionInfoSet.class);
