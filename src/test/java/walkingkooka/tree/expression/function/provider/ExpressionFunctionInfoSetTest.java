@@ -23,13 +23,13 @@ import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginInfoSetLikeTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTesting<ExpressionFunctionInfoSet, ExpressionFunctionInfo, FunctionExpressionName>,
+public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTesting<ExpressionFunctionInfoSet, ExpressionFunctionInfo, ExpressionFunctionName>,
         ClassTesting<ExpressionFunctionInfoSet> {
 
     @Test
@@ -62,7 +62,7 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
                 Sets.of(
                         ExpressionFunctionInfo.with(
                                 Url.parseAbsolute("https://example.com/test-function-1"),
-                                FunctionExpressionName.with("test-function-1")
+                                ExpressionFunctionName.with("test-function-1")
                         )
                 )
         );
@@ -84,7 +84,7 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
                 Sets.of(
                         ExpressionFunctionInfo.with(
                                 Url.parseAbsolute("https://example.com/1"),
-                                FunctionExpressionName.with("test-function-1")
+                                ExpressionFunctionName.with("test-function-1")
                         )
                 )
         );
@@ -117,11 +117,11 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
                 Sets.of(
                         ExpressionFunctionInfo.with(
                                 Url.parseAbsolute("https://example.com/test-function-1"),
-                                FunctionExpressionName.with("test-function-1")
+                                ExpressionFunctionName.with("test-function-1")
                         ),
                         ExpressionFunctionInfo.with(
                                 Url.parseAbsolute("https://example.com/test-function-2"),
-                                FunctionExpressionName.with("test-function-2")
+                                ExpressionFunctionName.with("test-function-2")
                         )
                 )
         );

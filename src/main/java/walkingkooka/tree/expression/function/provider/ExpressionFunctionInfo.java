@@ -21,26 +21,26 @@ import walkingkooka.Cast;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.PluginInfoLike;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
 
-public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFunctionInfo, FunctionExpressionName>,
-        HateosResource<FunctionExpressionName> {
+public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFunctionInfo, ExpressionFunctionName>,
+        HateosResource<ExpressionFunctionName> {
 
     public static ExpressionFunctionInfo parse(final String text) {
         return PluginInfoLike.parse(
                 text,
-                FunctionExpressionName::with,
+                ExpressionFunctionName::with,
                 ExpressionFunctionInfo::with
         );
     }
 
     public static ExpressionFunctionInfo with(final AbsoluteUrl url,
-                                              final FunctionExpressionName name) {
+                                              final ExpressionFunctionName name) {
         return new ExpressionFunctionInfo(
                 Objects.requireNonNull(url, "url"),
                 Objects.requireNonNull(name, "name")
@@ -48,7 +48,7 @@ public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFu
     }
 
     private ExpressionFunctionInfo(final AbsoluteUrl url,
-                                   final FunctionExpressionName name) {
+                                   final ExpressionFunctionName name) {
         this.url = url;
         this.name = name;
     }
@@ -62,11 +62,11 @@ public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFu
     // HasName..........................................................................................................
 
     @Override
-    public FunctionExpressionName name() {
+    public ExpressionFunctionName name() {
         return this.name;
     }
 
-    private final FunctionExpressionName name;
+    private final ExpressionFunctionName name;
 
     // Object...........................................................................................................
 
@@ -106,7 +106,7 @@ public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFu
         return PluginInfoLike.unmarshall(
                 node,
                 context,
-                FunctionExpressionName.class,
+                ExpressionFunctionName.class,
                 ExpressionFunctionInfo::with
         );
     }
@@ -118,6 +118,6 @@ public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFu
                 ExpressionFunctionInfo::marshall,
                 ExpressionFunctionInfo.class
         );
-        FunctionExpressionName.with("hello"); // trigger static init and json marshall/unmarshall registry
+        ExpressionFunctionName.with("hello"); // trigger static init and json marshall/unmarshall registry
     }
 }

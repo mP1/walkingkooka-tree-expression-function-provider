@@ -24,7 +24,7 @@ import walkingkooka.plugin.ProviderCollection;
 import walkingkooka.plugin.ProviderCollectionProviderGetter;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.util.List;
@@ -47,7 +47,7 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
                 new ProviderCollectionProviderGetter<>() {
                     @Override
                     public ExpressionFunction<?, ?> get(final ExpressionFunctionProvider provider,
-                                                        final FunctionExpressionName name,
+                                                        final ExpressionFunctionName name,
                                                         final List<?> values,
                                                         final ProviderContext context) {
                         return Cast.to(
@@ -60,7 +60,7 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
 
                     @Override
                     public ExpressionFunction<?, ?> get(final ExpressionFunctionProvider provider,
-                                                        final PluginSelectorLike<FunctionExpressionName> selector,
+                                                        final PluginSelectorLike<ExpressionFunctionName> selector,
                                                         final ProviderContext context) {
                         throw new UnsupportedOperationException();
                     }
@@ -72,7 +72,7 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name,
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
                                                                                  final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(context, "context");
@@ -91,7 +91,7 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
         return this.providers.infos();
     }
 
-    private final ProviderCollection<ExpressionFunctionProvider, FunctionExpressionName, ExpressionFunctionInfo, PluginSelectorLike<FunctionExpressionName>, ExpressionFunction<?, ?>> providers;
+    private final ProviderCollection<ExpressionFunctionProvider, ExpressionFunctionName, ExpressionFunctionInfo, PluginSelectorLike<ExpressionFunctionName>, ExpressionFunction<?, ?>> providers;
 
     @Override
     public String toString() {

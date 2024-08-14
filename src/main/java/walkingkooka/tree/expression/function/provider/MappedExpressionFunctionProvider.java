@@ -21,7 +21,7 @@ import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
@@ -31,7 +31,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 /**
- * A {@link ExpressionFunctionProvider} that wraps a view of new {@link FunctionExpressionName} to a wrapped {@link ExpressionFunctionProvider}.
+ * A {@link ExpressionFunctionProvider} that wraps a view of new {@link ExpressionFunctionName} to a wrapped {@link ExpressionFunctionProvider}.
  */
 final class MappedExpressionFunctionProvider implements ExpressionFunctionProvider {
 
@@ -61,7 +61,7 @@ final class MappedExpressionFunctionProvider implements ExpressionFunctionProvid
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name,
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
                                                                                  final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(context, "context");
@@ -76,9 +76,9 @@ final class MappedExpressionFunctionProvider implements ExpressionFunctionProvid
     }
 
     /**
-     * A function that maps incoming {@link FunctionExpressionName} to the target provider after mapping them across using the {@link walkingkooka.net.AbsoluteUrl}.
+     * A function that maps incoming {@link ExpressionFunctionName} to the target provider after mapping them across using the {@link walkingkooka.net.AbsoluteUrl}.
      */
-    private final Function<FunctionExpressionName, Optional<FunctionExpressionName>> nameMapper;
+    private final Function<ExpressionFunctionName, Optional<ExpressionFunctionName>> nameMapper;
 
     /**
      * The original wrapped {@link ExpressionFunctionProvider}.

@@ -19,14 +19,14 @@ package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.util.Set;
 
 public interface ExpressionFunctionProviderDelegator extends ExpressionFunctionProvider{
     @Override
-    default ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final FunctionExpressionName name,
+    default ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
                                                                                   final ProviderContext context) {
         return this.expressionFunctionProvider()
                 .expressionFunction(

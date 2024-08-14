@@ -22,7 +22,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.ProviderTesting;
-import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.util.Set;
@@ -49,7 +49,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
                 NullPointerException.class,
                 () -> this.createExpressionFunctionProvider()
                         .expressionFunction(
-                                FunctionExpressionName.with("ignore"),
+                                ExpressionFunctionName.with("ignore"),
                                 null
                         )
         );
@@ -65,7 +65,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
         );
     }
 
-    default void expressionFunctionFails(final FunctionExpressionName name,
+    default void expressionFunctionFails(final ExpressionFunctionName name,
                                          final ProviderContext context) {
         this.expressionFunctionFails(
                 this.createExpressionFunctionProvider(),
@@ -75,7 +75,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     }
 
     default void expressionFunctionFails(final ExpressionFunctionProvider provider,
-                                         final FunctionExpressionName name,
+                                         final ExpressionFunctionName name,
                                          final ProviderContext context) {
         assertThrows(
                 RuntimeException.class,
@@ -86,7 +86,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
         );
     }
 
-    default void expressionFunctionAndCheck(final FunctionExpressionName name,
+    default void expressionFunctionAndCheck(final ExpressionFunctionName name,
                                             final ProviderContext context,
                                             final ExpressionFunction<?, ?> expected) {
         this.expressionFunctionAndCheck(
@@ -98,7 +98,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     }
 
     default void expressionFunctionAndCheck(final ExpressionFunctionProvider provider,
-                                            final FunctionExpressionName name,
+                                            final ExpressionFunctionName name,
                                             final ProviderContext context,
                                             final ExpressionFunction<?, ?> expected) {
         this.checkEquals(
