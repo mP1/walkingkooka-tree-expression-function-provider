@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionProvider> extends ProviderTesting<T> {
 
     @Test
-    default void testFunctionWithNullNameFails() {
+    default void testExpressionFunctionWithNullNameFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createExpressionFunctionProvider()
@@ -44,7 +44,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     }
 
     @Test
-    default void testFunctionWithNullContextFails() {
+    default void testExpressionFunctionWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createExpressionFunctionProvider()
@@ -52,16 +52,6 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
                                 ExpressionFunctionName.with("ignore"),
                                 null
                         )
-        );
-    }
-
-    @Test
-    default void testExpressionFunctionInfosReadOnly() {
-        assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createExpressionFunctionProvider()
-                        .expressionFunctionInfos()
-                        .add(ExpressionFunctionInfo.parse("https://example.com/" + this.getClass().getName() + " " + this.getClass().getSimpleName()))
         );
     }
 
@@ -108,6 +98,16 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
                         context
                 ),
                 () -> name.toString()
+        );
+    }
+
+    @Test
+    default void testExpressionFunctionInfosReadOnly() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createExpressionFunctionProvider()
+                        .expressionFunctionInfos()
+                        .add(ExpressionFunctionInfo.parse("https://example.com/" + this.getClass().getName() + " " + this.getClass().getSimpleName()))
         );
     }
 
