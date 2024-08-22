@@ -79,43 +79,45 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
     }
 
     @Test
-    public void testWithNameClassFails() {
-        final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> ExpressionFunctionProviderCollection.with(
-                        Sets.of(
-                                ExpressionFunctionProviders.basic(
-                                        BASE_URL.appendPath(UrlPath.parse("1")),
-                                        CaseSensitivity.SENSITIVE,
-                                        Sets.of(
-                                                FUNCTION1,
-                                                FUNCTION2
-                                        )
-                                ),
-                                ExpressionFunctionProviders.basic(
-                                        BASE_URL.appendPath(UrlPath.parse("2")),
-                                        CaseSensitivity.SENSITIVE,
-                                        Sets.of(
-                                                FUNCTION1
-                                        )
-                                ),
-                                ExpressionFunctionProviders.basic(
-                                        BASE_URL.appendPath(UrlPath.parse("3")),
-                                        CaseSensitivity.SENSITIVE,
-                                        Sets.of(
-                                                FUNCTION2
-                                        )
+    public void testWithNameDuplicatesFails() {
+        final ExpressionFunctionProviderCollection provider = ExpressionFunctionProviderCollection.with(
+                Sets.of(
+                        ExpressionFunctionProviders.basic(
+                                BASE_URL.appendPath(UrlPath.parse("1")),
+                                CaseSensitivity.SENSITIVE,
+                                Sets.of(
+                                        FUNCTION1,
+                                        FUNCTION2
+                                )
+                        ),
+                        ExpressionFunctionProviders.basic(
+                                BASE_URL.appendPath(UrlPath.parse("2")),
+                                CaseSensitivity.SENSITIVE,
+                                Sets.of(
+                                        FUNCTION1
+                                )
+                        ),
+                        ExpressionFunctionProviders.basic(
+                                BASE_URL.appendPath(UrlPath.parse("3")),
+                                CaseSensitivity.SENSITIVE,
+                                Sets.of(
+                                        FUNCTION2
                                 )
                         )
                 )
         );
-        this.checkEquals(
-                "Found multiple ExpressionFunction for testfunction1(https://example.com/base/2/testfunction1, https://example.com/base/1/testfunction1), testfunction2(https://example.com/base/3/testfunction2, https://example.com/base/1/testfunction2)",
-                thrown.getMessage(),
-                "message"
+
+        this.expressionFunctionFails(
+                provider,
+                NAME1,
+                CONTEXT
+        );
+        this.expressionFunctionFails(
+                provider,
+                NAME2,
+                CONTEXT
         );
     }
-
 
     @Test
     public void testFunctionLookup1() {
