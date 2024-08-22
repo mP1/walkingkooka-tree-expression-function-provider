@@ -123,14 +123,6 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
         );
     }
 
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                this.createExpressionFunctionProvider(),
-                "https://example.com/function123 different-function-name-123"
-        );
-    }
-
     @Override
     public MappedExpressionFunctionProvider createExpressionFunctionProvider() {
         return MappedExpressionFunctionProvider.with(
@@ -163,6 +155,18 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
                 }
         );
     }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                this.createExpressionFunctionProvider(),
+                "https://example.com/function123 different-function-name-123"
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<MappedExpressionFunctionProvider> type() {
