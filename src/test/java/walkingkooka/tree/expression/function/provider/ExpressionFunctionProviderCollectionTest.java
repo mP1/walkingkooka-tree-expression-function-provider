@@ -19,6 +19,7 @@ package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
@@ -30,6 +31,7 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -56,6 +58,8 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
         }
     };
 
+    private final static List<?> VALUES = Lists.empty();
+
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
@@ -79,7 +83,7 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
     }
 
     @Test
-    public void testWithNameDuplicatesFails() {
+    public void testExpressionFunctionNameDuplicateUnknown() {
         final ExpressionFunctionProviderCollection provider = ExpressionFunctionProviderCollection.with(
                 Sets.of(
                         ExpressionFunctionProviders.basic(
@@ -110,30 +114,50 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
         this.expressionFunctionFails(
                 provider,
                 NAME1,
+                VALUES,
                 CONTEXT
         );
         this.expressionFunctionFails(
                 provider,
                 NAME2,
+                VALUES,
                 CONTEXT
         );
     }
 
     @Test
-    public void testExpressionFunctionLookup1() {
+    public void testExpressionFunctionNameLookup1() {
         this.expressionFunctionAndCheck(
-                this.createExpressionFunctionProvider(),
                 NAME1,
+                VALUES,
                 CONTEXT,
                 FUNCTION1
         );
     }
 
     @Test
-    public void testExpressionFunctionLookup2() {
+    public void testExpressionFunctionNameLookup2() {
         this.expressionFunctionAndCheck(
-                this.createExpressionFunctionProvider(),
                 NAME2,
+                VALUES,
+                CONTEXT,
+                FUNCTION2
+        );
+    }
+
+    @Test
+    public void testExpressionFunctionSelectorLookup1() {
+        this.expressionFunctionAndCheck(
+                ExpressionFunctionSelector.parse(NAME1 + ""),
+                CONTEXT,
+                FUNCTION1
+        );
+    }
+
+    @Test
+    public void testExpressionFunctionSelectorLookup2() {
+        this.expressionFunctionAndCheck(
+                ExpressionFunctionSelector.parse(NAME2 + ""),
                 CONTEXT,
                 FUNCTION2
         );

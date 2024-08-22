@@ -25,6 +25,7 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -61,14 +62,29 @@ final class MappedExpressionFunctionProvider implements ExpressionFunctionProvid
     }
 
     @Override
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
+                                                                                 final ProviderContext context) {
+        Objects.requireNonNull(selector, "selector");
+        Objects.requireNonNull(context, "context");
+
+        return selector.evaluateText(
+                this,
+                context
+        );
+    }
+
+    @Override
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                 final List<?> values,
                                                                                  final ProviderContext context) {
         Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
         return this.provider.expressionFunction(
                 this.nameMapper.apply(name)
                         .orElseThrow(() -> new UnknownExpressionFunctionException(name)),
+                values,
                 context
         ).setName(
                 Optional.of(name)

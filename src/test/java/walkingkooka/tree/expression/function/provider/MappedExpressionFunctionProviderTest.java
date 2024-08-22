@@ -19,6 +19,7 @@ package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
@@ -30,6 +31,7 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -72,6 +74,8 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
         };
     }
 
+    private final static List<?> VALUES = Lists.empty();
+
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
@@ -97,18 +101,37 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
     }
 
     @Test
-    public void testExpressionFunction() {
+    public void testExpressionFunctionName() {
         this.expressionFunctionAndCheck(
                 NAME,
+                VALUES,
                 CONTEXT,
                 function(NAME)
         );
     }
 
     @Test
-    public void testExpressionFunctionUnknownFails() {
+    public void testExpressionFunctionNameUnknownFails() {
         this.expressionFunctionFails(
                 ExpressionFunctionName.with("unknown"),
+                VALUES,
+                CONTEXT
+        );
+    }
+
+    @Test
+    public void testExpressionFunctionSelector() {
+        this.expressionFunctionAndCheck(
+                ExpressionFunctionSelector.parse(NAME + ""),
+                CONTEXT,
+                function(NAME)
+        );
+    }
+
+    @Test
+    public void testExpressionFunctionSelectorUnknownFails() {
+        this.expressionFunctionFails(
+                ExpressionFunctionSelector.parse("unknown"),
                 CONTEXT
         );
     }
@@ -136,11 +159,21 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
 
                     @Override
                     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                                 final List<?> values,
                                                                                                  final ProviderContext context) {
                         if(false == name.equals(ORIGINAL_NAME)) {
                             throw new IllegalArgumentException("Unknown function " + name);
                         }
                         return function(ORIGINAL_NAME);
+                    }
+
+                    @Override
+                    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
+                                                                                                 final ProviderContext context) {
+                        return selector.evaluateText(
+                                this,
+                                context
+                        );
                     }
 
                     @Override

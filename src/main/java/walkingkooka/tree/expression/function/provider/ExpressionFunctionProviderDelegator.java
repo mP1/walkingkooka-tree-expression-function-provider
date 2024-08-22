@@ -22,15 +22,29 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
+import java.util.List;
 import java.util.Set;
 
 public interface ExpressionFunctionProviderDelegator extends ExpressionFunctionProvider{
+
+    @Override
+    default ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
+                                                                                  final ProviderContext context) {
+        return this.expressionFunctionProvider()
+                .expressionFunction(
+                        selector,
+                        context
+                );
+    }
+
     @Override
     default ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                  final List<?> values,
                                                                                   final ProviderContext context) {
         return this.expressionFunctionProvider()
                 .expressionFunction(
                         name,
+                        values,
                         context
                 );
     }

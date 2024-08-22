@@ -24,6 +24,7 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -47,9 +48,22 @@ final class EmptyExpressionFunctionProvider implements ExpressionFunctionProvide
     }
 
     @Override
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
+                                                                                 final ProviderContext context) {
+        Objects.requireNonNull(selector, "selector");
+        Objects.requireNonNull(context, "context");
+
+        throw new UnknownExpressionFunctionException(
+                selector.name()
+        );
+    }
+
+    @Override
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                 final List<?> values,
                                                                                  final ProviderContext context) {
         Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
         throw new UnknownExpressionFunctionException(name);

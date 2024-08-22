@@ -19,6 +19,7 @@ package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
@@ -31,6 +32,7 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -115,28 +117,32 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
         );
     }
 
+    private final static List<?> VALUES = Lists.empty();
+
     @Test
-    public void testExpressionFunctionLookup1() {
+    public void testExpressionFunctionNameLookup1() {
         this.expressionFunctionAndCheck(
                 this.createExpressionFunctionProvider(),
                 NAME1,
+                VALUES,
                 CONTEXT,
                 FUNCTION1
         );
     }
 
     @Test
-    public void testExpressionFunctionLookup2() {
+    public void testExpressionFunctionNameLookup2() {
         this.expressionFunctionAndCheck(
                 this.createExpressionFunctionProvider(),
                 NAME2,
+                VALUES,
                 CONTEXT,
                 FUNCTION2
         );
     }
 
     @Test
-    public void testExpressionFunctionLookupDifferentCaseCaseSensitiveFails() {
+    public void testExpressionFunctionNameLookupDifferentCaseCaseSensitiveFails() {
         this.expressionFunctionFails(
                 this.createExpressionFunctionProvider(
                         CaseSensitivity.SENSITIVE
@@ -145,12 +151,13 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
                         NAME2.value()
                                 .toUpperCase()
                 ),
+                VALUES,
                 CONTEXT
         );
     }
 
     @Test
-    public void testExpressionFunctionLookupDifferentCaseCaseInsensitive() {
+    public void testExpressionFunctionNameLookupDifferentCaseCaseInsensitive() {
         this.expressionFunctionAndCheck(
                 this.createExpressionFunctionProvider(
                         CaseSensitivity.INSENSITIVE
@@ -159,13 +166,28 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
                         NAME2.value()
                                 .toUpperCase()
                 ),
+                VALUES,
                 CONTEXT,
                 FUNCTION2
         );
     }
 
     @Test
-    public void testExpressionFunctionInfo() {
+    public void testExpressionFunctionSelector() {
+        this.expressionFunctionAndCheck(
+                this.createExpressionFunctionProvider(
+                        CaseSensitivity.INSENSITIVE
+                ),
+                ExpressionFunctionSelector.parse(
+                        NAME2 + ""
+                ),
+                CONTEXT,
+                FUNCTION2
+        );
+    }
+
+    @Test
+    public void testExpressionFunctionNameInfo() {
         this.expressionFunctionInfosAndCheck(
                 this.createExpressionFunctionProvider(),
                 Sets.of(

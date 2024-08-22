@@ -23,6 +23,7 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -31,9 +32,16 @@ import java.util.Set;
 public interface ExpressionFunctionProvider extends Provider {
 
     /**
+     * Getter that attempts to return a {@link ExpressionFunction} with the given {@link ExpressionFunctionSelector} or throws an {@link IllegalArgumentException}.
+     */
+    ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
+                                                                          final ProviderContext context);
+
+    /**
      * Getter that attempts to return a {@link ExpressionFunction} with the given {@link ExpressionFunctionName} or throws an {@link IllegalArgumentException}.
      */
     ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                          final List<?> values,
                                                                           final ProviderContext context);
 
     /**
