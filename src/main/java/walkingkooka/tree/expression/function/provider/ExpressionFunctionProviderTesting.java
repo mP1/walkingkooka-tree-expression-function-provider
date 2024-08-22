@@ -18,6 +18,7 @@
 package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -25,11 +26,86 @@ import walkingkooka.plugin.ProviderTesting;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionProvider> extends ProviderTesting<T> {
+
+    // expressionFunction(ExpressionFunctionSelector, ProviderContext)..................................................
+
+    @Test
+    default void testExpressionFunctionWithNullSelectorFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createExpressionFunctionProvider()
+                        .expressionFunction(
+                                null,
+                                ProviderContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testExpressionFunctionWithSelectorNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createExpressionFunctionProvider()
+                        .expressionFunction(
+                                ExpressionFunctionSelector.parse("selector"),
+                                null
+                        )
+        );
+    }
+
+    default void expressionFunctionFails(final ExpressionFunctionSelector selector,
+                                         final ProviderContext context) {
+        this.expressionFunctionFails(
+                this.createExpressionFunctionProvider(),
+                selector,
+                context
+        );
+    }
+
+    default void expressionFunctionFails(final ExpressionFunctionProvider provider,
+                                         final ExpressionFunctionSelector selector,
+                                         final ProviderContext context) {
+        assertThrows(
+                RuntimeException.class,
+                () -> provider.expressionFunction(
+                        selector,
+                        context
+                )
+        );
+    }
+
+    default void expressionFunctionAndCheck(final ExpressionFunctionSelector selector,
+                                            final ProviderContext context,
+                                            final ExpressionFunction<?, ?> expected) {
+        this.expressionFunctionAndCheck(
+                this.createExpressionFunctionProvider(),
+                selector,
+                context,
+                expected
+        );
+    }
+
+    default void expressionFunctionAndCheck(final ExpressionFunctionProvider provider,
+                                            final ExpressionFunctionSelector selector,
+                                            final ProviderContext context,
+                                            final ExpressionFunction<?, ?> expected) {
+        this.checkEquals(
+                expected,
+                provider.expressionFunction(
+                        selector,
+                        context
+                ),
+                () -> selector.toString()
+        );
+    }
+
+    // expressionFunction(ExpressionFunctionName, List, ProviderContext)................................................
 
     @Test
     default void testExpressionFunctionWithNullNameFails() {
@@ -37,6 +113,20 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
                 NullPointerException.class,
                 () -> this.createExpressionFunctionProvider()
                         .expressionFunction(
+                                null,
+                                Lists.empty(),
+                                ProviderContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testFunctionWithNullValuesFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createExpressionFunctionProvider()
+                        .expressionFunction(
+                                ExpressionFunctionName.with("dummy"),
                                 null,
                                 ProviderContexts.fake()
                         )
@@ -50,38 +140,45 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
                 () -> this.createExpressionFunctionProvider()
                         .expressionFunction(
                                 ExpressionFunctionName.with("ignore"),
+                                Lists.empty(),
                                 null
                         )
         );
     }
 
     default void expressionFunctionFails(final ExpressionFunctionName name,
+                                         final List<?> values,
                                          final ProviderContext context) {
         this.expressionFunctionFails(
                 this.createExpressionFunctionProvider(),
                 name,
+                values,
                 context
         );
     }
 
     default void expressionFunctionFails(final ExpressionFunctionProvider provider,
                                          final ExpressionFunctionName name,
+                                         final List<?> values,
                                          final ProviderContext context) {
         assertThrows(
                 RuntimeException.class,
                 () -> provider.expressionFunction(
                         name,
+                        values,
                         context
                 )
         );
     }
 
     default void expressionFunctionAndCheck(final ExpressionFunctionName name,
+                                            final List<?> values,
                                             final ProviderContext context,
                                             final ExpressionFunction<?, ?> expected) {
         this.expressionFunctionAndCheck(
                 this.createExpressionFunctionProvider(),
                 name,
+                values,
                 context,
                 expected
         );
@@ -89,12 +186,14 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
 
     default void expressionFunctionAndCheck(final ExpressionFunctionProvider provider,
                                             final ExpressionFunctionName name,
+                                            final List<?> values,
                                             final ProviderContext context,
                                             final ExpressionFunction<?, ?> expected) {
         this.checkEquals(
                 expected,
                 provider.expressionFunction(
                         name,
+                        values,
                         context
                 ),
                 () -> name.toString()

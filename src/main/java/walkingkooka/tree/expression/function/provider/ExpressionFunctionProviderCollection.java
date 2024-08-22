@@ -17,9 +17,6 @@
 
 package walkingkooka.tree.expression.function.provider;
 
-import walkingkooka.Cast;
-import walkingkooka.collect.list.Lists;
-import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.plugin.ProviderCollection;
 import walkingkooka.plugin.ProviderCollectionProviderGetter;
 import walkingkooka.plugin.ProviderContext;
@@ -46,23 +43,25 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
         this.providers = ProviderCollection.with(
                 new ProviderCollectionProviderGetter<>() {
                     @Override
-                    public ExpressionFunction<?, ?> get(final ExpressionFunctionProvider provider,
-                                                        final ExpressionFunctionName name,
-                                                        final List<?> values,
-                                                        final ProviderContext context) {
-                        return Cast.to(
-                                provider.expressionFunction(
-                                        name,
-                                        context
-                                )
+                    public ExpressionFunction<?, ExpressionEvaluationContext> get(final ExpressionFunctionProvider provider,
+                                                                                  final ExpressionFunctionName name,
+                                                                                  final List<?> values,
+                                                                                  final ProviderContext context) {
+                        return provider.expressionFunction(
+                                name,
+                                values,
+                                context
                         );
                     }
 
                     @Override
-                    public ExpressionFunction<?, ?> get(final ExpressionFunctionProvider provider,
-                                                        final PluginSelectorLike<ExpressionFunctionName> selector,
-                                                        final ProviderContext context) {
-                        throw new UnsupportedOperationException();
+                    public ExpressionFunction<?, ExpressionEvaluationContext> get(final ExpressionFunctionProvider provider,
+                                                                                  final ExpressionFunctionSelector selector,
+                                                                                  final ProviderContext context) {
+                        return provider.expressionFunction(
+                                selector,
+                                context
+                        );
                     }
                 },
                 ExpressionFunctionProvider::expressionFunctionInfos,
@@ -72,17 +71,29 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
                                                                                  final ProviderContext context) {
-        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
 
-        return Cast.to(
-                this.providers.get(
-                        name,
-                        Lists.empty(),
-                        context
-                )
+        return this.providers.get(
+                selector,
+                context
+        );
+    }
+
+    @Override
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                 final List<?> values,
+                                                                                 final ProviderContext context) {
+        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(values, "values");
+        Objects.requireNonNull(context, "context");
+
+        return this.providers.get(
+                name,
+                values,
+                context
         );
     }
 
@@ -91,7 +102,7 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
         return this.providers.infos();
     }
 
-    private final ProviderCollection<ExpressionFunctionProvider, ExpressionFunctionName, ExpressionFunctionInfo, PluginSelectorLike<ExpressionFunctionName>, ExpressionFunction<?, ?>> providers;
+    private final ProviderCollection<ExpressionFunctionProvider, ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionSelector, ExpressionFunction<?, ExpressionEvaluationContext>> providers;
 
     @Override
     public String toString() {

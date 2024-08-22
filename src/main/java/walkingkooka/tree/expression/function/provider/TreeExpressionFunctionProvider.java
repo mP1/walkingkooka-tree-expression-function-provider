@@ -17,6 +17,8 @@
 
 package walkingkooka.tree.expression.function.provider;
 
+import walkingkooka.Cast;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
@@ -26,6 +28,7 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctions;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -71,28 +74,53 @@ final class TreeExpressionFunctionProvider implements ExpressionFunctionProvider
     private final Set<ExpressionFunctionInfo> infos;
 
     @Override
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
+                                                                                 final ProviderContext context) {
+        return selector.evaluateText(
+                this,
+                context
+        );
+    }
+
+    @Override
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                 final List<?> values,
                                                                                  final ProviderContext context) {
         Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
+
+        final List<?> copy = Lists.immutable(values);
 
         final ExpressionFunction function;
 
         switch (name.value()) {
             case "name":
+                checkNoValues(copy);
+
                 function = ExpressionFunctions.nodeName();
                 break;
             case "node":
+                checkNoValues(copy);
+
                 function = ExpressionFunctions.node();
                 break;
             case "typeName":
+                checkNoValues(copy);
+
                 function = ExpressionFunctions.typeName();
                 break;
             default:
                 throw new UnknownExpressionFunctionException(name);
         }
 
-        return function;
+        return Cast.to(function);
+    }
+
+    private void checkNoValues(final List<?> values) {
+        if(false == values.isEmpty()) {
+            throw new IllegalArgumentException("Got " + values.size() + " expected 0");
+        }
     }
 
     @Override
