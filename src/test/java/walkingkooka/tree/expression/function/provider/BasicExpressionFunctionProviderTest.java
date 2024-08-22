@@ -41,9 +41,9 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
 
     private final static AbsoluteUrl BASE_URL = Url.parseAbsolute("https://example.com/base/");
 
-    private final static ExpressionFunctionName NAME1 = ExpressionFunctionName.with("testfunction1");
+    private final static ExpressionFunctionName NAME1 = ExpressionFunctionName.with("testExpressionFunction1");
 
-    private final static ExpressionFunctionName NAME2 = ExpressionFunctionName.with("testfunction2");
+    private final static ExpressionFunctionName NAME2 = ExpressionFunctionName.with("testExpressionFunction2");
 
     private static final FakeExpressionFunction FUNCTION1 = new FakeExpressionFunction() {
         @Override
@@ -116,7 +116,7 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
     }
 
     @Test
-    public void testFunctionLookup1() {
+    public void testExpressionFunctionLookup1() {
         this.expressionFunctionAndCheck(
                 this.createExpressionFunctionProvider(),
                 NAME1,
@@ -126,7 +126,7 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
     }
 
     @Test
-    public void testFunctionLookup2() {
+    public void testExpressionFunctionLookup2() {
         this.expressionFunctionAndCheck(
                 this.createExpressionFunctionProvider(),
                 NAME2,
@@ -136,7 +136,7 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
     }
 
     @Test
-    public void testFunctionLookupDifferentCaseCaseSensitiveFails() {
+    public void testExpressionFunctionLookupDifferentCaseCaseSensitiveFails() {
         this.expressionFunctionFails(
                 this.createExpressionFunctionProvider(
                         CaseSensitivity.SENSITIVE
@@ -150,7 +150,7 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
     }
 
     @Test
-    public void testFunctionLookupDifferentCaseCaseInsensitive() {
+    public void testExpressionFunctionLookupDifferentCaseCaseInsensitive() {
         this.expressionFunctionAndCheck(
                 this.createExpressionFunctionProvider(
                         CaseSensitivity.INSENSITIVE
@@ -170,22 +170,14 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
                 this.createExpressionFunctionProvider(),
                 Sets.of(
                         ExpressionFunctionInfo.with(
-                                Url.parseAbsolute("https://example.com/base/testfunction1"),
+                                Url.parseAbsolute("https://example.com/base/testExpressionFunction1"),
                                 NAME1
                         ),
                         ExpressionFunctionInfo.with(
-                                Url.parseAbsolute("https://example.com/base/testfunction2"),
+                                Url.parseAbsolute("https://example.com/base/testExpressionFunction2"),
                                 NAME2
                         )
                 )
-        );
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                this.createExpressionFunctionProvider(),
-                "testfunction1, testfunction2"
         );
     }
 
@@ -204,13 +196,25 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
         );
     }
 
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                this.createExpressionFunctionProvider(),
+                "testExpressionFunction1, testExpressionFunction2"
+        );
     }
+
+    // class............................................................................................................
 
     @Override
     public Class<BasicExpressionFunctionProvider> type() {
         return BasicExpressionFunctionProvider.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
