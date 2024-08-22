@@ -120,7 +120,7 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
     }
 
     @Test
-    public void testFunctionLookup1() {
+    public void testExpressionFunctionLookup1() {
         this.expressionFunctionAndCheck(
                 this.createExpressionFunctionProvider(),
                 NAME1,
@@ -130,7 +130,7 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
     }
 
     @Test
-    public void testFunctionLookup2() {
+    public void testExpressionFunctionLookup2() {
         this.expressionFunctionAndCheck(
                 this.createExpressionFunctionProvider(),
                 NAME2,
@@ -156,14 +156,6 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
         );
     }
 
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                this.createExpressionFunctionProvider(),
-                "testfunction1, testfunction2"
-        );
-    }
-
     @Override
     public ExpressionFunctionProviderCollection createExpressionFunctionProvider() {
         return ExpressionFunctionProviderCollection.with(
@@ -186,13 +178,25 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
                 );
     }
 
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                this.createExpressionFunctionProvider(),
+                "testfunction1, testfunction2"
+        );
     }
+
+    // class............................................................................................................
 
     @Override
     public Class<ExpressionFunctionProviderCollection> type() {
         return ExpressionFunctionProviderCollection.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
