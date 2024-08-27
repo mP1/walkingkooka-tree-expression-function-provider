@@ -83,6 +83,7 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
      * Would be setter that returns a {@link ExpressionFunctionSelector} with the given {@link ExpressionFunctionName},
      * creating a new instance if necessary.
      */
+    @Override
     public ExpressionFunctionSelector setName(final ExpressionFunctionName name) {
         Objects.requireNonNull(name, "name");
 
