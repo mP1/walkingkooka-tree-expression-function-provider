@@ -18,6 +18,7 @@
 package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.collect.iterator.Iterators;
+import walkingkooka.collect.set.ImmutableSetDefaults;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.PluginInfoSetLike;
@@ -31,16 +32,14 @@ import java.util.AbstractSet;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * A read only {@link Set} of {@link ExpressionFunctionInfo} sorted by {@link ExpressionFunctionName}.
  */
 public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunctionInfo>
-        implements PluginInfoSetLike<ExpressionFunctionInfo, ExpressionFunctionName> {
-
-    static {
-        Sets.registerImmutableType(ExpressionFunctionInfoSet.class);
-    }
+        implements PluginInfoSetLike<ExpressionFunctionInfo, ExpressionFunctionName>,
+        ImmutableSetDefaults<ExpressionFunctionInfoSet, ExpressionFunctionInfo> {
 
     /**
      * Parses the given text into a {@link ExpressionFunctionInfo}
@@ -83,6 +82,23 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
     }
 
     private final Set<ExpressionFunctionInfo> functionInfos;
+
+    // ImmutableSet.....................................................................................................
+
+    @Override
+    public ExpressionFunctionInfoSet setElements(final Set<ExpressionFunctionInfo> set) {
+        final ExpressionFunctionInfoSet copy = with(set);
+        return this.equals(copy) ?
+                this :
+                copy;
+    }
+
+    @Override
+    public Set<ExpressionFunctionInfo> toSet() {
+        return new TreeSet<>(
+                this.functionInfos
+        );
+    }
 
     // json.............................................................................................................
 
