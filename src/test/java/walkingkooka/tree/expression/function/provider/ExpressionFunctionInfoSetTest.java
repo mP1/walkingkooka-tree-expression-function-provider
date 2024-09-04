@@ -42,6 +42,41 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
         );
     }
 
+    @Test
+    public void testDelete() {
+        final ExpressionFunctionInfo info1 = ExpressionFunctionInfo.with(
+                Url.parseAbsolute("https://example.com/function1"),
+                ExpressionFunctionName.with("function1")
+        );
+
+        final ExpressionFunctionInfo info2 = ExpressionFunctionInfo.with(
+                Url.parseAbsolute("https://example.com/function2"),
+                ExpressionFunctionName.with("function2")
+        );
+
+        final ExpressionFunctionInfo info3 = ExpressionFunctionInfo.with(
+                Url.parseAbsolute("https://example.com/function3"),
+                ExpressionFunctionName.with("function3")
+        );
+
+        this.deleteAndCheck(
+                ExpressionFunctionInfoSet.with(
+                        Sets.of(
+                                info1,
+                                info2,
+                                info3
+                        )
+                ),
+                info1,
+                ExpressionFunctionInfoSet.with(
+                        Sets.of(
+                                info2,
+                                info3
+                        )
+                )
+        );
+    }
+
     // parse............................................................................................................
 
     @Override
