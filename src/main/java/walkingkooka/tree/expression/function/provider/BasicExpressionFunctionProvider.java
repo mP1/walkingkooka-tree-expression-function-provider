@@ -19,6 +19,7 @@ package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
@@ -90,7 +91,7 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
                                             name
                                     );
                                 }
-                        ).collect(Collectors.toCollection(Sets::sorted))
+                        ).collect(Collectors.toCollection(SortedSets::tree))
         );
     }
 
