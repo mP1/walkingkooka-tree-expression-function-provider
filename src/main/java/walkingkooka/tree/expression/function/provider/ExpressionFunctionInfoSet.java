@@ -18,7 +18,6 @@
 package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.collect.iterator.Iterators;
-import walkingkooka.collect.set.ImmutableSetDefaults;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.PluginInfoSetLike;
@@ -38,8 +37,7 @@ import java.util.TreeSet;
  * A read only {@link Set} of {@link ExpressionFunctionInfo} sorted by {@link ExpressionFunctionName}.
  */
 public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunctionInfo>
-        implements PluginInfoSetLike<ExpressionFunctionInfo, ExpressionFunctionName>,
-        ImmutableSetDefaults<ExpressionFunctionInfoSet, ExpressionFunctionInfo> {
+        implements PluginInfoSetLike<ExpressionFunctionInfoSet, ExpressionFunctionInfo, ExpressionFunctionName> {
 
     /**
      * Parses the given text into a {@link ExpressionFunctionInfo}
