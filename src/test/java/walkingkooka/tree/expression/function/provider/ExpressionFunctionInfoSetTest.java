@@ -95,11 +95,16 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
     public ExpressionFunctionInfoSet createSet() {
         return ExpressionFunctionInfoSet.with(
                 Sets.of(
-                        ExpressionFunctionInfo.with(
-                                Url.parseAbsolute("https://example.com/test-function-1"),
-                                ExpressionFunctionName.with("test-function-1")
-                        )
+                        this.info()
                 )
+        );
+    }
+
+    @Override
+    public ExpressionFunctionInfo info() {
+        return ExpressionFunctionInfo.with(
+                Url.parseAbsolute("https://example.com/test-function-1"),
+                ExpressionFunctionName.with("test-function-1")
         );
     }
 

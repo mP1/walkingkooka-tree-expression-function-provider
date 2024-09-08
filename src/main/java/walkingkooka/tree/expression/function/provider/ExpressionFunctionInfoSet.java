@@ -18,6 +18,7 @@
 package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.collect.iterator.Iterators;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.PluginInfoSetLike;
@@ -40,6 +41,11 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
         implements PluginInfoSetLike<ExpressionFunctionInfoSet, ExpressionFunctionInfo, ExpressionFunctionName> {
 
     /**
+     * Empty
+     */
+    public final static ExpressionFunctionInfoSet EMPTY = new ExpressionFunctionInfoSet(Sets.empty());
+
+    /**
      * Parses the given text into a {@link ExpressionFunctionInfo}
      */
     public static ExpressionFunctionInfoSet parse(final String text) {
@@ -58,7 +64,9 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
 
         final Set<ExpressionFunctionInfo> copy = SortedSets.tree(HateosResource.comparator());
         copy.addAll(functionInfos);
-        return new ExpressionFunctionInfoSet(copy);
+        return copy.isEmpty() ?
+                EMPTY :
+                new ExpressionFunctionInfoSet(copy);
     }
 
     private ExpressionFunctionInfoSet(final Set<ExpressionFunctionInfo> functionInfos) {
