@@ -132,10 +132,7 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
         this.marshallAndCheck(
                 set,
                 "[\n" +
-                        "  {\n" +
-                        "    \"url\": \"https://example.com/1\",\n" +
-                        "    \"name\": \"test-function-1\"\n" +
-                        "  }\n" +
+                        "  \"https://example.com/1 test-function-1\"\n" +
                         "]"
         );
     }

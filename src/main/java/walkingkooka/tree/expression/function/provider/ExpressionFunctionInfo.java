@@ -106,7 +106,7 @@ public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFu
         return PluginInfoLike.unmarshall(
                 node,
                 context,
-                ExpressionFunctionName.class,
+                ExpressionFunctionName::with,
                 ExpressionFunctionInfo::with
         );
     }
