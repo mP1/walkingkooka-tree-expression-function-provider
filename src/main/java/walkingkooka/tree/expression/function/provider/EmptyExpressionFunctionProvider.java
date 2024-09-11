@@ -17,7 +17,6 @@
 
 package walkingkooka.tree.expression.function.provider;
 
-import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -26,7 +25,6 @@ import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * A {@link ExpressionFunctionProvider} that is always empty and returns no {@link ExpressionFunctionInfo} or {@link ExpressionFunction}.
@@ -43,8 +41,8 @@ final class EmptyExpressionFunctionProvider implements ExpressionFunctionProvide
     }
 
     @Override
-    public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
-        return Sets.empty();
+    public ExpressionFunctionInfoSet expressionFunctionInfos() {
+        return ExpressionFunctionInfoSet.EMPTY;
     }
 
     @Override

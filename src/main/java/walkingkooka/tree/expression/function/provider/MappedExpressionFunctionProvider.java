@@ -19,7 +19,6 @@ package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -55,9 +54,11 @@ final class MappedExpressionFunctionProvider implements ExpressionFunctionProvid
                 provider.expressionFunctionInfos()
         );
         this.provider = provider;
-        this.infos = PluginInfoSetLike.merge(
-                infos,
-                provider.expressionFunctionInfos()
+        this.infos = ExpressionFunctionInfoSet.with(
+                PluginInfoSetLike.merge(
+                        infos,
+                        provider.expressionFunctionInfos()
+                )
         );
     }
 
@@ -102,17 +103,14 @@ final class MappedExpressionFunctionProvider implements ExpressionFunctionProvid
     private final ExpressionFunctionProvider provider;
 
     @Override
-    public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
+    public ExpressionFunctionInfoSet expressionFunctionInfos() {
         return this.infos;
     }
 
-    private final Set<ExpressionFunctionInfo> infos;
+    private final ExpressionFunctionInfoSet infos;
 
     @Override
     public String toString() {
-        return CharacterConstant.COMMA.toSeparatedString(
-                this.infos,
-                ExpressionFunctionInfo::toString
-        );
+        return this.infos.text();
     }
 }

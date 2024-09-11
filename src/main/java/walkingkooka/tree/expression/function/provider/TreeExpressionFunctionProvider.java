@@ -30,7 +30,6 @@ import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * A {@link ExpressionFunctionProvider} for {@link ExpressionFunctions}.
@@ -45,10 +44,12 @@ final class TreeExpressionFunctionProvider implements ExpressionFunctionProvider
     private TreeExpressionFunctionProvider() {
         super();
 
-        this.infos = Sets.of(
-                nameToExpressionFunctionInfo(ExpressionFunctions.node()),
-                nameToExpressionFunctionInfo(ExpressionFunctions.nodeName()),
-                nameToExpressionFunctionInfo(ExpressionFunctions.typeName())
+        this.infos = ExpressionFunctionInfoSet.with(
+                Sets.of(
+                        nameToExpressionFunctionInfo(ExpressionFunctions.node()),
+                        nameToExpressionFunctionInfo(ExpressionFunctions.nodeName()),
+                        nameToExpressionFunctionInfo(ExpressionFunctions.typeName())
+                )
         );
     }
 
@@ -67,11 +68,11 @@ final class TreeExpressionFunctionProvider implements ExpressionFunctionProvider
     }
 
     @Override
-    public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
+    public ExpressionFunctionInfoSet expressionFunctionInfos() {
         return this.infos;
     }
 
-    private final Set<ExpressionFunctionInfo> infos;
+    private final ExpressionFunctionInfoSet infos;
 
     @Override
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,

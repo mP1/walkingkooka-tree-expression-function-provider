@@ -23,7 +23,6 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.util.List;
-import java.util.Set;
 
 public interface ExpressionFunctionProviderDelegator extends ExpressionFunctionProvider{
 
@@ -50,7 +49,7 @@ public interface ExpressionFunctionProviderDelegator extends ExpressionFunctionP
     }
 
     @Override
-    default Set<ExpressionFunctionInfo> expressionFunctionInfos() {
+    default ExpressionFunctionInfoSet expressionFunctionInfos() {
         return this.expressionFunctionProvider()
                 .expressionFunctionInfos();
     }

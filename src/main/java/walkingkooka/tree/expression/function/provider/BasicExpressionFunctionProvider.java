@@ -76,22 +76,24 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
 
         this.nameToFunction = nameToFunction;
 
-        this.expressionFunctionInfos = Sets.readOnly(
-                functions.stream()
-                        .map(
-                                f -> {
-                                    final ExpressionFunctionName name = f.name()
-                                            .get();
-                                    return ExpressionFunctionInfo.with(
-                                            baseUrl.appendPath(
-                                                    UrlPath.parse(
-                                                            name.value()
-                                                    )
-                                            ),
-                                            name
-                                    );
-                                }
-                        ).collect(Collectors.toCollection(SortedSets::tree))
+        this.expressionFunctionInfos = ExpressionFunctionInfoSet.with(
+                Sets.readOnly(
+                        functions.stream()
+                                .map(
+                                        f -> {
+                                            final ExpressionFunctionName name = f.name()
+                                                    .get();
+                                            return ExpressionFunctionInfo.with(
+                                                    baseUrl.appendPath(
+                                                            UrlPath.parse(
+                                                                    name.value()
+                                                            )
+                                                    ),
+                                                    name
+                                            );
+                                        }
+                                ).collect(Collectors.toCollection(SortedSets::tree))
+                )
         );
     }
 
@@ -125,11 +127,11 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
     private final Map<ExpressionFunctionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction;
 
     @Override
-    public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
+    public ExpressionFunctionInfoSet expressionFunctionInfos() {
         return this.expressionFunctionInfos;
     }
 
-    private final Set<ExpressionFunctionInfo> expressionFunctionInfos;
+    private final ExpressionFunctionInfoSet expressionFunctionInfos;
 
     @Override
     public String toString() {

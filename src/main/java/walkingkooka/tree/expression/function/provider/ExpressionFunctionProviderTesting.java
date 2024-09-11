@@ -27,7 +27,6 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -210,6 +209,8 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
         );
     }
 
+    // expresionFunctionInfos...........................................................................................
+
     default void expressionFunctionInfosAndCheck(final ExpressionFunctionInfo... expected) {
         this.expressionFunctionInfosAndCheck(
                 this.createExpressionFunctionProvider(),
@@ -221,11 +222,13 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
                                                  final ExpressionFunctionInfo... expected) {
         this.expressionFunctionInfosAndCheck(
                 provider,
-                Sets.of(expected)
+                ExpressionFunctionInfoSet.with(
+                    Sets.of(expected)
+                )
         );
     }
 
-    default void expressionFunctionInfosAndCheck(final Set<ExpressionFunctionInfo> expected) {
+    default void expressionFunctionInfosAndCheck(final ExpressionFunctionInfoSet expected) {
         this.expressionFunctionInfosAndCheck(
                 this.createExpressionFunctionProvider(),
                 expected
@@ -233,7 +236,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     }
 
     default void expressionFunctionInfosAndCheck(final ExpressionFunctionProvider provider,
-                                                 final Set<ExpressionFunctionInfo> expected) {
+                                                 final ExpressionFunctionInfoSet expected) {
         this.checkEquals(
                 expected,
                 provider.expressionFunctionInfos(),
