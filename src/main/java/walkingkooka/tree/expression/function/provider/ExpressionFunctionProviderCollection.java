@@ -98,8 +98,10 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
     }
 
     @Override
-    public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
-        return this.providers.infos();
+    public ExpressionFunctionInfoSet expressionFunctionInfos() {
+        return ExpressionFunctionInfoSet.with(
+                this.providers.infos()
+        );
     }
 
     private final ProviderCollection<ExpressionFunctionProvider, ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionSelector, ExpressionFunction<?, ExpressionEvaluationContext>> providers;

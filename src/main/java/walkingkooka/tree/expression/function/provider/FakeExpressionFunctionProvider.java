@@ -23,7 +23,6 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.util.List;
-import java.util.Set;
 
 public class FakeExpressionFunctionProvider implements ExpressionFunctionProvider{
 
@@ -42,7 +41,7 @@ public class FakeExpressionFunctionProvider implements ExpressionFunctionProvide
     }
 
     @Override
-    public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
+    public ExpressionFunctionInfoSet expressionFunctionInfos() {
         throw new UnsupportedOperationException();
     }
 }

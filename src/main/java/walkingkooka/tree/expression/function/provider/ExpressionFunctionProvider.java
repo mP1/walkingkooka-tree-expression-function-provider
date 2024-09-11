@@ -24,7 +24,6 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * A provider supports listing available {@link ExpressionFunctionInfo} and fetching implementations by {@link walkingkooka.tree.expression.ExpressionFunctionName}.
@@ -47,5 +46,5 @@ public interface ExpressionFunctionProvider extends Provider {
     /**
      * Returns all known {@link ExpressionFunctionInfo}.
      */
-    Set<ExpressionFunctionInfo> expressionFunctionInfos();
+    ExpressionFunctionInfoSet expressionFunctionInfos();
 }

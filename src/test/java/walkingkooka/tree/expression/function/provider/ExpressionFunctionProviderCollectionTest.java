@@ -164,18 +164,16 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
     }
 
     @Test
-    public void testExpressionFunctionInfo() {
+    public void testExpressionFunctionInfos() {
         this.expressionFunctionInfosAndCheck(
                 this.createExpressionFunctionProvider(),
-                Sets.of(
-                        ExpressionFunctionInfo.with(
-                                Url.parseAbsolute("https://example.com/base/testfunction1"),
-                                NAME1
-                        ),
-                        ExpressionFunctionInfo.with(
-                                Url.parseAbsolute("https://example.com/base/testfunction2"),
-                                NAME2
-                        )
+                ExpressionFunctionInfo.with(
+                        Url.parseAbsolute("https://example.com/base/testfunction1"),
+                        NAME1
+                ),
+                ExpressionFunctionInfo.with(
+                        Url.parseAbsolute("https://example.com/base/testfunction2"),
+                        NAME2
                 )
         );
     }

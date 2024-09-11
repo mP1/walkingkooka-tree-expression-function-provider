@@ -190,15 +190,13 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
     public void testExpressionFunctionNameInfo() {
         this.expressionFunctionInfosAndCheck(
                 this.createExpressionFunctionProvider(),
-                Sets.of(
-                        ExpressionFunctionInfo.with(
-                                Url.parseAbsolute("https://example.com/base/testExpressionFunction1"),
-                                NAME1
-                        ),
-                        ExpressionFunctionInfo.with(
-                                Url.parseAbsolute("https://example.com/base/testExpressionFunction2"),
-                                NAME2
-                        )
+                ExpressionFunctionInfo.with(
+                        Url.parseAbsolute("https://example.com/base/testExpressionFunction1"),
+                        NAME1
+                ),
+                ExpressionFunctionInfo.with(
+                        Url.parseAbsolute("https://example.com/base/testExpressionFunction2"),
+                        NAME2
                 )
         );
     }

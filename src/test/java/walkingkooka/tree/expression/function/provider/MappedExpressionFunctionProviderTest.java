@@ -33,7 +33,6 @@ import walkingkooka.tree.expression.function.FakeExpressionFunction;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -177,8 +176,8 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
                     }
 
                     @Override
-                    public Set<ExpressionFunctionInfo> expressionFunctionInfos() {
-                        return Sets.of(
+                    public ExpressionFunctionInfoSet expressionFunctionInfos() {
+                        return ExpressionFunctionInfoSet.EMPTY.concat(
                                 ExpressionFunctionInfo.with(
                                         URL,
                                         ORIGINAL_NAME
