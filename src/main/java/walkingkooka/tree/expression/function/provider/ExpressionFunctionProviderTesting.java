@@ -120,7 +120,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     }
 
     @Test
-    default void testFunctionWithNullValuesFails() {
+    default void testExpressionFunctionWithNullValuesFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createExpressionFunctionProvider()
