@@ -24,6 +24,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.expression.ExpressionFunctionName;
+import walkingkooka.tree.expression.function.ExpressionFunctions;
 
 import java.util.List;
 
@@ -52,11 +53,19 @@ public final class FilteredExpressionFunctionProviderTest implements ExpressionF
 
     @Test
     public void testExpressionFunctionWithFilteredFails() {
-        final ExpressionFunctionName name = ExpressionFunctionName.with("node");
+        final ExpressionFunctionName name = ExpressionFunctionName.with("name");
         final List<?> values = Lists.empty();
 
+        this.expressionFunctionAndCheck(
+                ExpressionFunctionProviders.expressionFunctions(),
+                name,
+                values,
+                CONTEXT,
+                ExpressionFunctions.nodeName()
+        );
+
         this.expressionFunctionFails(
-                ExpressionFunctionName.with("nodeName"),
+                name,
                 values,
                 CONTEXT
         );
@@ -79,6 +88,21 @@ public final class FilteredExpressionFunctionProviderTest implements ExpressionF
                         ExpressionFunctionInfo.parse("https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/node node")
                 )
         );
+    }
+
+    @Override
+    public void testExpressionFunctionWithNullContextFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testExpressionFunctionWithSelectorNullContextFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testExpressionFunctionWithNullValuesFails() {
+        throw new UnsupportedOperationException();
     }
 
     // ToString.........................................................................................................
