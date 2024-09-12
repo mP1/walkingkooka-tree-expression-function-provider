@@ -17,10 +17,12 @@
 
 package walkingkooka.tree.expression.function.provider;
 
+import walkingkooka.plugin.FilteredProviderGuard;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.List;
 import java.util.Objects;
@@ -39,7 +41,11 @@ final class FilteredExpressionFunctionProvider implements ExpressionFunctionProv
     }
 
     private FilteredExpressionFunctionProvider(final ExpressionFunctionProvider provider,
-                                              final ExpressionFunctionInfoSet infos) {
+                                               final ExpressionFunctionInfoSet infos) {
+        this.guard = FilteredProviderGuard.with(
+                infos.names(),
+                (n) -> new UnknownExpressionFunctionException(n)
+        );
         this.provider = provider;
         this.infos = infos;
     }
@@ -48,8 +54,8 @@ final class FilteredExpressionFunctionProvider implements ExpressionFunctionProv
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
                                                                                  final ProviderContext context) {
         return this.provider.expressionFunction(
-                selector,
-                context
+                this.guard.selector(selector),
+                Objects.requireNonNull(context, "context")
         );
     }
 
@@ -58,11 +64,13 @@ final class FilteredExpressionFunctionProvider implements ExpressionFunctionProv
                                                                                  final List<?> values,
                                                                                  final ProviderContext context) {
         return this.provider.expressionFunction(
-                name,
-                values,
-                context
+                this.guard.name(name),
+                Objects.requireNonNull(values, "values"),
+                Objects.requireNonNull(context, "context")
         );
     }
+
+    private final FilteredProviderGuard<ExpressionFunctionName, ExpressionFunctionSelector> guard;
 
     private final ExpressionFunctionProvider provider;
 
