@@ -78,6 +78,17 @@ public final class ExpressionFunctionProviders implements PublicStaticHelper {
     }
 
     /**
+     * {@see FilteredExpressionFunctionProvider}
+     */
+    public static ExpressionFunctionProvider filtered(final ExpressionFunctionProvider provider,
+                                                      final ExpressionFunctionInfoSet infos) {
+        return FilteredExpressionFunctionProvider.with(
+                provider,
+                infos
+        );
+    }
+
+    /**
      * {@see MappedExpressionFunctionProvider}
      */
     public static ExpressionFunctionProvider mapped(final Set<ExpressionFunctionInfo> infos,
