@@ -17,8 +17,8 @@
 
 package walkingkooka.tree.expression.function.provider;
 
-import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderMapper;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -27,15 +27,13 @@ import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-import java.util.function.Function;
 
 /**
  * A {@link ExpressionFunctionProvider} that wraps a view of new {@link ExpressionFunctionName} to a wrapped {@link ExpressionFunctionProvider}.
  */
 final class MappedExpressionFunctionProvider implements ExpressionFunctionProvider {
 
-    static MappedExpressionFunctionProvider with(final Set<ExpressionFunctionInfo> infos,
+    static MappedExpressionFunctionProvider with(final ExpressionFunctionInfoSet infos,
                                                  final ExpressionFunctionProvider provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
@@ -47,19 +45,15 @@ final class MappedExpressionFunctionProvider implements ExpressionFunctionProvid
     }
 
 
-    private MappedExpressionFunctionProvider(final Set<ExpressionFunctionInfo> infos,
+    private MappedExpressionFunctionProvider(final ExpressionFunctionInfoSet infos,
                                              final ExpressionFunctionProvider provider) {
-        this.nameMapper = PluginInfoSetLike.nameMapper(
+        this.mapper = ProviderMapper.with(
                 infos,
-                provider.expressionFunctionInfos()
+                provider.expressionFunctionInfos(),
+                (n) -> new UnknownExpressionFunctionException(n)
         );
+
         this.provider = provider;
-        this.infos = ExpressionFunctionInfoSet.with(
-                PluginInfoSetLike.merge(
-                        infos,
-                        provider.expressionFunctionInfos()
-                )
-        );
     }
 
     @Override
@@ -83,8 +77,7 @@ final class MappedExpressionFunctionProvider implements ExpressionFunctionProvid
         Objects.requireNonNull(context, "context");
 
         return this.provider.expressionFunction(
-                this.nameMapper.apply(name)
-                        .orElseThrow(() -> new UnknownExpressionFunctionException(name)),
+                this.mapper.name(name),
                 values,
                 context
         ).setName(
@@ -93,24 +86,19 @@ final class MappedExpressionFunctionProvider implements ExpressionFunctionProvid
     }
 
     /**
-     * A function that maps incoming {@link ExpressionFunctionName} to the target provider after mapping them across using the {@link walkingkooka.net.AbsoluteUrl}.
-     */
-    private final Function<ExpressionFunctionName, Optional<ExpressionFunctionName>> nameMapper;
-
-    /**
      * The original wrapped {@link ExpressionFunctionProvider}.
      */
     private final ExpressionFunctionProvider provider;
 
     @Override
     public ExpressionFunctionInfoSet expressionFunctionInfos() {
-        return this.infos;
+        return this.mapper.infos();
     }
 
-    private final ExpressionFunctionInfoSet infos;
+    private final ProviderMapper<ExpressionFunctionName, ExpressionFunctionSelector, ExpressionFunctionInfo, ExpressionFunctionInfoSet> mapper;
 
     @Override
     public String toString() {
-        return this.infos.text();
+        return this.mapper.toString();
     }
 }

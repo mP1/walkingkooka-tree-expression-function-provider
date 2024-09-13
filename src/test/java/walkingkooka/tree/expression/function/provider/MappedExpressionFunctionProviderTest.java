@@ -20,7 +20,6 @@ package walkingkooka.tree.expression.function.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
@@ -93,7 +92,7 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
         assertThrows(
                 NullPointerException.class,
                 () -> MappedExpressionFunctionProvider.with(
-                        Sets.empty(),
+                        ExpressionFunctionInfoSet.EMPTY,
                         null
                 )
         );
@@ -148,7 +147,7 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
     @Override
     public MappedExpressionFunctionProvider createExpressionFunctionProvider() {
         return MappedExpressionFunctionProvider.with(
-                Sets.of(
+                ExpressionFunctionInfoSet.EMPTY.concat(
                         ExpressionFunctionInfo.with(
                                 URL,
                                 NAME
