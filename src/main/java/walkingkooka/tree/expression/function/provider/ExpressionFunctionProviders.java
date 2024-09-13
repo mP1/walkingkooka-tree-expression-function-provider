@@ -91,7 +91,7 @@ public final class ExpressionFunctionProviders implements PublicStaticHelper {
     /**
      * {@see MappedExpressionFunctionProvider}
      */
-    public static ExpressionFunctionProvider mapped(final Set<ExpressionFunctionInfo> infos,
+    public static ExpressionFunctionProvider mapped(final ExpressionFunctionInfoSet infos,
                                                     final ExpressionFunctionProvider provider) {
         return MappedExpressionFunctionProvider.with(
                 infos,
