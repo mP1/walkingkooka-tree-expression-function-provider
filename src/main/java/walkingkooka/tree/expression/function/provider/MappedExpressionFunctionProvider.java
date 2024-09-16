@@ -17,8 +17,8 @@
 
 package walkingkooka.tree.expression.function.provider;
 
+import walkingkooka.plugin.FilteredProviderMapper;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.ProviderMapper;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -47,7 +47,7 @@ final class MappedExpressionFunctionProvider implements ExpressionFunctionProvid
 
     private MappedExpressionFunctionProvider(final ExpressionFunctionInfoSet infos,
                                              final ExpressionFunctionProvider provider) {
-        this.mapper = ProviderMapper.with(
+        this.mapper = FilteredProviderMapper.with(
                 infos,
                 provider.expressionFunctionInfos(),
                 (n) -> new UnknownExpressionFunctionException(n)
@@ -95,7 +95,7 @@ final class MappedExpressionFunctionProvider implements ExpressionFunctionProvid
         return this.mapper.infos();
     }
 
-    private final ProviderMapper<ExpressionFunctionName, ExpressionFunctionSelector, ExpressionFunctionInfo, ExpressionFunctionInfoSet> mapper;
+    private final FilteredProviderMapper<ExpressionFunctionName, ExpressionFunctionSelector, ExpressionFunctionInfo, ExpressionFunctionInfoSet> mapper;
 
     @Override
     public String toString() {
