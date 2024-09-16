@@ -31,22 +31,22 @@ import java.util.Optional;
 /**
  * A {@link ExpressionFunctionProvider} that wraps a view of new {@link ExpressionFunctionName} to a wrapped {@link ExpressionFunctionProvider}.
  */
-final class MappedExpressionFunctionProvider implements ExpressionFunctionProvider {
+final class FilteredMappedExpressionFunctionProvider implements ExpressionFunctionProvider {
 
-    static MappedExpressionFunctionProvider with(final ExpressionFunctionInfoSet infos,
-                                                 final ExpressionFunctionProvider provider) {
+    static FilteredMappedExpressionFunctionProvider with(final ExpressionFunctionInfoSet infos,
+                                                         final ExpressionFunctionProvider provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
 
-        return new MappedExpressionFunctionProvider(
+        return new FilteredMappedExpressionFunctionProvider(
                 infos,
                 provider
         );
     }
 
 
-    private MappedExpressionFunctionProvider(final ExpressionFunctionInfoSet infos,
-                                             final ExpressionFunctionProvider provider) {
+    private FilteredMappedExpressionFunctionProvider(final ExpressionFunctionInfoSet infos,
+                                                     final ExpressionFunctionProvider provider) {
         this.mapper = FilteredProviderMapper.with(
                 infos,
                 provider.expressionFunctionInfos(),

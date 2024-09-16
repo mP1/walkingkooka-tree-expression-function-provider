@@ -35,8 +35,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class MappedExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<MappedExpressionFunctionProvider>,
-        ToStringTesting<MappedExpressionFunctionProvider> {
+public final class FilteredMappedExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<FilteredMappedExpressionFunctionProvider>,
+        ToStringTesting<FilteredMappedExpressionFunctionProvider> {
 
     private final static AbsoluteUrl URL = Url.parseAbsolute("https://example.com/function123");
 
@@ -80,7 +80,7 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
     public void testWithNullViewFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> MappedExpressionFunctionProvider.with(
+                () -> FilteredMappedExpressionFunctionProvider.with(
                         null,
                         ExpressionFunctionProviders.fake()
                 )
@@ -91,7 +91,7 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
     public void testWithNullProviderFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> MappedExpressionFunctionProvider.with(
+                () -> FilteredMappedExpressionFunctionProvider.with(
                         ExpressionFunctionInfoSet.EMPTY,
                         null
                 )
@@ -145,8 +145,8 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
     }
 
     @Override
-    public MappedExpressionFunctionProvider createExpressionFunctionProvider() {
-        return MappedExpressionFunctionProvider.with(
+    public FilteredMappedExpressionFunctionProvider createExpressionFunctionProvider() {
+        return FilteredMappedExpressionFunctionProvider.with(
                 ExpressionFunctionInfoSet.EMPTY.concat(
                         ExpressionFunctionInfo.with(
                                 URL,
@@ -200,8 +200,8 @@ public final class MappedExpressionFunctionProviderTest implements ExpressionFun
     // class............................................................................................................
 
     @Override
-    public Class<MappedExpressionFunctionProvider> type() {
-        return MappedExpressionFunctionProvider.class;
+    public Class<FilteredMappedExpressionFunctionProvider> type() {
+        return FilteredMappedExpressionFunctionProvider.class;
     }
 
     @Override
