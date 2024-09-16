@@ -89,11 +89,11 @@ public final class ExpressionFunctionProviders implements PublicStaticHelper {
     }
 
     /**
-     * {@see MappedExpressionFunctionProvider}
+     * {@see FilteredMappedExpressionFunctionProvider}
      */
-    public static ExpressionFunctionProvider mapped(final ExpressionFunctionInfoSet infos,
-                                                    final ExpressionFunctionProvider provider) {
-        return MappedExpressionFunctionProvider.with(
+    public static ExpressionFunctionProvider filteredMapped(final ExpressionFunctionInfoSet infos,
+                                                            final ExpressionFunctionProvider provider) {
+        return FilteredMappedExpressionFunctionProvider.with(
                 infos,
                 provider
         );
