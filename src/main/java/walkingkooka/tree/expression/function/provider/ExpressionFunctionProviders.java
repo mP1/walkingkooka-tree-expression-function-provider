@@ -100,6 +100,17 @@ public final class ExpressionFunctionProviders implements PublicStaticHelper {
     }
 
     /**
+     * {@see RenamedMappedExpressionFunctionProvider}
+     */
+    public static ExpressionFunctionProvider renamedMapped(final ExpressionFunctionInfoSet infos,
+                                                           final ExpressionFunctionProvider provider) {
+        return RenamedMappedExpressionFunctionProvider.with(
+                infos,
+                provider
+        );
+    }
+
+    /**
      * Stop creation
      */
     private ExpressionFunctionProviders() {
