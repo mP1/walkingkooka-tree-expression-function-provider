@@ -39,15 +39,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class RenamedMappedExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<RenamedMappedExpressionFunctionProvider>,
         ToStringTesting<RenamedMappedExpressionFunctionProvider> {
 
-    private final static AbsoluteUrl RENAMED_URL = Url.parseAbsolute("https://example.com/function123");
+    private final static AbsoluteUrl RENAMED_URL = Url.parseAbsolute("https://example.com/renamed-function111");
 
-    private final static ExpressionFunctionName RENAME_NAME = ExpressionFunctionName.with("different-function-name-123");
+    private final static ExpressionFunctionName RENAME_NAME = ExpressionFunctionName.with("rename-renamed-function-111");
 
-    private final static ExpressionFunctionName ORIGINAL_NAME = ExpressionFunctionName.with("original-function-123");
+    private final static ExpressionFunctionName RENAME_PROVIDER_NAME = ExpressionFunctionName.with("provider-renamed-function-111");
 
-    private final static AbsoluteUrl PROVIDER_ONLY_URL = Url.parseAbsolute("https://example.com/provider-only-function123");
+    private final static AbsoluteUrl PROVIDER_ONLY_URL = Url.parseAbsolute("https://example.com/provider-only-function-222");
 
-    private final static ExpressionFunctionName PROVIDER_ONLY_NAME = ExpressionFunctionName.with("provider-only-function-123");
+    private final static ExpressionFunctionName PROVIDER_ONLY_NAME = ExpressionFunctionName.with("provider-only-function-222");
 
     private final static ExpressionFunction<?, ExpressionEvaluationContext> function(final ExpressionFunctionName name) {
         return new FakeExpressionFunction() {
@@ -180,10 +180,6 @@ public final class RenamedMappedExpressionFunctionProviderTest implements Expres
                                 ExpressionFunctionInfo.with(
                                         RENAMED_URL,
                                         RENAME_NAME
-                                ),
-                                ExpressionFunctionInfo.with(
-                                        PROVIDER_ONLY_URL,
-                                        PROVIDER_ONLY_NAME
                                 )
                         )
                 ),
@@ -193,8 +189,8 @@ public final class RenamedMappedExpressionFunctionProviderTest implements Expres
             public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
                                                                                          final List<?> values,
                                                                                          final ProviderContext context) {
-                if (name.equals(ORIGINAL_NAME)) {
-                    return function(ORIGINAL_NAME);
+                if (name.equals(RENAME_PROVIDER_NAME)) {
+                    return function(RENAME_PROVIDER_NAME);
                 }
                 if (name.equals(PROVIDER_ONLY_NAME)) {
                     return function(PROVIDER_ONLY_NAME);
@@ -217,7 +213,7 @@ public final class RenamedMappedExpressionFunctionProviderTest implements Expres
                         Sets.of(
                                 ExpressionFunctionInfo.with(
                                         RENAMED_URL,
-                                        ORIGINAL_NAME
+                                        RENAME_PROVIDER_NAME
                                 ),
                                 ExpressionFunctionInfo.with(
                                         PROVIDER_ONLY_URL,
@@ -236,7 +232,7 @@ public final class RenamedMappedExpressionFunctionProviderTest implements Expres
     public void testToString() {
         this.toStringAndCheck(
                 this.createExpressionFunctionProvider(),
-                "https://example.com/function123 different-function-name-123,https://example.com/provider-only-function123 provider-only-function-123"
+                "https://example.com/provider-only-function-222 provider-only-function-222,https://example.com/renamed-function111 rename-renamed-function-111"
         );
     }
 
