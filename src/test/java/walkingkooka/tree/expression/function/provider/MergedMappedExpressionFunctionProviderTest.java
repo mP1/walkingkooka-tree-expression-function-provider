@@ -36,8 +36,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class RenamedMappedExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<RenamedMappedExpressionFunctionProvider>,
-        ToStringTesting<RenamedMappedExpressionFunctionProvider> {
+public final class MergedMappedExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<MergedMappedExpressionFunctionProvider>,
+        ToStringTesting<MergedMappedExpressionFunctionProvider> {
 
     private final static AbsoluteUrl RENAMED_URL = Url.parseAbsolute("https://example.com/renamed-function111");
 
@@ -85,7 +85,7 @@ public final class RenamedMappedExpressionFunctionProviderTest implements Expres
     public void testWithNullInfosFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> RenamedMappedExpressionFunctionProvider.with(
+                () -> MergedMappedExpressionFunctionProvider.with(
                         null,
                         ExpressionFunctionProviders.fake()
                 )
@@ -96,7 +96,7 @@ public final class RenamedMappedExpressionFunctionProviderTest implements Expres
     public void testWithNullProviderFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> RenamedMappedExpressionFunctionProvider.with(
+                () -> MergedMappedExpressionFunctionProvider.with(
                         ExpressionFunctionInfoSet.EMPTY,
                         null
                 )
@@ -173,8 +173,8 @@ public final class RenamedMappedExpressionFunctionProviderTest implements Expres
     }
 
     @Override
-    public RenamedMappedExpressionFunctionProvider createExpressionFunctionProvider() {
-        return RenamedMappedExpressionFunctionProvider.with(
+    public MergedMappedExpressionFunctionProvider createExpressionFunctionProvider() {
+        return MergedMappedExpressionFunctionProvider.with(
                 ExpressionFunctionInfoSet.with(
                         Sets.of(
                                 ExpressionFunctionInfo.with(
@@ -239,8 +239,8 @@ public final class RenamedMappedExpressionFunctionProviderTest implements Expres
     // class............................................................................................................
 
     @Override
-    public Class<RenamedMappedExpressionFunctionProvider> type() {
-        return RenamedMappedExpressionFunctionProvider.class;
+    public Class<MergedMappedExpressionFunctionProvider> type() {
+        return MergedMappedExpressionFunctionProvider.class;
     }
 
     @Override

@@ -17,8 +17,8 @@
 
 package walkingkooka.tree.expression.function.provider;
 
+import walkingkooka.plugin.MergedProviderMapper;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.RenamingProviderMapper;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -31,23 +31,23 @@ import java.util.Optional;
 /**
  * A {@link ExpressionFunctionProvider} that supports renamed {@link ExpressionFunctionName} before invoking a wrapped {@link ExpressionFunctionProvider}.
  */
-final class RenamedMappedExpressionFunctionProvider implements ExpressionFunctionProvider {
+final class MergedMappedExpressionFunctionProvider implements ExpressionFunctionProvider {
 
-    static RenamedMappedExpressionFunctionProvider with(final ExpressionFunctionInfoSet infos,
-                                                        final ExpressionFunctionProvider provider) {
+    static MergedMappedExpressionFunctionProvider with(final ExpressionFunctionInfoSet infos,
+                                                       final ExpressionFunctionProvider provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
 
-        return new RenamedMappedExpressionFunctionProvider(
+        return new MergedMappedExpressionFunctionProvider(
                 infos,
                 provider
         );
     }
 
 
-    private RenamedMappedExpressionFunctionProvider(final ExpressionFunctionInfoSet infos,
-                                                    final ExpressionFunctionProvider provider) {
-        this.mapper = RenamingProviderMapper.with(
+    private MergedMappedExpressionFunctionProvider(final ExpressionFunctionInfoSet infos,
+                                                   final ExpressionFunctionProvider provider) {
+        this.mapper = MergedProviderMapper.with(
                 infos,
                 provider.expressionFunctionInfos(),
                 (n) -> new UnknownExpressionFunctionException(n)
@@ -95,7 +95,7 @@ final class RenamedMappedExpressionFunctionProvider implements ExpressionFunctio
         return this.mapper.infos();
     }
 
-    private final RenamingProviderMapper<ExpressionFunctionName, ExpressionFunctionSelector, ExpressionFunctionInfo, ExpressionFunctionInfoSet> mapper;
+    private final MergedProviderMapper<ExpressionFunctionName, ExpressionFunctionSelector, ExpressionFunctionInfo, ExpressionFunctionInfoSet> mapper;
 
     @Override
     public String toString() {
