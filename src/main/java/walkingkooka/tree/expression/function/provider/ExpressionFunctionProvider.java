@@ -26,7 +26,7 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 import java.util.List;
 
 /**
- * A provider supports listing available {@link ExpressionFunctionInfo} and fetching implementations by {@link walkingkooka.tree.expression.ExpressionFunctionName}.
+ * A provider that supports listing available {@link ExpressionFunctionInfo} and fetching implementations by {@link ExpressionFunctionName}.
  */
 public interface ExpressionFunctionProvider extends Provider {
 
