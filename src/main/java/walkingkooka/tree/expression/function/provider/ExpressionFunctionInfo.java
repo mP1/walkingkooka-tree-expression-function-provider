@@ -66,6 +66,18 @@ public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFu
         return this.name;
     }
 
+    @Override
+    public ExpressionFunctionInfo setName(final ExpressionFunctionName name) {
+        Objects.requireNonNull(name, "name");
+
+        return this.name.equals(name) ?
+                this :
+                new ExpressionFunctionInfo(
+                        this.url,
+                        name
+                );
+    }
+
     private final ExpressionFunctionName name;
 
     // Object...........................................................................................................

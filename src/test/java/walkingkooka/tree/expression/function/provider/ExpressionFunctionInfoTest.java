@@ -19,6 +19,7 @@ package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginInfoLikeTesting;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
@@ -33,6 +34,24 @@ public final class ExpressionFunctionInfoTest implements PluginInfoLikeTesting<E
         this.parseStringInvalidCharacterFails(
                 text,
                 text.indexOf('!')
+        );
+    }
+
+    @Test
+    public void testSetNameWithDifferent() {
+        final AbsoluteUrl url = Url.parseAbsolute("https://example/function123");
+        final ExpressionFunctionName different = ExpressionFunctionName.with("different");
+
+        this.setNameAndCheck(
+                ExpressionFunctionInfo.with(
+                        url,
+                        ExpressionFunctionName.with("original-function-name")
+                ),
+                different,
+                ExpressionFunctionInfo.with(
+                        url,
+                        different
+                )
         );
     }
 
