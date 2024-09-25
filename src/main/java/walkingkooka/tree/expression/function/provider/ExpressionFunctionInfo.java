@@ -20,74 +20,77 @@ package walkingkooka.tree.expression.function.provider;
 import walkingkooka.Cast;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.plugin.PluginInfo;
 import walkingkooka.plugin.PluginInfoLike;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-
-import java.util.Objects;
 
 public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFunctionInfo, ExpressionFunctionName>,
         HateosResource<ExpressionFunctionName> {
 
     public static ExpressionFunctionInfo parse(final String text) {
-        return PluginInfoLike.parse(
-                text,
-                ExpressionFunctionName::with,
-                ExpressionFunctionInfo::with
+        return new ExpressionFunctionInfo(
+                PluginInfo.parse(
+                        text,
+                        ExpressionFunctionName::with
+                )
         );
     }
 
     public static ExpressionFunctionInfo with(final AbsoluteUrl url,
                                               final ExpressionFunctionName name) {
         return new ExpressionFunctionInfo(
-                Objects.requireNonNull(url, "url"),
-                Objects.requireNonNull(name, "name")
+                PluginInfo.with(
+                        url,
+                        name
+                )
         );
     }
 
-    private ExpressionFunctionInfo(final AbsoluteUrl url,
-                                   final ExpressionFunctionName name) {
-        this.url = url;
-        this.name = name;
+    private ExpressionFunctionInfo(final PluginInfo<ExpressionFunctionName> pluginInfo) {
+        this.pluginInfo = pluginInfo;
     }
 
+    // HasAbsoluteUrl...................................................................................................
+
+    @Override
     public AbsoluteUrl url() {
-        return this.url;
+        return this.pluginInfo.url();
     }
-
-    private final AbsoluteUrl url;
 
     // HasName..........................................................................................................
 
     @Override
     public ExpressionFunctionName name() {
-        return this.name;
+        return this.pluginInfo.name();
     }
 
     @Override
     public ExpressionFunctionInfo setName(final ExpressionFunctionName name) {
-        Objects.requireNonNull(name, "name");
-
-        return this.name.equals(name) ?
+        return this.name().equals(name) ?
                 this :
                 new ExpressionFunctionInfo(
-                        this.url,
-                        name
+                        this.pluginInfo.setName(name)
                 );
     }
 
-    private final ExpressionFunctionName name;
+    private final PluginInfo<ExpressionFunctionName> pluginInfo;
+
+    // Comparable.......................................................................................................
+
+    @Override
+    public int compareTo(final ExpressionFunctionInfo other) {
+        return this.pluginInfo.compareTo(other.pluginInfo);
+    }
 
     // Object...........................................................................................................
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                this.url,
-                this.name
-        );
+        return this.pluginInfo.hashCode();
     }
 
     @Override
@@ -98,13 +101,12 @@ public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFu
     }
 
     private boolean equals0(final ExpressionFunctionInfo other) {
-        return this.url.equals(other.url) &&
-                this.name.equals(other.name);
+        return this.pluginInfo.equals(other.pluginInfo);
     }
 
     @Override
     public String toString() {
-        return PluginInfoLike.toString(this);
+        return this.pluginInfo.toString();
     }
 
     // Json.............................................................................................................
@@ -113,13 +115,14 @@ public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFu
         // helps force registry of json marshaller
     }
 
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        return JsonNode.string(this.toString());
+    }
+
     static ExpressionFunctionInfo unmarshall(final JsonNode node,
                                              final JsonNodeUnmarshallContext context) {
-        return PluginInfoLike.unmarshall(
-                node,
-                context,
-                ExpressionFunctionName::with,
-                ExpressionFunctionInfo::with
+        return ExpressionFunctionInfo.parse(
+                node.stringOrFail()
         );
     }
 
