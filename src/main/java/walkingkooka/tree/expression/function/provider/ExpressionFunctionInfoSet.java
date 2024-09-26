@@ -17,11 +17,13 @@
 
 package walkingkooka.tree.expression.function.provider;
 
-import walkingkooka.collect.iterator.Iterators;
+import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.collect.set.SortedSets;
-import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.UrlFragment;
+import walkingkooka.plugin.PluginInfoSet;
 import walkingkooka.plugin.PluginInfoSetLike;
+import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -32,92 +34,158 @@ import java.util.AbstractSet;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * A read only {@link Set} of {@link ExpressionFunctionInfo} sorted by {@link ExpressionFunctionName}.
  */
-public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunctionInfo>
-        implements PluginInfoSetLike<ExpressionFunctionInfoSet, ExpressionFunctionInfo, ExpressionFunctionName> {
+public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunctionInfo> implements PluginInfoSetLike<ExpressionFunctionInfoSet, ExpressionFunctionInfo, ExpressionFunctionName> {
 
-    /**
-     * Empty
-     */
-    public final static ExpressionFunctionInfoSet EMPTY = new ExpressionFunctionInfoSet(Sets.empty());
+    public final static ExpressionFunctionInfoSet EMPTY = new ExpressionFunctionInfoSet(
+            PluginInfoSet.with(
+                    Sets.<ExpressionFunctionInfo>empty()
+            )
+    );
 
-    /**
-     * Parses the given text into a {@link ExpressionFunctionInfo}
-     */
     public static ExpressionFunctionInfoSet parse(final String text) {
-        return PluginInfoSetLike.parse(
-                text,
-                ExpressionFunctionInfo::parse,
-                ExpressionFunctionInfoSet::with
+        return new ExpressionFunctionInfoSet(
+                PluginInfoSet.parse(
+                        text,
+                        ExpressionFunctionInfo::parse
+                )
         );
     }
 
-    /**
-     * Factory that creates a {@link ExpressionFunctionInfoSet} with the provided {@link ExpressionFunctionInfo}.
-     */
-    public static ExpressionFunctionInfoSet with(final Set<ExpressionFunctionInfo> functionInfos) {
-        Objects.requireNonNull(functionInfos, "functionInfos");
+    public static ExpressionFunctionInfoSet with(final Set<ExpressionFunctionInfo> infos) {
+        Objects.requireNonNull(infos, "infos");
 
-        final Set<ExpressionFunctionInfo> copy = SortedSets.tree(HateosResource.comparator());
-        copy.addAll(functionInfos);
-        return copy.isEmpty() ?
+        final PluginInfoSet<ExpressionFunctionName, ExpressionFunctionInfo> pluginInfoSet = PluginInfoSet.with(infos);
+        return pluginInfoSet.isEmpty() ?
                 EMPTY :
-                new ExpressionFunctionInfoSet(copy);
+                new ExpressionFunctionInfoSet(pluginInfoSet);
     }
 
-    private ExpressionFunctionInfoSet(final Set<ExpressionFunctionInfo> functionInfos) {
-        this.functionInfos = functionInfos;
+    private ExpressionFunctionInfoSet(final PluginInfoSet<ExpressionFunctionName, ExpressionFunctionInfo> pluginInfoSet) {
+        this.pluginInfoSet = pluginInfoSet;
+    }
+
+    // PluginInfoSetLike................................................................................................
+
+    @Override
+    public Set<ExpressionFunctionName> names() {
+        return this.pluginInfoSet.names();
+    }
+
+    @Override
+    public Set<AbsoluteUrl> url() {
+        return this.pluginInfoSet.url();
+    }
+
+    @Override
+    public UrlFragment urlFragment() {
+        return this.pluginInfoSet.urlFragment();
+    }
+
+    @Override
+    public ExpressionFunctionInfoSet filter(final ExpressionFunctionInfoSet infos) {
+        return this.setElements(
+                this.pluginInfoSet.filter(
+                        infos.pluginInfoSet
+                )
+        );
+    }
+
+    @Override
+    public ExpressionFunctionInfoSet renameIfPresent(ExpressionFunctionInfoSet renameInfos) {
+        return this.setElements(
+                this.pluginInfoSet.renameIfPresent(
+                        renameInfos.pluginInfoSet
+                )
+        );
+    }
+
+    @Override
+    public ExpressionFunctionInfoSet concat(final ExpressionFunctionInfo info) {
+        return this.setElements(
+                this.pluginInfoSet.concat(info)
+        );
+    }
+
+    @Override
+    public ExpressionFunctionInfoSet delete(final ExpressionFunctionInfo info) {
+        return this.setElements(
+                this.pluginInfoSet.delete(info)
+        );
+    }
+
+    @Override
+    public ExpressionFunctionInfoSet replace(final ExpressionFunctionInfo oldInfo,
+                                             final ExpressionFunctionInfo newInfo) {
+        return this.setElements(
+                this.pluginInfoSet.replace(
+                        oldInfo,
+                        newInfo
+                )
+        );
+    }
+
+    @Override
+    public ImmutableSet<ExpressionFunctionInfo> setElementsFailIfDifferent(final Set<ExpressionFunctionInfo> infos) {
+        return this.setElements(
+                this.pluginInfoSet.setElementsFailIfDifferent(
+                        infos
+                )
+        );
+    }
+
+    @Override
+    public ExpressionFunctionInfoSet setElements(final Set<ExpressionFunctionInfo> infos) {
+        final ExpressionFunctionInfoSet after = new ExpressionFunctionInfoSet(
+                this.pluginInfoSet.setElements(infos)
+        );
+        return this.pluginInfoSet.equals(infos) ?
+                this :
+                after;
+    }
+
+    @Override
+    public Set<ExpressionFunctionInfo> toSet() {
+        return this.pluginInfoSet.toSet();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public String text() {
+        return this.pluginInfoSet.text();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            this.pluginInfoSet.printTree(printer);
+        }
+        printer.outdent();
     }
 
     // AbstractSet......................................................................................................
 
     @Override
     public Iterator<ExpressionFunctionInfo> iterator() {
-        return Iterators.readOnly(
-                this.functionInfos.iterator()
-        );
+        return this.pluginInfoSet.iterator();
     }
 
     @Override
     public int size() {
-        return this.functionInfos.size();
+        return this.pluginInfoSet.size();
     }
 
-    private final Set<ExpressionFunctionInfo> functionInfos;
-
-    // ImmutableSet.....................................................................................................
-
-    @Override
-    public ExpressionFunctionInfoSet setElements(final Set<ExpressionFunctionInfo> set) {
-        final ExpressionFunctionInfoSet copy = with(set);
-        return this.equals(copy) ?
-                this :
-                copy;
-    }
-
-    @Override
-    public Set<ExpressionFunctionInfo> toSet() {
-        return new TreeSet<>(
-                this.functionInfos
-        );
-    }
+    private final PluginInfoSet<ExpressionFunctionName, ExpressionFunctionInfo> pluginInfoSet;
 
     // json.............................................................................................................
-
-    static {
-        ExpressionFunctionInfo.register(); // helps force registry of json marshaller
-
-        JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(ExpressionFunctionInfoSet.class),
-                ExpressionFunctionInfoSet::unmarshall,
-                ExpressionFunctionInfoSet::marshall,
-                ExpressionFunctionInfoSet.class
-        );
-    }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return context.marshallCollection(this);
@@ -126,11 +194,20 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
     // @VisibleForTesting
     static ExpressionFunctionInfoSet unmarshall(final JsonNode node,
                                                 final JsonNodeUnmarshallContext context) {
-        return ExpressionFunctionInfoSet.with(
+        return with(
                 context.unmarshallSet(
                         node,
                         ExpressionFunctionInfo.class
                 )
+        );
+    }
+
+    static {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(ExpressionFunctionInfoSet.class),
+                ExpressionFunctionInfoSet::unmarshall,
+                ExpressionFunctionInfoSet::marshall,
+                ExpressionFunctionInfoSet.class
         );
     }
 }
