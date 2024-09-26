@@ -203,6 +203,8 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
     }
 
     static {
+        ExpressionFunctionInfo.register(); // force registration
+
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(ExpressionFunctionInfoSet.class),
                 ExpressionFunctionInfoSet::unmarshall,
