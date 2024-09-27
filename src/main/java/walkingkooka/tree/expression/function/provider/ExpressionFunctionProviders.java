@@ -37,6 +37,17 @@ public final class ExpressionFunctionProviders implements PublicStaticHelper {
     );
 
     /**
+     * {@see AliasExpressionFunctionProvider}.
+     */
+    public static ExpressionFunctionProvider alias(final String aliases,
+                                                   final ExpressionFunctionProvider provider) {
+        return AliasExpressionFunctionProvider.with(
+                aliases,
+                provider
+        );
+    }
+
+    /**
      * {@see BasicExpressionFunctionProvider}
      */
     public static ExpressionFunctionProvider basic(final AbsoluteUrl baseUrl,
