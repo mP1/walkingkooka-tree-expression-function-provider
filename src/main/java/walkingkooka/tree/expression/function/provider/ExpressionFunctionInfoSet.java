@@ -126,6 +126,13 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
     }
 
     @Override
+    public ExpressionFunctionInfoSet deleteAll(final Collection<ExpressionFunctionInfo> infos) {
+        return this.setElements(
+                this.pluginInfoSet.deleteAll(infos)
+        );
+    }
+
+    @Override
     public ExpressionFunctionInfoSet replace(final ExpressionFunctionInfo oldInfo,
                                              final ExpressionFunctionInfo newInfo) {
         return this.setElements(
