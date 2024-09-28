@@ -31,6 +31,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.AbstractSet;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
@@ -107,6 +108,13 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
     public ExpressionFunctionInfoSet concat(final ExpressionFunctionInfo info) {
         return this.setElements(
                 this.pluginInfoSet.concat(info)
+        );
+    }
+
+    @Override
+    public ExpressionFunctionInfoSet concatAll(final Collection<ExpressionFunctionInfo> infos) {
+        return this.setElements(
+                this.pluginInfoSet.concatAll(infos)
         );
     }
 
