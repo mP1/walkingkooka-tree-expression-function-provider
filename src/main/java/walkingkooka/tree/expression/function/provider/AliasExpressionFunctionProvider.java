@@ -22,9 +22,6 @@ import walkingkooka.collect.set.SortedSets;
 import walkingkooka.plugin.PluginAliases;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.text.CharacterConstant;
-import walkingkooka.text.cursor.TextCursor;
-import walkingkooka.text.cursor.parser.ParserContext;
-import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -35,7 +32,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.BiFunction;
 
 /**
  * A {@link ExpressionFunctionProvider} that uses the given aliases definition and {@link ExpressionFunctionProvider} to present another view.
@@ -54,7 +50,7 @@ final class AliasExpressionFunctionProvider implements ExpressionFunctionProvide
                                             final ExpressionFunctionProvider provider) {
         this.aliases = PluginAliases.parse(
                 aliases,
-                NAME_PARSER, // nameParser
+                ExpressionFunctionName.PARSER, // nameParser
                 ExpressionFunctionInfo::with, // infoFactory
                 ExpressionFunctionInfoSet::with, // infoSet factory
                 ExpressionFunctionSelector::parse // selector parser
@@ -132,19 +128,6 @@ final class AliasExpressionFunctionProvider implements ExpressionFunctionProvide
 
         this.infos = newInfos;
     }
-
-    private final static BiFunction<TextCursor, ParserContext, Optional<ExpressionFunctionName>> NAME_PARSER = (t, c) ->
-            Parsers.stringInitialAndPartCharPredicate(
-                    cc -> ExpressionFunctionName.isChar(0, cc),
-                    cc -> ExpressionFunctionName.isChar(1, cc),
-                    ExpressionFunctionName.MIN_LENGTH,
-                    ExpressionFunctionName.MAX_LENGTH
-            ).parse(
-                    t,
-                    c
-            ).map(
-                    tt -> ExpressionFunctionName.with(tt.text())
-            );
 
     @Override
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
