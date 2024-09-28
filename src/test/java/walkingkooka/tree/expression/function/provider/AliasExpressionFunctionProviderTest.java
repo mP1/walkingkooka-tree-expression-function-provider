@@ -23,6 +23,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -31,6 +32,8 @@ import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class AliasExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<AliasExpressionFunctionProvider> {
 
@@ -83,6 +86,65 @@ public final class AliasExpressionFunctionProviderTest implements ExpressionFunc
     }
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
+
+    @Test
+    public void testWithUnknownFunctionNameFails() {
+        this.withFails(
+                "unknown-function404",
+                ExpressionFunctionInfoSet.parse("https://example.com/function111 function111"),
+                "Unknown functions: unknown-function404"
+        );
+    }
+
+    @Test
+    public void testWithUnknownFunctionNameFails2() {
+        this.withFails(
+                "unknown-function111, function111",
+                ExpressionFunctionInfoSet.parse("https://example.com/function111 function111"),
+                "Unknown functions: unknown-function111"
+        );
+    }
+
+    @Test
+    public void testWithUnknownFunctionNameFails3() {
+        this.withFails(
+                "unknown-function111, unknown-function222",
+                ExpressionFunctionInfoSet.parse("https://example.com/function111 function111"),
+                "Unknown functions: unknown-function111,unknown-function222"
+        );
+    }
+
+    @Test
+    public void testWithAliasWithUnknownFunctionNameFails() {
+        this.withFails(
+                "alias404 unknown-function404",
+                ExpressionFunctionInfoSet.parse("https://example.com/function111 function111"),
+                "Unknown functions: unknown-function404"
+        );
+    }
+
+    private void withFails(final String alias,
+                           final ExpressionFunctionInfoSet infos,
+                           final String expected) {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> AliasExpressionFunctionProvider.with(
+                    alias,
+                        new FakeExpressionFunctionProvider() {
+                            @Override
+                            public ExpressionFunctionInfoSet expressionFunctionInfos() {
+                                return infos;
+                            }
+                        }
+                )
+        );
+
+        this.checkEquals(
+                expected,
+                thrown.getMessage(),
+                () -> "parse " + CharSequences.quoteAndEscape(alias)
+        );
+    }
 
     @Test
     public void testExpressionFunctionNameWithName() {
@@ -147,7 +209,7 @@ public final class AliasExpressionFunctionProviderTest implements ExpressionFunc
                 INFO1,
                 INFO2.setName(ALIAS2),
                 INFO3,
-                INFO4.setName(NAME4)
+                INFO4.setName(NAME4) // from PluginAliases
         );
     }
 

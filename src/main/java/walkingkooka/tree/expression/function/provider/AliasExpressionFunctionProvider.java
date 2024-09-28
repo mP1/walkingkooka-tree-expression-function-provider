@@ -17,8 +17,11 @@
 
 package walkingkooka.tree.expression.function.provider;
 
+import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.plugin.PluginAliases;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -28,8 +31,10 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
 
 /**
@@ -51,10 +56,81 @@ final class AliasExpressionFunctionProvider implements ExpressionFunctionProvide
                 aliases,
                 NAME_PARSER, // nameParser
                 ExpressionFunctionInfo::with, // infoFactory
-                provider.expressionFunctionInfos(), // infos
+                ExpressionFunctionInfoSet::with, // infoSet factory
                 ExpressionFunctionSelector::parse // selector parser
         );
         this.provider = provider;
+
+        final ExpressionFunctionInfoSet providerInfos = provider.expressionFunctionInfos();
+
+        // verify all aliases -> name and names exist
+        final Set<ExpressionFunctionName> providerNames = providerInfos.names();
+
+        final Set<ExpressionFunctionName> unknownNames = SortedSets.tree();
+
+        this.aliases.names()
+                .stream()
+                .filter(n -> false == providerNames.contains(n))
+                .forEach(unknownNames::add);
+
+        // Fix all INFOs for each alias
+        ExpressionFunctionInfoSet newInfos = providerInfos;
+
+        final Set<ExpressionFunctionName> aliasNames = this.aliases.aliases();
+        final ExpressionFunctionInfoSet aliasesInfos = this.aliases.infos();
+
+        if (aliasNames.size() + aliasesInfos.size() > 0) {
+            final Map<ExpressionFunctionName, ExpressionFunctionInfo> nameToProviderInfo = Maps.sorted();
+
+            for (final ExpressionFunctionInfo providerInfo : providerInfos) {
+                nameToProviderInfo.put(
+                        providerInfo.name(),
+                        providerInfo
+                );
+            }
+
+            for(final ExpressionFunctionName aliasName : aliasNames) {
+                final Optional<ExpressionFunctionSelector> selector = this.aliases.alias(aliasName);
+                if(selector.isPresent()) {
+                    final ExpressionFunctionInfo providerInfo = nameToProviderInfo.get(
+                            selector.get()
+                                    .name()
+                    );
+                    if (null != providerInfo) {
+                        newInfos = newInfos.replace(
+                                providerInfo,
+                                providerInfo.setName(aliasName)
+                        );
+                    }
+                }
+            }
+
+            for (final ExpressionFunctionInfo aliasInfo : aliasesInfos) {
+                final ExpressionFunctionName name = aliasInfo.name();
+                final ExpressionFunctionInfo providerInfo = nameToProviderInfo.get(name);
+                if (null != providerInfo) {
+                    newInfos = newInfos.replace(
+                            providerInfo,
+                            aliasInfo
+                    );
+                } else {
+                    newInfos = newInfos.concat(
+                            aliasInfo
+                    );
+                }
+            }
+        }
+
+        if (false == unknownNames.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Unknown functions: " +
+                            CharacterConstant.COMMA.toSeparatedString(
+                                    unknownNames,
+                                    ExpressionFunctionName::toString
+                            ));
+        }
+
+        this.infos = newInfos;
     }
 
     private final static BiFunction<TextCursor, ParserContext, Optional<ExpressionFunctionName>> NAME_PARSER = (t, c) ->
@@ -114,14 +190,16 @@ final class AliasExpressionFunctionProvider implements ExpressionFunctionProvide
         return function;
     }
 
+    private final PluginAliases<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector> aliases;
+
     private final ExpressionFunctionProvider provider;
 
     @Override
     public ExpressionFunctionInfoSet expressionFunctionInfos() {
-        return this.aliases.infos();
+        return this.infos;
     }
 
-    private final PluginAliases<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector> aliases;
+    private final ExpressionFunctionInfoSet infos;
 
     @Override
     public String toString() {
