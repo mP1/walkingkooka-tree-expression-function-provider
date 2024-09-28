@@ -85,9 +85,9 @@ final class AliasExpressionFunctionProvider implements ExpressionFunctionProvide
                 );
             }
 
-            for(final ExpressionFunctionName aliasName : aliasNames) {
+            for (final ExpressionFunctionName aliasName : aliasNames) {
                 final Optional<ExpressionFunctionSelector> selector = this.aliases.alias(aliasName);
-                if(selector.isPresent()) {
+                if (selector.isPresent()) {
                     final ExpressionFunctionInfo providerInfo = nameToProviderInfo.get(
                             selector.get()
                                     .name()
@@ -123,7 +123,8 @@ final class AliasExpressionFunctionProvider implements ExpressionFunctionProvide
                             CharacterConstant.COMMA.toSeparatedString(
                                     unknownNames,
                                     ExpressionFunctionName::toString
-                            ));
+                            )
+            );
         }
 
         this.infos = newInfos;
