@@ -20,12 +20,6 @@ package walkingkooka.tree.expression.function.provider;
 import walkingkooka.plugin.PluginSelector;
 import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.text.cursor.TextCursor;
-import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserContext;
-import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.text.cursor.parser.Parsers;
-import walkingkooka.text.cursor.parser.StringParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -136,30 +130,11 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
         Objects.requireNonNull(context, "context");
 
         return this.selector.evaluateText(
-                (final TextCursor cursor, final ParserContext c) -> NAME_PARSER.parse(
-                        cursor,
-                        c
-                ).map(
-                        (final ParserToken token) ->
-                                ExpressionFunctionName.with(
-                                        token.cast(StringParserToken.class)
-                                                .value()
-                                )
-                ),
+                ExpressionFunctionName.PARSER,
                 provider::expressionFunction,
                 context
         );
     }
-
-    /**
-     * A parser that returns a {@link ExpressionFunctionName}.
-     */
-    private final static Parser<ParserContext> NAME_PARSER = Parsers.stringInitialAndPartCharPredicate(
-            (c) -> ExpressionFunctionName.isChar(0, c),
-            (c) -> ExpressionFunctionName.isChar(1, c),
-            1,
-            ExpressionFunctionName.MAX_LENGTH
-    );
 
     // Object...........................................................................................................
 
