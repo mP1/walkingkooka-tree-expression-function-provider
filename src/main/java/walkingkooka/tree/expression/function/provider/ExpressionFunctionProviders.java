@@ -37,11 +37,11 @@ public final class ExpressionFunctionProviders implements PublicStaticHelper {
     );
 
     /**
-     * {@see AliasExpressionFunctionProvider}.
+     * {@see AliasesExpressionFunctionProvider}.
      */
-    public static ExpressionFunctionProvider alias(final ExpressionFunctionAliases aliases,
-                                                   final ExpressionFunctionProvider provider) {
-        return AliasExpressionFunctionProvider.with(
+    public static ExpressionFunctionProvider aliases(final ExpressionFunctionAliases aliases,
+                                                     final ExpressionFunctionProvider provider) {
+        return AliasesExpressionFunctionProvider.with(
                 aliases,
                 provider
         );

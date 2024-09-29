@@ -34,7 +34,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class AliasExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<AliasExpressionFunctionProvider> {
+public final class AliasesExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<AliasesExpressionFunctionProvider> {
 
     private final static String NAME1_STRING = "function1";
 
@@ -127,7 +127,7 @@ public final class AliasExpressionFunctionProviderTest implements ExpressionFunc
                            final String expected) {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> AliasExpressionFunctionProvider.with(
+                () -> AliasesExpressionFunctionProvider.with(
                     alias,
                         new FakeExpressionFunctionProvider() {
                             @Override
@@ -213,7 +213,7 @@ public final class AliasExpressionFunctionProviderTest implements ExpressionFunc
     }
 
     @Override
-    public AliasExpressionFunctionProvider createExpressionFunctionProvider() {
+    public AliasesExpressionFunctionProvider createExpressionFunctionProvider() {
         final String aliases = "function1, alias2 function2, custom4 function3(\"Value3\") https://example.com/custom4";
 
         this.checkEquals(
@@ -221,7 +221,7 @@ public final class AliasExpressionFunctionProviderTest implements ExpressionFunc
                 aliases
         );
 
-        return AliasExpressionFunctionProvider.with(
+        return AliasesExpressionFunctionProvider.with(
                 ExpressionFunctionAliases.parse(aliases),
                 new FakeExpressionFunctionProvider() {
                     @Override
@@ -276,8 +276,8 @@ public final class AliasExpressionFunctionProviderTest implements ExpressionFunc
     // class............................................................................................................
 
     @Override
-    public Class<AliasExpressionFunctionProvider> type() {
-        return AliasExpressionFunctionProvider.class;
+    public Class<AliasesExpressionFunctionProvider> type() {
+        return AliasesExpressionFunctionProvider.class;
     }
 
     @Override
