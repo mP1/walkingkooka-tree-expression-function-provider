@@ -19,7 +19,6 @@ package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.SortedSets;
-import walkingkooka.plugin.PluginAliases;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -38,7 +37,7 @@ import java.util.Set;
  */
 final class AliasExpressionFunctionProvider implements ExpressionFunctionProvider {
 
-    static AliasExpressionFunctionProvider with(final String aliases,
+    static AliasExpressionFunctionProvider with(final ExpressionFunctionAliases aliases,
                                                 final ExpressionFunctionProvider provider) {
         return new AliasExpressionFunctionProvider(
                 Objects.requireNonNull(aliases, "aliases"),
@@ -46,15 +45,9 @@ final class AliasExpressionFunctionProvider implements ExpressionFunctionProvide
         );
     }
 
-    private AliasExpressionFunctionProvider(final String aliases,
+    private AliasExpressionFunctionProvider(final ExpressionFunctionAliases aliases,
                                             final ExpressionFunctionProvider provider) {
-        this.aliases = PluginAliases.parse(
-                aliases,
-                ExpressionFunctionName.PARSER, // nameParser
-                ExpressionFunctionInfo::with, // infoFactory
-                ExpressionFunctionInfoSet::with, // infoSet factory
-                ExpressionFunctionSelector::parse // selector parser
-        );
+        this.aliases = aliases;
         this.provider = provider;
 
         final ExpressionFunctionInfoSet providerInfos = provider.expressionFunctionInfos();
@@ -72,8 +65,8 @@ final class AliasExpressionFunctionProvider implements ExpressionFunctionProvide
         // Fix all INFOs for each alias
         ExpressionFunctionInfoSet newInfos = providerInfos;
 
-        final Set<ExpressionFunctionName> aliasNames = this.aliases.aliases();
-        final ExpressionFunctionInfoSet aliasesInfos = this.aliases.infos();
+        final Set<ExpressionFunctionName> aliasNames = aliases.aliases();
+        final ExpressionFunctionInfoSet aliasesInfos = aliases.infos();
 
         if (aliasNames.size() + aliasesInfos.size() > 0) {
             final Map<ExpressionFunctionName, ExpressionFunctionInfo> nameToProviderInfo = Maps.sorted();
@@ -86,7 +79,7 @@ final class AliasExpressionFunctionProvider implements ExpressionFunctionProvide
             }
 
             for (final ExpressionFunctionName aliasName : aliasNames) {
-                final Optional<ExpressionFunctionSelector> selector = this.aliases.alias(aliasName);
+                final Optional<ExpressionFunctionSelector> selector = aliases.alias(aliasName);
                 if (selector.isPresent()) {
                     final ExpressionFunctionInfo providerInfo = nameToProviderInfo.get(
                             selector.get()
@@ -149,7 +142,7 @@ final class AliasExpressionFunctionProvider implements ExpressionFunctionProvide
 
         ExpressionFunction<?, ExpressionEvaluationContext> function;
 
-        final PluginAliases<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector> aliases = this.aliases;
+        final ExpressionFunctionAliases aliases = this.aliases;
         final ExpressionFunctionProvider provider = this.provider;
 
         final Optional<ExpressionFunctionSelector> selector = aliases.alias(name);
@@ -174,7 +167,7 @@ final class AliasExpressionFunctionProvider implements ExpressionFunctionProvide
         return function;
     }
 
-    private final PluginAliases<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector> aliases;
+    private final ExpressionFunctionAliases aliases;
 
     private final ExpressionFunctionProvider provider;
 

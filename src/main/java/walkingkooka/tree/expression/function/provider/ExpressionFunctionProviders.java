@@ -39,7 +39,7 @@ public final class ExpressionFunctionProviders implements PublicStaticHelper {
     /**
      * {@see AliasExpressionFunctionProvider}.
      */
-    public static ExpressionFunctionProvider alias(final String aliases,
+    public static ExpressionFunctionProvider alias(final ExpressionFunctionAliases aliases,
                                                    final ExpressionFunctionProvider provider) {
         return AliasExpressionFunctionProvider.with(
                 aliases,
