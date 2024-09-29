@@ -35,18 +35,18 @@ import java.util.Set;
 /**
  * A {@link ExpressionFunctionProvider} that uses the given aliases definition and {@link ExpressionFunctionProvider} to present another view.
  */
-final class AliasExpressionFunctionProvider implements ExpressionFunctionProvider {
+final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvider {
 
-    static AliasExpressionFunctionProvider with(final ExpressionFunctionAliases aliases,
-                                                final ExpressionFunctionProvider provider) {
-        return new AliasExpressionFunctionProvider(
+    static AliasesExpressionFunctionProvider with(final ExpressionFunctionAliases aliases,
+                                                  final ExpressionFunctionProvider provider) {
+        return new AliasesExpressionFunctionProvider(
                 Objects.requireNonNull(aliases, "aliases"),
                 Objects.requireNonNull(provider, "provider")
         );
     }
 
-    private AliasExpressionFunctionProvider(final ExpressionFunctionAliases aliases,
-                                            final ExpressionFunctionProvider provider) {
+    private AliasesExpressionFunctionProvider(final ExpressionFunctionAliases aliases,
+                                              final ExpressionFunctionProvider provider) {
         this.aliases = aliases;
         this.provider = provider;
 
