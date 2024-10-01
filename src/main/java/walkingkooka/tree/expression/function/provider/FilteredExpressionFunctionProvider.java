@@ -22,7 +22,6 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.List;
 import java.util.Objects;
@@ -44,7 +43,7 @@ final class FilteredExpressionFunctionProvider implements ExpressionFunctionProv
                                                final ExpressionFunctionInfoSet infos) {
         this.guard = FilteredProviderGuard.with(
                 infos.names(),
-                (n) -> new UnknownExpressionFunctionException(n)
+                ExpressionFunctionHelper.INSTANCE
         );
         this.provider = provider;
         this.infos = infos;

@@ -35,10 +35,7 @@ public final class ExpressionFunctionAliases implements PluginAliasesLike<Expres
         return new ExpressionFunctionAliases(
                 PluginAliases.parse(
                         text,
-                        ExpressionFunctionName.PARSER, // nameParser
-                        ExpressionFunctionInfo::with, // infoFactory
-                        ExpressionFunctionInfoSet::with, // infoSet factory
-                        ExpressionFunctionSelector::parse // selector parser
+                        ExpressionFunctionHelper.INSTANCE
                 )
         );
     }
