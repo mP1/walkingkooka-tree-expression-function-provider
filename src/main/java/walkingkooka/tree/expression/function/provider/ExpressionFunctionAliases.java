@@ -20,6 +20,7 @@ package walkingkooka.tree.expression.function.provider;
 import walkingkooka.Cast;
 import walkingkooka.plugin.PluginAliases;
 import walkingkooka.plugin.PluginAliasesLike;
+import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -30,6 +31,11 @@ import java.util.Optional;
 import java.util.Set;
 
 public final class ExpressionFunctionAliases implements PluginAliasesLike<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector> {
+
+    /**
+     * {@see PluginAliases#SEPARATOR}
+     */
+    public final static CharacterConstant SEPARATOR = PluginAliases.SEPARATOR;
 
     public static ExpressionFunctionAliases parse(final String text) {
         return new ExpressionFunctionAliases(
