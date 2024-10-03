@@ -57,7 +57,7 @@ public final class ExpressionFunctionAliases implements PluginAliasesLike<Expres
 
     @Override
     public Set<ExpressionFunctionName> aliases() {
-        return this.pluginAliases.aliases();
+        return this.pluginAliases.aliasesWithoutInfos();
     }
 
     @Override
