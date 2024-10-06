@@ -75,6 +75,7 @@ public final class ExpressionFunctionAliases implements PluginAliasesLike<Expres
         return this.pluginAliasSet.infos();
     }
 
+    @Override
     public ExpressionFunctionInfoSet merge(final ExpressionFunctionInfoSet infos) {
         return this.pluginAliasSet.merge(infos);
     }
