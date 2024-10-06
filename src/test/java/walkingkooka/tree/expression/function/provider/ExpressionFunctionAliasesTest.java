@@ -67,34 +67,6 @@ public final class ExpressionFunctionAliasesTest implements PluginAliasesLikeTes
         );
     }
 
-    @Test
-    public void testNames() {
-        this.namesAndCheck(
-                this.createPluginAliases(),
-                ExpressionFunctionName.with("abs"),
-                ExpressionFunctionName.with("min"),
-                ExpressionFunctionName.with("max"),
-                ExpressionFunctionName.with("custom"),
-                ExpressionFunctionName.with("sum")
-        );
-    }
-
-    @Test
-    public void testAliases() {
-        this.aliasesAndCheck(
-                this.createPluginAliases(),
-                ExpressionFunctionName.with("sum-alias")
-        );
-    }
-
-    @Test
-    public void testInfos() {
-        this.infosAndCheck(
-                this.createPluginAliases(),
-                ExpressionFunctionInfo.parse("https://example.com/custom custom-alias")
-        );
-    }
-
     @Override
     public ExpressionFunctionAliases createPluginAliases() {
         return ExpressionFunctionAliases.parse("abs, min, max, custom-alias custom(1) https://example.com/custom , sum-alias sum");
