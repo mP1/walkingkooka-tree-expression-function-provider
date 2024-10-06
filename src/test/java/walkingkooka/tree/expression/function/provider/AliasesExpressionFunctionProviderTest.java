@@ -91,7 +91,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
         this.withFails(
                 ExpressionFunctionAliases.parse("unknown-function404"),
                 ExpressionFunctionInfoSet.parse("https://example.com/function111 function111"),
-                "Unknown functions: unknown-function404"
+                "Unknown Function(s): unknown-function404"
         );
     }
 
@@ -100,7 +100,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
         this.withFails(
                 ExpressionFunctionAliases.parse("unknown-function111, function111"),
                 ExpressionFunctionInfoSet.parse("https://example.com/function111 function111"),
-                "Unknown functions: unknown-function111"
+                "Unknown Function(s): unknown-function111"
         );
     }
 
@@ -109,7 +109,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
         this.withFails(
                 ExpressionFunctionAliases.parse("unknown-function111, unknown-function222"),
                 ExpressionFunctionInfoSet.parse("https://example.com/function111 function111"),
-                "Unknown functions: unknown-function111,unknown-function222"
+                "Unknown Function(s): unknown-function111,unknown-function222"
         );
     }
 
@@ -118,7 +118,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
         this.withFails(
                 ExpressionFunctionAliases.parse("alias404 unknown-function404"),
                 ExpressionFunctionInfoSet.parse("https://example.com/function111 function111"),
-                "Unknown functions: unknown-function404"
+                "Unknown Function(s): unknown-function404"
         );
     }
 
