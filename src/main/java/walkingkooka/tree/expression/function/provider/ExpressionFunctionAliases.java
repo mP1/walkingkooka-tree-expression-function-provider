@@ -18,6 +18,7 @@
 package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.Cast;
+import walkingkooka.plugin.PluginAliasSet;
 import walkingkooka.plugin.PluginAliases;
 import walkingkooka.plugin.PluginAliasesLike;
 import walkingkooka.text.CharacterConstant;
@@ -39,47 +40,47 @@ public final class ExpressionFunctionAliases implements PluginAliasesLike<Expres
 
     public static ExpressionFunctionAliases parse(final String text) {
         return new ExpressionFunctionAliases(
-                PluginAliases.parse(
+                PluginAliasSet.parse(
                         text,
                         ExpressionFunctionHelper.INSTANCE
                 )
         );
     }
 
-    private ExpressionFunctionAliases(final PluginAliases<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector> pluginAliases) {
-        this.pluginAliases = pluginAliases;
+    private ExpressionFunctionAliases(final PluginAliasSet<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector> pluginAliasSet) {
+        this.pluginAliasSet = pluginAliasSet;
     }
 
     @Override
     public Optional<ExpressionFunctionSelector> alias(final ExpressionFunctionName name) {
-        return this.pluginAliases.alias(name);
+        return this.pluginAliasSet.alias(name);
     }
 
     @Override
     public Set<ExpressionFunctionName> aliases() {
-        return this.pluginAliases.aliasesWithoutInfos();
+        return this.pluginAliasSet.aliasesWithoutInfos();
     }
 
     @Override
     public Optional<ExpressionFunctionName> name(final ExpressionFunctionName name) {
-        return this.pluginAliases.name(name);
+        return this.pluginAliasSet.name(name);
     }
 
     @Override
     public Set<ExpressionFunctionName> names() {
-        return this.pluginAliases.names();
+        return this.pluginAliasSet.names();
     }
 
     @Override
     public ExpressionFunctionInfoSet infos() {
-        return this.pluginAliases.infos();
+        return this.pluginAliasSet.infos();
     }
 
     // Object...........................................................................................................
 
     @Override
     public int hashCode() {
-        return this.pluginAliases.hashCode();
+        return this.pluginAliasSet.hashCode();
     }
 
     @Override
@@ -88,15 +89,15 @@ public final class ExpressionFunctionAliases implements PluginAliasesLike<Expres
     }
 
     private boolean equals0(final ExpressionFunctionAliases other) {
-        return this.pluginAliases.equals(other.pluginAliases);
+        return this.pluginAliasSet.equals(other.pluginAliasSet);
     }
 
     @Override
     public String toString() {
-        return this.pluginAliases.toString();
+        return this.pluginAliasSet.text();
     }
 
-    private final PluginAliases<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector> pluginAliases;
+    private final PluginAliasSet<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector> pluginAliasSet;
 
     // Json.............................................................................................................
 
@@ -105,7 +106,9 @@ public final class ExpressionFunctionAliases implements PluginAliasesLike<Expres
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        return JsonNode.string(this.toString());
+        return JsonNode.string(
+                this.pluginAliasSet.text()
+    );
     }
 
     static ExpressionFunctionAliases unmarshall(final JsonNode node,
