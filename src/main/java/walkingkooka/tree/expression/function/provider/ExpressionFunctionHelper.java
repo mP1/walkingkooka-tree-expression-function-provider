@@ -102,6 +102,11 @@ final class ExpressionFunctionHelper implements PluginHelper<ExpressionFunctionN
     }
 
     @Override
+    public String label() {
+        return "Function";
+    }
+
+    @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
