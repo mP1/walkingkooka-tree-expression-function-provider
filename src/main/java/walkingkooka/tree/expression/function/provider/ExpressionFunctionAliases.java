@@ -28,7 +28,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Optional;
-import java.util.Set;
 
 public final class ExpressionFunctionAliases implements PluginAliasesLike<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector> {
 
@@ -56,23 +55,8 @@ public final class ExpressionFunctionAliases implements PluginAliasesLike<Expres
     }
 
     @Override
-    public Set<ExpressionFunctionName> aliases() {
-        return this.pluginAliasSet.aliasesWithoutInfos();
-    }
-
-    @Override
     public Optional<ExpressionFunctionName> name(final ExpressionFunctionName name) {
         return this.pluginAliasSet.name(name);
-    }
-
-    @Override
-    public Set<ExpressionFunctionName> names() {
-        return this.pluginAliasSet.names();
-    }
-
-    @Override
-    public ExpressionFunctionInfoSet infos() {
-        return this.pluginAliasSet.infos();
     }
 
     @Override
