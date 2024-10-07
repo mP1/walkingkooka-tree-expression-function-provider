@@ -207,8 +207,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
         this.expressionFunctionInfosAndCheck(
                 INFO1,
                 INFO2.setName(ALIAS2),
-                INFO3,
-                INFO4.setName(NAME4) // from PluginAliases
+                INFO4.setName(NAME4) // from ExpressionFunctionAliases
         );
     }
 
