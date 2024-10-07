@@ -33,7 +33,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 /**
- * A {@link PluginHelper} that is hardcoded to use a {@link CaseSensitivity#INSENSITIVE} to match the expeted behaviour of spreadsheet function name lookups.
+ * A {@link PluginHelper} that is hardcoded to use a {@link CaseSensitivity#INSENSITIVE} to match the expected behaviour of spreadsheet function name lookups.
  * <br>
  * TODO https://github.com/mP1/walkingkooka-tree-expression-function-provider/issues/118
  */
