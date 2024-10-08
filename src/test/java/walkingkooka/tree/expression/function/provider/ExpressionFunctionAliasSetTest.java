@@ -30,15 +30,15 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ExpressionFunctionAliasesTest implements PluginAliasSetLikeTesting<ExpressionFunctionName,
+public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeTesting<ExpressionFunctionName,
         ExpressionFunctionInfo,
         ExpressionFunctionInfoSet,
         ExpressionFunctionSelector,
         ExpressionFunctionAlias,
-        ExpressionFunctionAliases>,
-        HashCodeEqualsDefinedTesting2<ExpressionFunctionAliases>,
-        ToStringTesting<ExpressionFunctionAliases>,
-        JsonNodeMarshallingTesting<ExpressionFunctionAliases> {
+        ExpressionFunctionAliasSet>,
+        HashCodeEqualsDefinedTesting2<ExpressionFunctionAliasSet>,
+        ToStringTesting<ExpressionFunctionAliasSet>,
+        JsonNodeMarshallingTesting<ExpressionFunctionAliasSet> {
 
     // with.............................................................................................................
 
@@ -46,15 +46,15 @@ public final class ExpressionFunctionAliasesTest implements PluginAliasSetLikeTe
     public void testWithNullFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> ExpressionFunctionAliases.with(null)
+                () -> ExpressionFunctionAliasSet.with(null)
         );
     }
 
     @Test
     public void testWithEmpty() {
         assertSame(
-                ExpressionFunctionAliases.EMPTY,
-                ExpressionFunctionAliases.with(SortedSets.empty())
+                ExpressionFunctionAliasSet.EMPTY,
+                ExpressionFunctionAliasSet.with(SortedSets.empty())
         );
     }
 
@@ -97,15 +97,15 @@ public final class ExpressionFunctionAliasesTest implements PluginAliasSetLikeTe
     }
 
     @Override
-    public ExpressionFunctionAliases createSet() {
-        return ExpressionFunctionAliases.parse("abs, min, max, custom-alias custom(1) https://example.com/custom , sum-alias sum");
+    public ExpressionFunctionAliasSet createSet() {
+        return ExpressionFunctionAliasSet.parse("abs, min, max, custom-alias custom(1) https://example.com/custom , sum-alias sum");
     }
 
     // parse............................................................................................................
 
     @Override
-    public ExpressionFunctionAliases parseString(final String text) {
-        return ExpressionFunctionAliases.parse(text);
+    public ExpressionFunctionAliasSet parseString(final String text) {
+        return ExpressionFunctionAliasSet.parse(text);
     }
 
     // equals...........................................................................................................
@@ -113,35 +113,35 @@ public final class ExpressionFunctionAliasesTest implements PluginAliasSetLikeTe
     @Test
     public void testEqualsDifferent() {
         this.checkNotEquals(
-                ExpressionFunctionAliases.parse("different")
+                ExpressionFunctionAliasSet.parse("different")
         );
     }
 
     @Override
-    public ExpressionFunctionAliases createObject() {
-        return ExpressionFunctionAliases.parse("abs, custom-alias custom(1) https://example.com/custom");
+    public ExpressionFunctionAliasSet createObject() {
+        return ExpressionFunctionAliasSet.parse("abs, custom-alias custom(1) https://example.com/custom");
     }
 
     // json.............................................................................................................
 
     @Override
-    public ExpressionFunctionAliases unmarshall(final JsonNode json,
-                                                final JsonNodeUnmarshallContext context) {
-        return ExpressionFunctionAliases.unmarshall(
+    public ExpressionFunctionAliasSet unmarshall(final JsonNode json,
+                                                 final JsonNodeUnmarshallContext context) {
+        return ExpressionFunctionAliasSet.unmarshall(
                 json,
                 context
         );
     }
 
     @Override
-    public ExpressionFunctionAliases createJsonNodeMarshallingValue() {
-        return ExpressionFunctionAliases.parse("alias1 name1, name2, alias3 name3(\"999\") https://example.com/name3");
+    public ExpressionFunctionAliasSet createJsonNodeMarshallingValue() {
+        return ExpressionFunctionAliasSet.parse("alias1 name1, name2, alias3 name3(\"999\") https://example.com/name3");
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<ExpressionFunctionAliases> type() {
-        return ExpressionFunctionAliases.class;
+    public Class<ExpressionFunctionAliasSet> type() {
+        return ExpressionFunctionAliasSet.class;
     }
 }

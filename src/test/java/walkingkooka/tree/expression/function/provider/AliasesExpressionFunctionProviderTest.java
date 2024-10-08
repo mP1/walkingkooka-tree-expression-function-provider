@@ -89,7 +89,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     @Test
     public void testWithUnknownFunctionNameFails() {
         this.withFails(
-                ExpressionFunctionAliases.parse("unknown-function404"),
+                ExpressionFunctionAliasSet.parse("unknown-function404"),
                 ExpressionFunctionInfoSet.parse("https://example.com/function111 function111"),
                 "Unknown Function(s): unknown-function404"
         );
@@ -98,7 +98,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     @Test
     public void testWithUnknownFunctionNameFails2() {
         this.withFails(
-                ExpressionFunctionAliases.parse("unknown-function111, function111"),
+                ExpressionFunctionAliasSet.parse("unknown-function111, function111"),
                 ExpressionFunctionInfoSet.parse("https://example.com/function111 function111"),
                 "Unknown Function(s): unknown-function111"
         );
@@ -107,7 +107,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     @Test
     public void testWithUnknownFunctionNameFails3() {
         this.withFails(
-                ExpressionFunctionAliases.parse("unknown-function111, unknown-function222"),
+                ExpressionFunctionAliasSet.parse("unknown-function111, unknown-function222"),
                 ExpressionFunctionInfoSet.parse("https://example.com/function111 function111"),
                 "Unknown Function(s): unknown-function111,unknown-function222"
         );
@@ -116,13 +116,13 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     @Test
     public void testWithAliasWithUnknownFunctionNameFails() {
         this.withFails(
-                ExpressionFunctionAliases.parse("alias404 unknown-function404"),
+                ExpressionFunctionAliasSet.parse("alias404 unknown-function404"),
                 ExpressionFunctionInfoSet.parse("https://example.com/function111 function111"),
                 "Unknown Function(s): unknown-function404"
         );
     }
 
-    private void withFails(final ExpressionFunctionAliases alias,
+    private void withFails(final ExpressionFunctionAliasSet alias,
                            final ExpressionFunctionInfoSet infos,
                            final String expected) {
         final IllegalArgumentException thrown = assertThrows(
@@ -207,7 +207,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
         this.expressionFunctionInfosAndCheck(
                 INFO1,
                 INFO2.setName(ALIAS2),
-                INFO4.setName(NAME4) // from ExpressionFunctionAliases
+                INFO4.setName(NAME4) // from ExpressionFunctionAliasSet
         );
     }
 
@@ -221,7 +221,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
         );
 
         return AliasesExpressionFunctionProvider.with(
-                ExpressionFunctionAliases.parse(aliases),
+                ExpressionFunctionAliasSet.parse(aliases),
                 new FakeExpressionFunctionProvider() {
                     @Override
                     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
