@@ -17,7 +17,6 @@
 
 package walkingkooka.tree.expression.function.provider;
 
-import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.ImmutableSortedSetDefaults;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.plugin.PluginAliasSet;
@@ -62,7 +61,6 @@ public final class ExpressionFunctionAliases extends AbstractSet<ExpressionFunct
     /**
      * Factory that creates {@link ExpressionFunctionAliases} with the given aliases.
      */
-    @Test
     public static ExpressionFunctionAliases with(final SortedSet<ExpressionFunctionAlias> aliases) {
         return EMPTY.setElements(aliases);
     }
