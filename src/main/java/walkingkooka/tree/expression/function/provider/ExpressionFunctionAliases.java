@@ -45,7 +45,7 @@ public final class ExpressionFunctionAliases implements PluginAliasesLike<Expres
         );
     }
 
-    private ExpressionFunctionAliases(final PluginAliasSet<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector> pluginAliasSet) {
+    private ExpressionFunctionAliases(final PluginAliasSet<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector, ExpressionFunctionAlias> pluginAliasSet) {
         this.pluginAliasSet = pluginAliasSet;
     }
 
@@ -85,7 +85,7 @@ public final class ExpressionFunctionAliases implements PluginAliasesLike<Expres
         return this.pluginAliasSet.text();
     }
 
-    private final PluginAliasSet<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector> pluginAliasSet;
+    private final PluginAliasSet<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector, ExpressionFunctionAlias> pluginAliasSet;
 
     // Json.............................................................................................................
 

@@ -94,7 +94,7 @@ final class MergedMappedExpressionFunctionProvider implements ExpressionFunction
         return this.mapper.infos();
     }
 
-    private final MergedProviderMapper<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector> mapper;
+    private final MergedProviderMapper<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector, ExpressionFunctionAlias> mapper;
 
     @Override
     public String toString() {
