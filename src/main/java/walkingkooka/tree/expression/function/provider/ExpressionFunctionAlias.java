@@ -52,6 +52,16 @@ public final class ExpressionFunctionAlias implements PluginAliasLike<Expression
     }
 
     @Override
+    public Optional<ExpressionFunctionSelector> selector() {
+        return this.pluginAlias.selector();
+    }
+
+    @Override
+    public Optional<AbsoluteUrl> url() {
+        return this.pluginAlias.url();
+    }
+
+    @Override
     public String text() {
         return this.pluginAlias.text();
     }
