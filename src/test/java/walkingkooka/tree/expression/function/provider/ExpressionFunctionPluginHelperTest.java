@@ -21,7 +21,7 @@ import walkingkooka.plugin.PluginHelperTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 
-public final class ExpressionFunctionHelperTest implements PluginHelperTesting<ExpressionFunctionHelper,
+public final class ExpressionFunctionPluginHelperTest implements PluginHelperTesting<ExpressionFunctionPluginHelper,
         ExpressionFunctionName,
         ExpressionFunctionInfo,
         ExpressionFunctionInfoSet,
@@ -34,8 +34,8 @@ public final class ExpressionFunctionHelperTest implements PluginHelperTesting<E
     }
 
     @Override
-    public ExpressionFunctionHelper createPluginHelper() {
-        return ExpressionFunctionHelper.INSTANCE;
+    public ExpressionFunctionPluginHelper createPluginHelper() {
+        return ExpressionFunctionPluginHelper.INSTANCE;
     }
 
     @Override
@@ -46,8 +46,8 @@ public final class ExpressionFunctionHelperTest implements PluginHelperTesting<E
     // class............................................................................................................
 
     @Override
-    public Class<ExpressionFunctionHelper> type() {
-        return ExpressionFunctionHelper.class;
+    public Class<ExpressionFunctionPluginHelper> type() {
+        return ExpressionFunctionPluginHelper.class;
     }
 
     @Override

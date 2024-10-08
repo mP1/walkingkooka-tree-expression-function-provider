@@ -49,7 +49,7 @@ final class MergedMappedExpressionFunctionProvider implements ExpressionFunction
         this.mapper = MergedProviderMapper.with(
                 infos,
                 provider.expressionFunctionInfos(),
-                ExpressionFunctionHelper.INSTANCE
+                ExpressionFunctionPluginHelper.INSTANCE
         );
 
         this.provider = provider;

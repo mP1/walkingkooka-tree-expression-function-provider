@@ -49,7 +49,7 @@ final class FilteredMappedExpressionFunctionProvider implements ExpressionFuncti
         this.mapper = FilteredProviderMapper.with(
                 infos,
                 provider.expressionFunctionInfos(),
-                ExpressionFunctionHelper.INSTANCE
+                ExpressionFunctionPluginHelper.INSTANCE
         );
 
         this.provider = provider;

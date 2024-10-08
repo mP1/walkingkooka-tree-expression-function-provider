@@ -43,7 +43,7 @@ final class FilteredExpressionFunctionProvider implements ExpressionFunctionProv
                                                final ExpressionFunctionInfoSet infos) {
         this.guard = FilteredProviderGuard.with(
                 infos.names(),
-                ExpressionFunctionHelper.INSTANCE
+                ExpressionFunctionPluginHelper.INSTANCE
         );
         this.provider = provider;
         this.infos = infos;
