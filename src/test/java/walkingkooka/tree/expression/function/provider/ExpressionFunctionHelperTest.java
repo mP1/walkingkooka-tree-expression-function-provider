@@ -21,7 +21,12 @@ import walkingkooka.plugin.PluginHelperTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 
-public final class ExpressionFunctionHelperTest implements PluginHelperTesting<ExpressionFunctionHelper, ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector> {
+public final class ExpressionFunctionHelperTest implements PluginHelperTesting<ExpressionFunctionHelper,
+        ExpressionFunctionName,
+        ExpressionFunctionInfo,
+        ExpressionFunctionInfoSet,
+        ExpressionFunctionSelector,
+        ExpressionFunctionAlias> {
 
     @Override
     public void testParseNameWithNullContextFails() {
@@ -31,6 +36,11 @@ public final class ExpressionFunctionHelperTest implements PluginHelperTesting<E
     @Override
     public ExpressionFunctionHelper createPluginHelper() {
         return ExpressionFunctionHelper.INSTANCE;
+    }
+
+    @Override
+    public ExpressionFunctionName createName() {
+        return ExpressionFunctionName.with("Hello");
     }
 
     // class............................................................................................................
