@@ -37,7 +37,7 @@ import java.util.function.Function;
  * <br>
  * TODO https://github.com/mP1/walkingkooka-tree-expression-function-provider/issues/118
  */
-final class ExpressionFunctionHelper implements PluginHelper<ExpressionFunctionName,
+final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFunctionName,
         ExpressionFunctionInfo,
         ExpressionFunctionInfoSet,
         ExpressionFunctionSelector,
@@ -46,9 +46,9 @@ final class ExpressionFunctionHelper implements PluginHelper<ExpressionFunctionN
     /**
      * Singleton
      */
-    final static ExpressionFunctionHelper INSTANCE = new ExpressionFunctionHelper();
+    final static ExpressionFunctionPluginHelper INSTANCE = new ExpressionFunctionPluginHelper();
 
-    private ExpressionFunctionHelper() {
+    private ExpressionFunctionPluginHelper() {
         super();
     }
 

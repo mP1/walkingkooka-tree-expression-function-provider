@@ -40,7 +40,7 @@ public final class ExpressionFunctionAliases implements PluginAliasesLike<Expres
         return new ExpressionFunctionAliases(
                 PluginAliasSet.parse(
                         text,
-                        ExpressionFunctionHelper.INSTANCE
+                        ExpressionFunctionPluginHelper.INSTANCE
                 )
         );
     }
