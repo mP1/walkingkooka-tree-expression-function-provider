@@ -20,23 +20,52 @@ package walkingkooka.tree.expression.function.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
-import walkingkooka.plugin.PluginAliasesLikeTesting;
+import walkingkooka.collect.set.SortedSets;
+import walkingkooka.plugin.PluginAliasSetLikeTesting;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public final class ExpressionFunctionAliasesTest implements PluginAliasesLikeTesting<ExpressionFunctionAliases, ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector>,
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+public final class ExpressionFunctionAliasesTest implements PluginAliasSetLikeTesting<ExpressionFunctionName,
+        ExpressionFunctionInfo,
+        ExpressionFunctionInfoSet,
+        ExpressionFunctionSelector,
+        ExpressionFunctionAlias,
+        ExpressionFunctionAliases>,
         HashCodeEqualsDefinedTesting2<ExpressionFunctionAliases>,
         ToStringTesting<ExpressionFunctionAliases>,
         JsonNodeMarshallingTesting<ExpressionFunctionAliases> {
+
+    // with.............................................................................................................
+
+    @Test
+    public void testWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> ExpressionFunctionAliases.with(null)
+        );
+    }
+
+    @Test
+    public void testWithEmpty() {
+        assertSame(
+                ExpressionFunctionAliases.EMPTY,
+                ExpressionFunctionAliases.with(SortedSets.empty())
+        );
+    }
+
+    // name.............................................................................................................
 
     @Test
     public void testNameWithName() {
         final ExpressionFunctionName abs = ExpressionFunctionName.with("abs");
 
         this.nameAndCheck(
-                this.createPluginAliases(),
+                this.createSet(),
                 abs,
                 abs
         );
@@ -45,7 +74,7 @@ public final class ExpressionFunctionAliasesTest implements PluginAliasesLikeTes
     @Test
     public void testNameWithAlias() {
         this.nameAndCheck(
-                this.createPluginAliases(),
+                this.createSet(),
                 ExpressionFunctionName.with("sum-alias")
         );
     }
@@ -53,7 +82,7 @@ public final class ExpressionFunctionAliasesTest implements PluginAliasesLikeTes
     @Test
     public void testAliasWithName() {
         this.aliasAndCheck(
-                this.createPluginAliases(),
+                this.createSet(),
                 ExpressionFunctionName.with("abs")
         );
     }
@@ -61,15 +90,22 @@ public final class ExpressionFunctionAliasesTest implements PluginAliasesLikeTes
     @Test
     public void testAliasWithAlias() {
         this.aliasAndCheck(
-                this.createPluginAliases(),
+                this.createSet(),
                 ExpressionFunctionName.with("custom-alias"),
                 ExpressionFunctionSelector.parse("custom(1)")
         );
     }
 
     @Override
-    public ExpressionFunctionAliases createPluginAliases() {
+    public ExpressionFunctionAliases createSet() {
         return ExpressionFunctionAliases.parse("abs, min, max, custom-alias custom(1) https://example.com/custom , sum-alias sum");
+    }
+
+    // parse............................................................................................................
+
+    @Override
+    public ExpressionFunctionAliases parseString(final String text) {
+        return ExpressionFunctionAliases.parse(text);
     }
 
     // equals...........................................................................................................
@@ -84,16 +120,6 @@ public final class ExpressionFunctionAliasesTest implements PluginAliasesLikeTes
     @Override
     public ExpressionFunctionAliases createObject() {
         return ExpressionFunctionAliases.parse("abs, custom-alias custom(1) https://example.com/custom");
-    }
-
-    // toString...........................................................................................................
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                ExpressionFunctionAliases.parse("sum, custom-alias custom(1) https://example.com/custom , abs, min"),
-                "abs, custom-alias custom(1) https://example.com/custom , min, sum"
-        );
     }
 
     // json.............................................................................................................
