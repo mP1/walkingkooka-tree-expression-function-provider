@@ -94,7 +94,7 @@ final class FilteredMappedExpressionFunctionProvider implements ExpressionFuncti
         return this.mapper.infos();
     }
 
-    private final FilteredProviderMapper<ExpressionFunctionName, ExpressionFunctionSelector, ExpressionFunctionInfo, ExpressionFunctionInfoSet> mapper;
+    private final FilteredProviderMapper<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector> mapper;
 
     @Override
     public String toString() {
