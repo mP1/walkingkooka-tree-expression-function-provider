@@ -35,18 +35,18 @@ import java.util.Iterator;
 import java.util.Optional;
 import java.util.SortedSet;
 
-public final class ExpressionFunctionAliases extends AbstractSet<ExpressionFunctionAlias>
+public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunctionAlias>
         implements PluginAliasSetLike<ExpressionFunctionName,
         ExpressionFunctionInfo,
         ExpressionFunctionInfoSet,
         ExpressionFunctionSelector,
         ExpressionFunctionAlias>,
-        ImmutableSortedSetDefaults<ExpressionFunctionAliases, ExpressionFunctionAlias> {
+        ImmutableSortedSetDefaults<ExpressionFunctionAliasSet, ExpressionFunctionAlias> {
 
     /**
-     * An empty {@link ExpressionFunctionAliases}.
+     * An empty {@link ExpressionFunctionAliasSet}.
      */
-    public final static ExpressionFunctionAliases EMPTY = new ExpressionFunctionAliases(
+    public final static ExpressionFunctionAliasSet EMPTY = new ExpressionFunctionAliasSet(
             PluginAliasSet.with(
                     SortedSets.empty(),
                     ExpressionFunctionPluginHelper.INSTANCE
@@ -59,14 +59,14 @@ public final class ExpressionFunctionAliases extends AbstractSet<ExpressionFunct
     public final static CharacterConstant SEPARATOR = PluginAliasSet.SEPARATOR;
 
     /**
-     * Factory that creates {@link ExpressionFunctionAliases} with the given aliases.
+     * Factory that creates {@link ExpressionFunctionAliasSet} with the given aliases.
      */
-    public static ExpressionFunctionAliases with(final SortedSet<ExpressionFunctionAlias> aliases) {
+    public static ExpressionFunctionAliasSet with(final SortedSet<ExpressionFunctionAlias> aliases) {
         return EMPTY.setElements(aliases);
     }
 
-    public static ExpressionFunctionAliases parse(final String text) {
-        return new ExpressionFunctionAliases(
+    public static ExpressionFunctionAliasSet parse(final String text) {
+        return new ExpressionFunctionAliasSet(
                 PluginAliasSet.parse(
                         text,
                         ExpressionFunctionPluginHelper.INSTANCE
@@ -74,7 +74,7 @@ public final class ExpressionFunctionAliases extends AbstractSet<ExpressionFunct
         );
     }
 
-    private ExpressionFunctionAliases(final PluginAliasSet<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector, ExpressionFunctionAlias> pluginAliasSet) {
+    private ExpressionFunctionAliasSet(final PluginAliasSet<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector, ExpressionFunctionAlias> pluginAliasSet) {
         this.pluginAliasSet = pluginAliasSet;
     }
 
@@ -111,8 +111,8 @@ public final class ExpressionFunctionAliases extends AbstractSet<ExpressionFunct
     }
 
     @Override
-    public ExpressionFunctionAliases setElements(final SortedSet<ExpressionFunctionAlias> aliases) {
-        final ExpressionFunctionAliases after = new ExpressionFunctionAliases(
+    public ExpressionFunctionAliasSet setElements(final SortedSet<ExpressionFunctionAlias> aliases) {
+        final ExpressionFunctionAliasSet after = new ExpressionFunctionAliasSet(
                 this.pluginAliasSet.setElements(aliases)
         );
         return this.pluginAliasSet.equals(aliases) ?
@@ -126,8 +126,8 @@ public final class ExpressionFunctionAliases extends AbstractSet<ExpressionFunct
     }
 
     @Override
-    public ExpressionFunctionAliases subSet(final ExpressionFunctionAlias from,
-                                            final ExpressionFunctionAlias to) {
+    public ExpressionFunctionAliasSet subSet(final ExpressionFunctionAlias from,
+                                             final ExpressionFunctionAlias to) {
         return this.setElements(
                 this.pluginAliasSet.subSet(
                         from,
@@ -137,7 +137,7 @@ public final class ExpressionFunctionAliases extends AbstractSet<ExpressionFunct
     }
 
     @Override
-    public ExpressionFunctionAliases headSet(final ExpressionFunctionAlias alias) {
+    public ExpressionFunctionAliasSet headSet(final ExpressionFunctionAlias alias) {
         return this.setElements(
                 this.pluginAliasSet.headSet(alias)
         );
@@ -184,8 +184,8 @@ public final class ExpressionFunctionAliases extends AbstractSet<ExpressionFunct
     );
     }
 
-    static ExpressionFunctionAliases unmarshall(final JsonNode node,
-                                                final JsonNodeUnmarshallContext context) {
+    static ExpressionFunctionAliasSet unmarshall(final JsonNode node,
+                                                 final JsonNodeUnmarshallContext context) {
         return parse(
                 node.stringOrFail()
         );
@@ -193,10 +193,10 @@ public final class ExpressionFunctionAliases extends AbstractSet<ExpressionFunct
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(ExpressionFunctionAliases.class),
-                ExpressionFunctionAliases::unmarshall,
-                ExpressionFunctionAliases::marshall,
-                ExpressionFunctionAliases.class
+                JsonNodeContext.computeTypeName(ExpressionFunctionAliasSet.class),
+                ExpressionFunctionAliasSet::unmarshall,
+                ExpressionFunctionAliasSet::marshall,
+                ExpressionFunctionAliasSet.class
         );
         ExpressionFunctionInfoSet.EMPTY.size(); // trigger static init and json marshall/unmarshall registry
     }

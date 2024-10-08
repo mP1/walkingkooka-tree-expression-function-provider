@@ -32,7 +32,7 @@ import java.util.Optional;
  */
 final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvider {
 
-    static AliasesExpressionFunctionProvider with(final ExpressionFunctionAliases aliases,
+    static AliasesExpressionFunctionProvider with(final ExpressionFunctionAliasSet aliases,
                                                   final ExpressionFunctionProvider provider) {
         return new AliasesExpressionFunctionProvider(
                 Objects.requireNonNull(aliases, "aliases"),
@@ -40,7 +40,7 @@ final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvi
         );
     }
 
-    private AliasesExpressionFunctionProvider(final ExpressionFunctionAliases aliases,
+    private AliasesExpressionFunctionProvider(final ExpressionFunctionAliasSet aliases,
                                               final ExpressionFunctionProvider provider) {
         this.aliases = aliases;
         this.provider = provider;
@@ -67,7 +67,7 @@ final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvi
 
         ExpressionFunction<?, ExpressionEvaluationContext> function;
 
-        final ExpressionFunctionAliases aliases = this.aliases;
+        final ExpressionFunctionAliasSet aliases = this.aliases;
         final ExpressionFunctionProvider provider = this.provider;
 
         final Optional<ExpressionFunctionSelector> selector = aliases.alias(name);
@@ -92,7 +92,7 @@ final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvi
         return function;
     }
 
-    private final ExpressionFunctionAliases aliases;
+    private final ExpressionFunctionAliasSet aliases;
 
     private final ExpressionFunctionProvider provider;
 
