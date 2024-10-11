@@ -18,6 +18,7 @@
 package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
@@ -30,6 +31,7 @@ import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public final class AliasesExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<AliasesExpressionFunctionProvider> {
@@ -76,8 +78,35 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
             }
 
             @Override
+            public ExpressionFunction<Object, ExpressionEvaluationContext> setName(final Optional<ExpressionFunctionName> n) {
+                Objects.requireNonNull(n, "name");
+
+                return this.name().equals(n) ?
+                        this :
+                        Cast.to(
+                                function(n.get())
+                        );
+            }
+
+            @Override
+            public int hashCode() {
+                return this.name().hashCode();
+            }
+
+            @Override
+            public boolean equals(final Object other) {
+                return this == other || other instanceof ExpressionFunction && this.equals0((ExpressionFunction<?, ?>) other);
+            }
+
+            private boolean equals0(final ExpressionFunction<?, ?> other) {
+                return this.name().equals(other.name());
+            }
+
+            @Override
             public String toString() {
-                return name.toString();
+                return this.name()
+                        .get()
+                        .toString();
             }
         };
     }
@@ -122,7 +151,9 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
                 ALIAS2,
                 Lists.empty(),
                 CONTEXT,
-                FUNCTION2
+                FUNCTION2.setName(
+                        Optional.of(ALIAS2)
+                )
         );
     }
 
@@ -131,7 +162,9 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
         this.expressionFunctionAndCheck(
                 ExpressionFunctionSelector.parse(ALIAS2 + ""),
                 CONTEXT,
-                FUNCTION2
+                FUNCTION2.setName(
+                        Optional.of(ALIAS2)
+                )
         );
     }
 
@@ -141,7 +174,9 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
                 NAME4,
                 Lists.empty(),
                 CONTEXT,
-                FUNCTION3
+                FUNCTION3.setName(
+                        Optional.of(NAME4)
+                )
         );
     }
 
@@ -150,7 +185,9 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
         this.expressionFunctionAndCheck(
                 ExpressionFunctionSelector.parse(NAME4 + ""),
                 CONTEXT,
-                FUNCTION3
+                FUNCTION3.setName(
+                        Optional.of(NAME4)
+                )
         );
     }
 
