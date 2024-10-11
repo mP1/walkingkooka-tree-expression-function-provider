@@ -32,8 +32,6 @@ import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 public final class AliasesExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<AliasesExpressionFunctionProvider> {
 
     private final static String NAME1_STRING = "function1";
@@ -87,61 +85,15 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
-    public void testWithUnknownFunctionNameFails() {
-        this.withFails(
+    public void testWithUnknownFunctionName() {
+        AliasesExpressionFunctionProvider.with(
                 ExpressionFunctionAliasSet.parse("unknown-function404"),
-                ExpressionFunctionInfoSet.parse("https://example.com/function111 function111"),
-                "Unknown Function(s): unknown-function404"
-        );
-    }
-
-    @Test
-    public void testWithUnknownFunctionNameFails2() {
-        this.withFails(
-                ExpressionFunctionAliasSet.parse("unknown-function111, function111"),
-                ExpressionFunctionInfoSet.parse("https://example.com/function111 function111"),
-                "Unknown Function(s): unknown-function111"
-        );
-    }
-
-    @Test
-    public void testWithUnknownFunctionNameFails3() {
-        this.withFails(
-                ExpressionFunctionAliasSet.parse("unknown-function111, unknown-function222"),
-                ExpressionFunctionInfoSet.parse("https://example.com/function111 function111"),
-                "Unknown Function(s): unknown-function111,unknown-function222"
-        );
-    }
-
-    @Test
-    public void testWithAliasWithUnknownFunctionNameFails() {
-        this.withFails(
-                ExpressionFunctionAliasSet.parse("alias404 unknown-function404"),
-                ExpressionFunctionInfoSet.parse("https://example.com/function111 function111"),
-                "Unknown Function(s): unknown-function404"
-        );
-    }
-
-    private void withFails(final ExpressionFunctionAliasSet alias,
-                           final ExpressionFunctionInfoSet infos,
-                           final String expected) {
-        final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> AliasesExpressionFunctionProvider.with(
-                    alias,
-                        new FakeExpressionFunctionProvider() {
-                            @Override
-                            public ExpressionFunctionInfoSet expressionFunctionInfos() {
-                                return infos;
-                            }
-                        }
-                )
-        );
-
-        this.checkEquals(
-                expected,
-                thrown.getMessage(),
-                () -> "parse " + alias
+                new FakeExpressionFunctionProvider() {
+                    @Override
+                    public ExpressionFunctionInfoSet expressionFunctionInfos() {
+                        return ExpressionFunctionInfoSet.parse("https://example.com/function111 function111");
+                    }
+                }
         );
     }
 
