@@ -79,6 +79,8 @@ final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvi
             function = provider.expressionFunction(
                     selector.get(),
                     context
+            ).setName(
+                    Optional.of(name)
             );
         } else {
             function = provider.expressionFunction(
