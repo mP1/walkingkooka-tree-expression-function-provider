@@ -96,8 +96,8 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
     }
 
     @Override
-    public boolean containsName(final ExpressionFunctionName name) {
-        return this.pluginAliasSet.containsName(name);
+    public boolean containsNameOrAlias(final ExpressionFunctionName name) {
+        return this.pluginAliasSet.containsNameOrAlias(name);
     }
 
     // ImmutableSortedSet...............................................................................................
