@@ -100,6 +100,13 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
         return this.pluginAliasSet.containsNameOrAlias(name);
     }
 
+    @Override
+    public ExpressionFunctionAliasSet concatOrReplace(final ExpressionFunctionAlias alias) {
+        return new ExpressionFunctionAliasSet(
+                this.pluginAliasSet.concatOrReplace(alias)
+        );
+    }
+
     // ImmutableSortedSet...............................................................................................
 
     @Override
