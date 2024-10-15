@@ -30,6 +30,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.AbstractSet;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Optional;
@@ -40,7 +41,8 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
         ExpressionFunctionInfo,
         ExpressionFunctionInfoSet,
         ExpressionFunctionSelector,
-        ExpressionFunctionAlias>,
+        ExpressionFunctionAlias,
+        ExpressionFunctionAliasSet>,
         ImmutableSortedSetDefaults<ExpressionFunctionAliasSet, ExpressionFunctionAlias> {
 
     /**
@@ -93,6 +95,11 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
         return this.pluginAliasSet.merge(infos);
     }
 
+    @Override
+    public boolean containsName(final ExpressionFunctionName name) {
+        return this.pluginAliasSet.containsName(name);
+    }
+
     // ImmutableSortedSet...............................................................................................
 
     @Override
@@ -121,6 +128,11 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
     }
 
     @Override
+    public ExpressionFunctionAliasSet setElementsFailIfDifferent(SortedSet<ExpressionFunctionAlias> sortedSet) {
+        return null;
+    }
+
+    @Override
     public SortedSet<ExpressionFunctionAlias> toSet() {
         return this.pluginAliasSet.toSet();
     }
@@ -144,9 +156,48 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
     }
 
     @Override
-    public SortedSet<ExpressionFunctionAlias> tailSet(final ExpressionFunctionAlias alias) {
+    public ExpressionFunctionAliasSet tailSet(final ExpressionFunctionAlias alias) {
         return this.setElements(
                 this.pluginAliasSet.tailSet(alias)
+        );
+    }
+
+    @Override
+    public ExpressionFunctionAliasSet concat(final ExpressionFunctionAlias alias) {
+        return this.setElements(
+                this.pluginAliasSet.concat(alias)
+        );
+    }
+
+    @Override
+    public ExpressionFunctionAliasSet concatAll(final Collection<ExpressionFunctionAlias> aliases) {
+        return this.setElements(
+                this.pluginAliasSet.concatAll(aliases)
+        );
+    }
+
+    @Override
+    public ExpressionFunctionAliasSet delete(final ExpressionFunctionAlias alias) {
+        return this.setElements(
+                this.pluginAliasSet.delete(alias)
+        );
+    }
+
+    @Override
+    public ExpressionFunctionAliasSet deleteAll(final Collection<ExpressionFunctionAlias> aliases) {
+        return this.setElements(
+                this.pluginAliasSet.deleteAll(aliases)
+        );
+    }
+
+    @Override
+    public ExpressionFunctionAliasSet replace(final ExpressionFunctionAlias oldAlias,
+                                              final ExpressionFunctionAlias newAlias) {
+        return this.setElements(
+                this.pluginAliasSet.replace(
+                        oldAlias,
+                        newAlias
+                )
         );
     }
 
@@ -194,7 +245,7 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
     static {
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(ExpressionFunctionAliasSet.class),
-                ExpressionFunctionAliasSet::unmarshall,
+                walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet::unmarshall,
                 ExpressionFunctionAliasSet::marshall,
                 ExpressionFunctionAliasSet.class
         );
