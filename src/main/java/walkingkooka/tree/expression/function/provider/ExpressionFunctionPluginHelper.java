@@ -30,6 +30,7 @@ import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.function.Function;
 
 /**
@@ -41,7 +42,8 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
         ExpressionFunctionInfo,
         ExpressionFunctionInfoSet,
         ExpressionFunctionSelector,
-        ExpressionFunctionAlias> {
+        ExpressionFunctionAlias,
+        ExpressionFunctionAliasSet> {
 
     /**
      * Singleton
@@ -114,6 +116,11 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
                 selector,
                 url
         );
+    }
+
+    @Override
+    public ExpressionFunctionAliasSet aliasSet(final SortedSet<ExpressionFunctionAlias> aliases) {
+        return ExpressionFunctionAliasSet.with(aliases);
     }
 
     @Override
