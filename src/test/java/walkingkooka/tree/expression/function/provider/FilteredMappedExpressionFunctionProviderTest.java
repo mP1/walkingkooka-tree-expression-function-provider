@@ -44,7 +44,7 @@ public final class FilteredMappedExpressionFunctionProviderTest implements Expre
 
     private final static ExpressionFunctionName ORIGINAL_NAME = ExpressionFunctionName.with("original-function-123");
 
-    private final static ExpressionFunction<?, ExpressionEvaluationContext> function(final ExpressionFunctionName name) {
+    private static ExpressionFunction<?, ExpressionEvaluationContext> function(final ExpressionFunctionName name) {
         return new FakeExpressionFunction() {
             @Override
             public Optional<ExpressionFunctionName> name() {
