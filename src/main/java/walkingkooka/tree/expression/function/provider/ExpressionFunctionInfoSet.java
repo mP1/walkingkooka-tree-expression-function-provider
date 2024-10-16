@@ -38,7 +38,7 @@ import java.util.Set;
 /**
  * A read only {@link Set} of {@link ExpressionFunctionInfo} sorted by {@link ExpressionFunctionName}.
  */
-public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunctionInfo> implements PluginInfoSetLike<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet> {
+public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunctionInfo> implements PluginInfoSetLike<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector, ExpressionFunctionAlias, ExpressionFunctionAliasSet> {
 
     public final static ExpressionFunctionInfoSet EMPTY = new ExpressionFunctionInfoSet(
             PluginInfoSet.with(
