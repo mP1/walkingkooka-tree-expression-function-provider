@@ -49,7 +49,7 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
 
     private final static ExpressionFunctionName PROVIDER_ONLY_NAME = ExpressionFunctionName.with("provider-only-function-222");
 
-    private final static ExpressionFunction<?, ExpressionEvaluationContext> function(final ExpressionFunctionName name) {
+    private static ExpressionFunction<?, ExpressionEvaluationContext> function(final ExpressionFunctionName name) {
         return new FakeExpressionFunction() {
             @Override
             public Optional<ExpressionFunctionName> name() {
