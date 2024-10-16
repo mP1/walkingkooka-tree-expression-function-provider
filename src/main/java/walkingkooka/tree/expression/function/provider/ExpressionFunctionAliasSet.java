@@ -76,7 +76,7 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
         );
     }
 
-    private ExpressionFunctionAliasSet(final PluginAliasSet<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector, ExpressionFunctionAlias> pluginAliasSet) {
+    private ExpressionFunctionAliasSet(final PluginAliasSet<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector, ExpressionFunctionAlias, ExpressionFunctionAliasSet> pluginAliasSet) {
         this.pluginAliasSet = pluginAliasSet;
     }
 
@@ -228,7 +228,7 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
         this.pluginAliasSet.printTree(printer);
     }
 
-    private final PluginAliasSet<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector, ExpressionFunctionAlias> pluginAliasSet;
+    private final PluginAliasSet<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector, ExpressionFunctionAlias, ExpressionFunctionAliasSet> pluginAliasSet;
 
     // Json.............................................................................................................
 

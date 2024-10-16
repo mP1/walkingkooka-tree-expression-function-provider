@@ -26,7 +26,8 @@ public final class ExpressionFunctionPluginHelperTest implements PluginHelperTes
         ExpressionFunctionInfo,
         ExpressionFunctionInfoSet,
         ExpressionFunctionSelector,
-        ExpressionFunctionAlias> {
+        ExpressionFunctionAlias,
+        ExpressionFunctionAliasSet> {
 
     @Override
     public void testParseNameWithNullContextFails() {
