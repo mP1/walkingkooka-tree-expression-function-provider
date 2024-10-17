@@ -81,6 +81,11 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
     }
 
     @Override
+    public ExpressionFunctionAliasSet aliasSet() {
+        return ExpressionFunctionPluginHelper.INSTANCE.toAliasSet(this);
+    }
+
+    @Override
     public ExpressionFunctionInfoSet filter(final ExpressionFunctionInfoSet infos) {
         return this.setElements(
                 this.pluginInfoSet.filter(
