@@ -24,19 +24,35 @@ import walkingkooka.plugin.PluginAliasLike;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public final class ExpressionFunctionAlias implements PluginAliasLike<ExpressionFunctionName, ExpressionFunctionSelector, ExpressionFunctionAlias> {
 
+    public static ExpressionFunctionAlias parse(final String text) {
+        return ExpressionFunctionAlias.with(
+                PluginAlias.parse(
+                        text,
+                        ExpressionFunctionPluginHelper.INSTANCE
+                )
+        );
+    }
+
     public static ExpressionFunctionAlias with(final ExpressionFunctionName name,
                                                final Optional<ExpressionFunctionSelector> selector,
                                                final Optional<AbsoluteUrl> url) {
-        return new ExpressionFunctionAlias(
+        return with(
                 PluginAlias.with(
                         name,
                         selector,
                         url
                 )
+        );
+    }
+
+    static ExpressionFunctionAlias with(final PluginAlias<ExpressionFunctionName, ExpressionFunctionSelector> pluginAlias) {
+        return new ExpressionFunctionAlias(
+                Objects.requireNonNull(pluginAlias, "pluginAlias")
         );
     }
 
