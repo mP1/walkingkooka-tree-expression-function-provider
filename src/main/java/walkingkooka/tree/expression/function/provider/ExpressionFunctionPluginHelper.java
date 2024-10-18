@@ -20,6 +20,7 @@ package walkingkooka.tree.expression.function.provider;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.naming.Name;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.PluginHelper;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
@@ -116,6 +117,11 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
                 selector,
                 url
         );
+    }
+
+    @Override
+    public ExpressionFunctionAlias alias(final PluginAlias<ExpressionFunctionName, ExpressionFunctionSelector> pluginAlias) {
+        return ExpressionFunctionAlias.with(pluginAlias);
     }
 
     @Override

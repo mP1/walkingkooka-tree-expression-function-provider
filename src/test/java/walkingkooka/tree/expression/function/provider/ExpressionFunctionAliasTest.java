@@ -78,6 +78,29 @@ public final class ExpressionFunctionAliasTest implements PluginAliasLikeTesting
         );
     }
 
+    // parse............................................................................................................
+
+    @Test
+    public void testParse() {
+        this.parseStringAndCheck(
+                "alias1 name1 https://example.com",
+                ExpressionFunctionAlias.with(
+                        ExpressionFunctionName.with("alias1"),
+                        Optional.of(
+                                ExpressionFunctionSelector.parse("name1")
+                        ),
+                        Optional.of(
+                                Url.parseAbsolute("https://example.com")
+                        )
+                )
+        );
+    }
+
+    @Override
+    public ExpressionFunctionAlias parseString(final String text) {
+        return ExpressionFunctionAlias.parse(text);
+    }
+
     // Comparable.......................................................................................................
 
     @Override
