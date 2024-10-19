@@ -70,7 +70,7 @@ final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvi
         final ExpressionFunctionAliasSet aliases = this.aliases;
         final ExpressionFunctionProvider provider = this.provider;
 
-        final Optional<ExpressionFunctionSelector> selector = aliases.alias(name);
+        final Optional<ExpressionFunctionSelector> selector = aliases.aliasSelector(name);
         if (selector.isPresent()) {
             if (false == values.isEmpty()) {
                 throw new IllegalArgumentException("Alias " + name + " should have no values");

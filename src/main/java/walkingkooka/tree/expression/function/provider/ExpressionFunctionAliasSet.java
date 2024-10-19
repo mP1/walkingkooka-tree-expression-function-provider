@@ -81,8 +81,8 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
     }
 
     @Override
-    public Optional<ExpressionFunctionSelector> alias(final ExpressionFunctionName name) {
-        return this.pluginAliasSet.alias(name);
+    public Optional<ExpressionFunctionSelector> aliasSelector(final ExpressionFunctionName name) {
+        return this.pluginAliasSet.aliasSelector(name);
     }
 
     @Override
