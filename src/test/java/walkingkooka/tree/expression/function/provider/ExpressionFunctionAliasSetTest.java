@@ -61,10 +61,10 @@ public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeT
     // name.............................................................................................................
 
     @Test
-    public void testNameWithName() {
+    public void testAliasOrNameWithName() {
         final ExpressionFunctionName abs = ExpressionFunctionName.with("abs");
 
-        this.nameAndCheck(
+        this.aliasOrNameAndCheck(
                 this.createSet(),
                 abs,
                 abs
@@ -72,8 +72,8 @@ public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeT
     }
 
     @Test
-    public void testNameWithAlias() {
-        this.nameAndCheck(
+    public void testAliasOrNameWithAlias() {
+        this.aliasOrNameAndCheck(
                 this.createSet(),
                 ExpressionFunctionName.with("sum-alias")
         );

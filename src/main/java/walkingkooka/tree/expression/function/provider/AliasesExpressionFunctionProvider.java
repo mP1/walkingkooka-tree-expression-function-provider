@@ -84,7 +84,7 @@ final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvi
             );
         } else {
             function = provider.expressionFunction(
-                    aliases.name(name)
+                    aliases.aliasOrName(name)
                             .orElseThrow(() -> new UnknownExpressionFunctionException(name)),
                     values,
                     context
