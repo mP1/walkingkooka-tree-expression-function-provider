@@ -96,8 +96,8 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
     }
 
     @Override
-    public boolean containsNameOrAlias(final ExpressionFunctionName name) {
-        return this.pluginAliasSet.containsNameOrAlias(name);
+    public boolean containsAliasOrName(final ExpressionFunctionName aliasOrName) {
+        return this.pluginAliasSet.containsAliasOrName(aliasOrName);
     }
 
     @Override
