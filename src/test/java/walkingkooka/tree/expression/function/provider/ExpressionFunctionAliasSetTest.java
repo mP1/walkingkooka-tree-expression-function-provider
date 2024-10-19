@@ -80,16 +80,16 @@ public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeT
     }
 
     @Test
-    public void testAliasWithName() {
-        this.aliasAndCheck(
+    public void testAliasSelectorWithName() {
+        this.aliasSelectorAndCheck(
                 this.createSet(),
                 ExpressionFunctionName.with("abs")
         );
     }
 
     @Test
-    public void testAliasWithAlias() {
-        this.aliasAndCheck(
+    public void testAliasSelectorWithAlias() {
+        this.aliasSelectorAndCheck(
                 this.createSet(),
                 ExpressionFunctionName.with("custom-alias"),
                 ExpressionFunctionSelector.parse("custom(1)")
