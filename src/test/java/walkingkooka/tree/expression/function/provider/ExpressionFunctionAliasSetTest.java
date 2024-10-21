@@ -75,7 +75,8 @@ public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeT
     public void testAliasOrNameWithAlias() {
         this.aliasOrNameAndCheck(
                 this.createSet(),
-                ExpressionFunctionName.with("sum-alias")
+                ExpressionFunctionName.with("sum-alias"),
+                ExpressionFunctionName.with("sum")
         );
     }
 
