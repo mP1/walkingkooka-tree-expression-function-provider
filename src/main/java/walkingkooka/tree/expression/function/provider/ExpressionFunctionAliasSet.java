@@ -107,6 +107,20 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
         );
     }
 
+    @Override
+    public ExpressionFunctionAliasSet deleteAliasOrNameAll(final Collection<ExpressionFunctionName> aliasOrNames) {
+        return this.setElements(
+                this.pluginAliasSet.deleteAliasOrNameAll(aliasOrNames)
+        );
+    }
+
+    @Override
+    public ExpressionFunctionAliasSet keepAliasOrNameAll(final Collection<ExpressionFunctionName> aliasOrNames) {
+        return this.setElements(
+                this.pluginAliasSet.keepAliasOrNameAll(aliasOrNames)
+        );
+    }
+
     // ImmutableSortedSet...............................................................................................
 
     @Override
