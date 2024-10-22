@@ -51,9 +51,13 @@ final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvi
     @Override
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
                                                                                  final ProviderContext context) {
-        return selector.evaluateText(
-                this,
+        return this.provider.expressionFunction(
+                this.aliases.selector(selector),
                 context
+        ).setName(
+                Optional.of(
+                        selector.name()
+                )
         );
     }
 
