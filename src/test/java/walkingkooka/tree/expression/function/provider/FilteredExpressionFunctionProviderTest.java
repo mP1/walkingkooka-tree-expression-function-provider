@@ -34,7 +34,7 @@ public final class FilteredExpressionFunctionProviderTest implements ExpressionF
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
-    public void testExpressionFunction() {
+    public void testExpressionFunctionName() {
         final ExpressionFunctionName name = ExpressionFunctionName.with("node");
         final List<?> values = Lists.empty();
 
@@ -52,7 +52,7 @@ public final class FilteredExpressionFunctionProviderTest implements ExpressionF
     }
 
     @Test
-    public void testExpressionFunctionWithFilteredFails() {
+    public void testExpressionFunctionNameWithFilteredFails() {
         final ExpressionFunctionName name = ExpressionFunctionName.with("name");
         final List<?> values = Lists.empty();
 
