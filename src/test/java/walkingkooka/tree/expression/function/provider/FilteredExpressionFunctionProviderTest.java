@@ -91,17 +91,17 @@ public final class FilteredExpressionFunctionProviderTest implements ExpressionF
     }
 
     @Override
-    public void testExpressionFunctionWithNullContextFails() {
+    public void testExpressionFunctionSelectorWithNullContextFails() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void testExpressionFunctionWithSelectorNullContextFails() {
+    public void testExpressionFunctionNameWithNullContextFails() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void testExpressionFunctionWithNullValuesFails() {
+    public void testExpressionFunctionNameWithNullValuesFails() {
         throw new UnsupportedOperationException();
     }
 
