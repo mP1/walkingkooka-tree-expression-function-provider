@@ -35,7 +35,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     // expressionFunction(ExpressionFunctionSelector, ProviderContext)..................................................
 
     @Test
-    default void testExpressionFunctionWithNullSelectorFails() {
+    default void testExpressionFunctionSelectorWithNullSelectorFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createExpressionFunctionProvider()
@@ -47,7 +47,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     }
 
     @Test
-    default void testExpressionFunctionWithSelectorNullContextFails() {
+    default void testExpressionFunctionSelectorWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createExpressionFunctionProvider()
@@ -107,7 +107,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     // expressionFunction(ExpressionFunctionName, List, ProviderContext)................................................
 
     @Test
-    default void testExpressionFunctionWithNullNameFails() {
+    default void testExpressionFunctionNameWithNullFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createExpressionFunctionProvider()
@@ -120,7 +120,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     }
 
     @Test
-    default void testExpressionFunctionWithNullValuesFails() {
+    default void testExpressionFunctionNameWithNullValuesFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createExpressionFunctionProvider()
@@ -133,7 +133,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     }
 
     @Test
-    default void testExpressionFunctionWithNullContextFails() {
+    default void testExpressionFunctionNameWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createExpressionFunctionProvider()
