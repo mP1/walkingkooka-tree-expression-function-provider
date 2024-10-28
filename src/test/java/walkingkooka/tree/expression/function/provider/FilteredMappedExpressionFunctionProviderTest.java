@@ -168,7 +168,7 @@ public final class FilteredMappedExpressionFunctionProviderTest implements Expre
                     @Override
                     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
                                                                                                  final ProviderContext context) {
-                        return selector.evaluateText(
+                        return selector.evaluateValueText(
                                 this,
                                 context
                         );

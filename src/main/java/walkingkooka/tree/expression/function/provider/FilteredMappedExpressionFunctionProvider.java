@@ -61,7 +61,7 @@ final class FilteredMappedExpressionFunctionProvider implements ExpressionFuncti
         Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
 
-        return selector.evaluateText(
+        return selector.evaluateValueText(
                 this,
                 context
         );
