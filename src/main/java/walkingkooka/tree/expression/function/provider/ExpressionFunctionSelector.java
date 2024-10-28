@@ -91,19 +91,17 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
                 );
     }
 
-    // HasText..........................................................................................................
-
     /**
      * Function parameters in text form.
      */
     @Override
-    public String text() {
-        return this.selector.text();
+    public String valueText() {
+        return this.selector.valueText();
     }
 
     @Override
-    public ExpressionFunctionSelector setText(final String text) {
-        final PluginSelector<ExpressionFunctionName> different = this.selector.setText(text);
+    public ExpressionFunctionSelector setValueText(final String valueText) {
+        final PluginSelector<ExpressionFunctionName> different = this.selector.setValueText(valueText);
         return this.selector.equals(different) ?
                 this :
                 new ExpressionFunctionSelector(different);
@@ -124,12 +122,12 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
     /**
      * Parses the text as an expression that may contain String literals, numbers or {@link ExpressionFunctionName}.
      */
-    public ExpressionFunction<?, ExpressionEvaluationContext> evaluateText(final ExpressionFunctionProvider provider,
-                                                                           final ProviderContext context) {
+    public ExpressionFunction<?, ExpressionEvaluationContext> evaluateValueText(final ExpressionFunctionProvider provider,
+                                                                                final ProviderContext context) {
         Objects.requireNonNull(provider, "provider");
         Objects.requireNonNull(context, "context");
 
-        return this.selector.evaluateText(
+        return this.selector.evaluateValueText(
                 ExpressionFunctionName.PARSER,
                 provider::expressionFunction,
                 context
