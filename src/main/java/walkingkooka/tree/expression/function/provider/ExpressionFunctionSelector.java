@@ -86,7 +86,7 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
                 new ExpressionFunctionSelector(
                         PluginSelector.with(
                                 name,
-                                this.text()
+                                this.valueText()
                         )
                 );
     }
