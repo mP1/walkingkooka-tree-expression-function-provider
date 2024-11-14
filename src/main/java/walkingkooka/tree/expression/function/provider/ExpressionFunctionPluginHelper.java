@@ -51,13 +51,17 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
      */
     final static ExpressionFunctionPluginHelper INSTANCE = new ExpressionFunctionPluginHelper();
 
+
+    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
+
     private ExpressionFunctionPluginHelper() {
         super();
     }
 
     @Override
     public ExpressionFunctionName name(final String text) {
-        return ExpressionFunctionName.with(text);
+        return ExpressionFunctionName.with(text)
+                .setCaseSensitivity(CASE_SENSITIVITY);
     }
 
     @Override
@@ -76,7 +80,7 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
 
     @Override
     public Comparator<ExpressionFunctionName> nameComparator() {
-        return Name.comparator(CaseSensitivity.INSENSITIVE);
+        return Name.comparator(CASE_SENSITIVITY);
     }
 
     @Override
