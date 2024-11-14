@@ -51,8 +51,7 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
      */
     final static ExpressionFunctionPluginHelper INSTANCE = new ExpressionFunctionPluginHelper();
 
-
-    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
+    final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
 
     private ExpressionFunctionPluginHelper() {
         super();
@@ -70,6 +69,8 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
         return ExpressionFunctionName.PARSER.apply(
                 cursor,
                 context
+        ).map(
+                n -> n.setCaseSensitivity(CASE_SENSITIVITY)
         );
     }
 
