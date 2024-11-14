@@ -20,6 +20,8 @@ package walkingkooka.tree.expression.function.provider;
 import walkingkooka.plugin.PluginSelector;
 import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -31,6 +33,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Contains the {@link ExpressionFunctionName} and some parameters in text form.
@@ -44,7 +47,7 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
         return new ExpressionFunctionSelector(
                 PluginSelector.parse(
                         text,
-                        ExpressionFunctionName::with
+                        (n) -> ExpressionFunctionName.with(n).setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY)
                 )
         );
     }
@@ -128,10 +131,18 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
         Objects.requireNonNull(context, "context");
 
         return this.selector.evaluateValueText(
-                ExpressionFunctionName.PARSER,
+                ExpressionFunctionSelector::parseName,
                 provider::expressionFunction,
                 context
         );
+    }
+
+    private static Optional<ExpressionFunctionName> parseName(final TextCursor cursor,
+                                                              final ParserContext context) {
+        return ExpressionFunctionName.PARSER.apply(
+                cursor,
+                context
+        ).map(n -> n.setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY));
     }
 
     // Object...........................................................................................................

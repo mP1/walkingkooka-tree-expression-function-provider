@@ -62,7 +62,8 @@ public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeT
 
     @Test
     public void testAliasOrNameWithName() {
-        final ExpressionFunctionName abs = ExpressionFunctionName.with("abs");
+        final ExpressionFunctionName abs = ExpressionFunctionName.with("abs")
+                .setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY);
 
         this.aliasOrNameAndCheck(
                 this.createSet(),
@@ -75,8 +76,10 @@ public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeT
     public void testAliasOrNameWithAlias() {
         this.aliasOrNameAndCheck(
                 this.createSet(),
-                ExpressionFunctionName.with("sum-alias"),
+                ExpressionFunctionName.with("sum-alias")
+                        .setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY),
                 ExpressionFunctionName.with("sum")
+                        .setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY)
         );
     }
 
@@ -85,6 +88,7 @@ public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeT
         this.aliasSelectorAndCheck(
                 this.createSet(),
                 ExpressionFunctionName.with("abs")
+                        .setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY)
         );
     }
 
@@ -92,7 +96,8 @@ public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeT
     public void testAliasSelectorWithAlias() {
         this.aliasSelectorAndCheck(
                 this.createSet(),
-                ExpressionFunctionName.with("custom-alias"),
+                ExpressionFunctionName.with("custom-alias")
+                        .setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY),
                 ExpressionFunctionSelector.parse("custom(1)")
         );
     }

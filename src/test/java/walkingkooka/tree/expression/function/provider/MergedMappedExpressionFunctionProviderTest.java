@@ -41,13 +41,16 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
 
     private final static AbsoluteUrl RENAMED_URL = Url.parseAbsolute("https://example.com/renamed-function111");
 
-    private final static ExpressionFunctionName RENAME_NAME = ExpressionFunctionName.with("rename-renamed-function-111");
+    private final static ExpressionFunctionName RENAME_NAME = ExpressionFunctionName.with("rename-renamed-function-111")
+            .setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY);
 
-    private final static ExpressionFunctionName RENAME_PROVIDER_NAME = ExpressionFunctionName.with("provider-renamed-function-111");
+    private final static ExpressionFunctionName RENAME_PROVIDER_NAME = ExpressionFunctionName.with("provider-renamed-function-111")
+            .setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY);
 
     private final static AbsoluteUrl PROVIDER_ONLY_URL = Url.parseAbsolute("https://example.com/provider-only-function-222");
 
-    private final static ExpressionFunctionName PROVIDER_ONLY_NAME = ExpressionFunctionName.with("provider-only-function-222");
+    private final static ExpressionFunctionName PROVIDER_ONLY_NAME = ExpressionFunctionName.with("provider-only-function-222")
+            .setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY);
 
     private static ExpressionFunction<?, ExpressionEvaluationContext> function(final ExpressionFunctionName name) {
         return new FakeExpressionFunction() {
@@ -126,7 +129,8 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
     @Test
     public void testExpressionFunctionNameUnknownFails() {
         this.expressionFunctionFails(
-                ExpressionFunctionName.with("unknown"),
+                ExpressionFunctionName.with("unknown")
+                        .setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY),
                 VALUES,
                 CONTEXT
         );
