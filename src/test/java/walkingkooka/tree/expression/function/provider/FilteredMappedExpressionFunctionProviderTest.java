@@ -41,10 +41,10 @@ public final class FilteredMappedExpressionFunctionProviderTest implements Expre
     private final static AbsoluteUrl URL = Url.parseAbsolute("https://example.com/function123");
 
     private final static ExpressionFunctionName NAME = ExpressionFunctionName.with("different-function-name-123")
-            .setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY);
+            .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
     private final static ExpressionFunctionName ORIGINAL_NAME = ExpressionFunctionName.with("original-function-123")
-            .setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY);
+            .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
     private static ExpressionFunction<?, ExpressionEvaluationContext> function(final ExpressionFunctionName name) {
         return new FakeExpressionFunction() {

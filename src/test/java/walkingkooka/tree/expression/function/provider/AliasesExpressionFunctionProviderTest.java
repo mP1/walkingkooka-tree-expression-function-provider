@@ -39,19 +39,19 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     private final static String NAME1_STRING = "function1";
 
     private final static ExpressionFunctionName NAME1 = ExpressionFunctionName.with(NAME1_STRING)
-            .setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY);
+            .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
     private final static ExpressionFunctionInfo INFO1 = ExpressionFunctionInfo.parse("https://example.com/function1 " + NAME1);
 
     private final static ExpressionFunctionName ALIAS2 = ExpressionFunctionName.with("alias2")
-            .setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY);
+            .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
     private final static ExpressionFunction<?, ExpressionEvaluationContext> FUNCTION1 = function(NAME1);
 
     private final static String NAME2_STRING = "function2";
 
     private final static ExpressionFunctionName NAME2 = ExpressionFunctionName.with(NAME2_STRING)
-            .setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY);
+            .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
     private final static ExpressionFunction<?, ExpressionEvaluationContext> FUNCTION2 = function(NAME2);
 
@@ -60,7 +60,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     private final static String NAME3_STRING = "function3";
 
     private final static ExpressionFunctionName NAME3 = ExpressionFunctionName.with(NAME3_STRING)
-            .setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY);
+            .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
     private final static ExpressionFunction<?, ExpressionEvaluationContext> FUNCTION3 = function(NAME3);
 
@@ -71,7 +71,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     private final static String NAME4_STRING = "custom4";
 
     private final static ExpressionFunctionName NAME4 = ExpressionFunctionName.with(NAME4_STRING)
-            .setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY);
+            .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
     private final static ExpressionFunctionInfo INFO4 = ExpressionFunctionInfo.parse("https://example.com/custom4 " + NAME4);
 
