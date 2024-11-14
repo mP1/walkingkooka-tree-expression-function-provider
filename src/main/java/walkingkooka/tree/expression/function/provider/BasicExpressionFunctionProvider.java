@@ -56,21 +56,22 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
     private BasicExpressionFunctionProvider(final AbsoluteUrl baseUrl,
                                             final CaseSensitivity nameCaseSensitivity,
                                             final Set<ExpressionFunction<?, ExpressionEvaluationContext>> functions) {
-        if(functions.isEmpty()) {
+        if (functions.isEmpty()) {
             throw new IllegalArgumentException("Functions cannot be empty");
         }
 
-        final Map<ExpressionFunctionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction = Maps.sorted(
-                ExpressionFunctionName.comparator(nameCaseSensitivity)
-        );
+        final Map<ExpressionFunctionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction = Maps.sorted();
         for (final ExpressionFunction<?, ExpressionEvaluationContext> function : functions) {
             final ExpressionFunctionName name = function.name()
                     .orElseThrow(
                             () -> new IllegalArgumentException("Cannot add unnamed functions to provider")
                     );
             nameToFunction.put(
-                    name,
-                    function
+                    name.setCaseSensitivity(nameCaseSensitivity),
+                    function.setName(
+                            function.name()
+                                    .map(n -> n.setCaseSensitivity(nameCaseSensitivity))
+                    )
             );
         }
 
@@ -89,7 +90,7 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
                                                                     name.value()
                                                             )
                                                     ),
-                                                    name
+                                                    name.setCaseSensitivity(nameCaseSensitivity)
                                             );
                                         }
                                 ).collect(Collectors.toCollection(SortedSets::tree))
