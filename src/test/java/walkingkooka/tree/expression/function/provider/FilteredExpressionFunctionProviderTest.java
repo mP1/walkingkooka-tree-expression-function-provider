@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunctions;
 
@@ -103,6 +104,12 @@ public final class FilteredExpressionFunctionProviderTest implements ExpressionF
     @Override
     public void testExpressionFunctionNameWithNullValuesFails() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+        return ExpressionFunctionProviders.expressionFunctions()
+                .expressionFunctionNameCaseSensitivity();
     }
 
     // ToString.........................................................................................................

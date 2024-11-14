@@ -19,6 +19,7 @@ package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.plugin.MergedProviderMapper;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -82,6 +83,11 @@ final class MergedMappedExpressionFunctionProvider implements ExpressionFunction
         ).setName(
                 Optional.of(name)
         );
+    }
+
+    @Override
+    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+        return this.provider.expressionFunctionNameCaseSensitivity();
     }
 
     /**

@@ -22,6 +22,8 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CaseSensitivity;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctions;
 
@@ -62,6 +64,11 @@ public final class TreeExpressionFunctionProviderTest implements ExpressionFunct
     @Override
     public TreeExpressionFunctionProvider createExpressionFunctionProvider() {
         return TreeExpressionFunctionProvider.INSTANCE;
+    }
+
+    @Override
+    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+        return ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY;
     }
 
     // toString.........................................................................................................

@@ -17,13 +17,34 @@
 
 package walkingkooka.tree.expression.function.provider;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CaseSensitivity;
+import walkingkooka.tree.expression.ExpressionFunctionName;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class EmptyExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<EmptyExpressionFunctionProvider> {
+
+    @Test
+    public void testWithNullCaseSensitivityFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> EmptyExpressionFunctionProvider.with(null)
+        );
+    }
+
     @Override
     public EmptyExpressionFunctionProvider createExpressionFunctionProvider() {
-        return EmptyExpressionFunctionProvider.INSTANCE;
+        return EmptyExpressionFunctionProvider.with(ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY);
     }
+
+    @Override
+    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+        return ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY;
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<EmptyExpressionFunctionProvider> type() {

@@ -23,6 +23,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.ProviderTesting;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
@@ -94,13 +95,24 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
                                             final ExpressionFunctionSelector selector,
                                             final ProviderContext context,
                                             final ExpressionFunction<?, ?> expected) {
+        final ExpressionFunction<?, ?> function = provider.expressionFunction(
+                selector,
+                context
+        );
+
         this.checkEquals(
                 expected,
-                provider.expressionFunction(
-                        selector,
-                        context
-                ),
+                function,
                 () -> selector.toString()
+        );
+
+        final CaseSensitivity expressionFunctionNameCaseSensitivity = this.expressionFunctionNameCaseSensitivity();
+        this.checkEquals(
+                expressionFunctionNameCaseSensitivity,
+                function.name()
+                        .get()
+                        .caseSensitivity(),
+                () -> "function name has wrong case sensitivity"
         );
     }
 
@@ -188,14 +200,25 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
                                             final List<?> values,
                                             final ProviderContext context,
                                             final ExpressionFunction<?, ?> expected) {
+        final ExpressionFunction<?, ?> function = provider.expressionFunction(
+                name,
+                values,
+                context
+        );
+
         this.checkEquals(
                 expected,
-                provider.expressionFunction(
-                        name,
-                        values,
-                        context
-                ),
+                function,
                 () -> name.toString()
+        );
+
+        final CaseSensitivity expressionFunctionNameCaseSensitivity = provider.expressionFunctionNameCaseSensitivity();
+        this.checkEquals(
+                expressionFunctionNameCaseSensitivity,
+                function.name()
+                        .get()
+                        .caseSensitivity(),
+                () -> "function name has wrong case sensitivity"
         );
     }
 
@@ -244,5 +267,34 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
         );
     }
 
+    // expressionFunctionNameCaseSensitivity............................................................................
+
+    @Test
+    default void testExpressionFunctionNameCaseSensitivityNotNull() {
+        this.checkNotEquals(
+                null,
+                this.createExpressionFunctionProvider()
+                        .expressionFunctionNameCaseSensitivity()
+        );
+    }
+
+    @Test
+    default void testExpressionFunctionNameCaseSensitivity() {
+        this.expressionFunctionNameCaseSensitivityAndCheck(
+                this.createExpressionFunctionProvider(),
+                this.expressionFunctionNameCaseSensitivity()
+        );
+    }
+
+    default void expressionFunctionNameCaseSensitivityAndCheck(final T provider,
+                                                               final CaseSensitivity expected) {
+        this.checkEquals(
+                expected,
+                provider.expressionFunctionNameCaseSensitivity()
+        );
+    }
+
     T createExpressionFunctionProvider();
+
+    CaseSensitivity expressionFunctionNameCaseSensitivity();
 }

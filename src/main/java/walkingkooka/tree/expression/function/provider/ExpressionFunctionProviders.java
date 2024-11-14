@@ -63,15 +63,19 @@ public final class ExpressionFunctionProviders implements PublicStaticHelper {
     /**
      * {@see ExpressionFunctionProviderCollection}
      */
-    public static ExpressionFunctionProvider collection(final Set<ExpressionFunctionProvider> providers) {
-        return ExpressionFunctionProviderCollection.with(providers);
+    public static ExpressionFunctionProvider collection(final CaseSensitivity expressionFunctionNameCaseSensitivity,
+                                                        final Set<ExpressionFunctionProvider> providers) {
+        return ExpressionFunctionProviderCollection.with(
+                expressionFunctionNameCaseSensitivity,
+                providers
+        );
     }
 
     /**
      * {@see EmptyExpressionFunctionProvider}
      */
-    public static ExpressionFunctionProvider empty() {
-        return EmptyExpressionFunctionProvider.INSTANCE;
+    public static ExpressionFunctionProvider empty(final CaseSensitivity expressionFunctionNameCaseSensitivity) {
+        return EmptyExpressionFunctionProvider.with(expressionFunctionNameCaseSensitivity);
     }
 
     /**

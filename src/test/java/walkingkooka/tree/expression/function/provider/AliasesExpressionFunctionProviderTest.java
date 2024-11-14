@@ -24,6 +24,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -126,6 +127,11 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
                     @Override
                     public ExpressionFunctionInfoSet expressionFunctionInfos() {
                         return ExpressionFunctionInfoSet.parse("https://example.com/function111 function111");
+                    }
+
+                    @Override
+                    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+                        return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
                     }
                 }
         );
@@ -262,8 +268,18 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
                                 )
                         );
                     }
+
+                    @Override
+                    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+                        return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
+                    }
                 }
         );
+    }
+
+    @Override
+    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+        return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
     }
 
     // class............................................................................................................
