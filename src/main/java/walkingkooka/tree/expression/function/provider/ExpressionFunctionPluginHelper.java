@@ -49,18 +49,17 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
     /**
      * Singleton
      */
-    final static ExpressionFunctionPluginHelper INSTANCE = new ExpressionFunctionPluginHelper();
+    final static ExpressionFunctionPluginHelper INSTANCE = new ExpressionFunctionPluginHelper(CaseSensitivity.INSENSITIVE);
 
-    final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
-
-    private ExpressionFunctionPluginHelper() {
+    private ExpressionFunctionPluginHelper(final CaseSensitivity caseSensitivity) {
         super();
+        this.caseSensitivity = caseSensitivity;
     }
 
     @Override
     public ExpressionFunctionName name(final String text) {
         return ExpressionFunctionName.with(text)
-                .setCaseSensitivity(CASE_SENSITIVITY);
+                .setCaseSensitivity(this.caseSensitivity);
     }
 
     @Override
@@ -70,7 +69,7 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
                 cursor,
                 context
         ).map(
-                n -> n.setCaseSensitivity(CASE_SENSITIVITY)
+                n -> n.setCaseSensitivity(this.caseSensitivity)
         );
     }
 
@@ -81,7 +80,7 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
 
     @Override
     public Comparator<ExpressionFunctionName> nameComparator() {
-        return Name.comparator(CASE_SENSITIVITY);
+        return Name.comparator(this.caseSensitivity);
     }
 
     @Override
@@ -138,6 +137,8 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
     public String label() {
         return "Function";
     }
+
+    final CaseSensitivity caseSensitivity;
 
     @Override
     public String toString() {

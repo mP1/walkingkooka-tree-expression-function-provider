@@ -47,7 +47,7 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
         return new ExpressionFunctionSelector(
                 PluginSelector.parse(
                         text,
-                        (n) -> ExpressionFunctionName.with(n).setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY)
+                        (n) -> ExpressionFunctionName.with(n).setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity)
                 )
         );
     }
@@ -142,7 +142,7 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
         return ExpressionFunctionName.PARSER.apply(
                 cursor,
                 context
-        ).map(n -> n.setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY));
+        ).map(n -> n.setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity));
     }
 
     // Object...........................................................................................................

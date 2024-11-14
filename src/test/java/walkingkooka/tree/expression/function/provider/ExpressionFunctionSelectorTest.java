@@ -103,7 +103,7 @@ public final class ExpressionFunctionSelectorTest implements PluginSelectorLikeT
     public ExpressionFunctionSelector createJsonNodeMarshallingValue() {
         return ExpressionFunctionSelector.with(
                 ExpressionFunctionName.with("function123")
-                        .setCaseSensitivity(ExpressionFunctionPluginHelper.CASE_SENSITIVITY),
+                        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity),
                 "@@"
         );
     }
