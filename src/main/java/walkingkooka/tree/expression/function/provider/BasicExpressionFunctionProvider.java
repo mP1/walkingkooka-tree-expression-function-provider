@@ -60,6 +60,8 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
             throw new IllegalArgumentException("Functions cannot be empty");
         }
 
+        this.nameCaseSensitivity = nameCaseSensitivity;
+
         final Map<ExpressionFunctionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction = Maps.sorted();
         for (final ExpressionFunction<?, ExpressionEvaluationContext> function : functions) {
             final ExpressionFunctionName name = function.name()
@@ -133,6 +135,13 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
     }
 
     private final ExpressionFunctionInfoSet expressionFunctionInfos;
+
+    @Override
+    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+        return this.nameCaseSensitivity;
+    }
+
+    private final CaseSensitivity nameCaseSensitivity;
 
     @Override
     public String toString() {

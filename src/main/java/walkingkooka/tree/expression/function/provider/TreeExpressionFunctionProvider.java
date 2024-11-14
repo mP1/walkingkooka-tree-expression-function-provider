@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -122,6 +123,11 @@ final class TreeExpressionFunctionProvider implements ExpressionFunctionProvider
         if(false == values.isEmpty()) {
             throw new IllegalArgumentException("Got " + values.size() + " expected 0");
         }
+    }
+
+    @Override
+    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+        return ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY;
     }
 
     @Override

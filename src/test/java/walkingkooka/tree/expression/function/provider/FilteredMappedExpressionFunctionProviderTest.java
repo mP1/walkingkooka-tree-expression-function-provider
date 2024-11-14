@@ -25,6 +25,7 @@ import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -185,8 +186,19 @@ public final class FilteredMappedExpressionFunctionProviderTest implements Expre
                                 )
                         );
                     }
+
+                    @Override
+                    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+                        return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
+                    }
+
                 }
         );
+    }
+
+    @Override
+    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+        return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
     }
 
     // toString.........................................................................................................

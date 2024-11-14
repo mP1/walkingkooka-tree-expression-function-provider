@@ -62,11 +62,25 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
+    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
+
+    @Test
+    public void testWithNullNameCaseSensitivityFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> ExpressionFunctionProviderCollection.with(
+                        null,
+                        Sets.empty()
+                )
+        );
+    }
+
     @Test
     public void testWithNullProvidersFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> ExpressionFunctionProviderCollection.with(
+                        CASE_SENSITIVITY,
                         null
                 )
         );
@@ -77,6 +91,7 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
         assertThrows(
                 IllegalArgumentException.class,
                 () -> ExpressionFunctionProviderCollection.with(
+                        CASE_SENSITIVITY,
                         Sets.empty()
                 )
         );
@@ -85,6 +100,7 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
     @Test
     public void testExpressionFunctionNameDuplicateUnknown() {
         final ExpressionFunctionProviderCollection provider = ExpressionFunctionProviderCollection.with(
+                CASE_SENSITIVITY,
                 Sets.of(
                         ExpressionFunctionProviders.basic(
                                 BASE_URL.appendPath(UrlPath.parse("1")),
@@ -128,20 +144,28 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
     @Test
     public void testExpressionFunctionNameLookup1() {
         this.expressionFunctionAndCheck(
-                NAME1,
+                NAME1.setCaseSensitivity(CASE_SENSITIVITY),
                 VALUES,
                 CONTEXT,
-                FUNCTION1
+                FUNCTION1.setName(
+                        Optional.of(
+                                NAME1.setCaseSensitivity(CASE_SENSITIVITY)
+                        )
+                )
         );
     }
 
     @Test
     public void testExpressionFunctionNameLookup2() {
         this.expressionFunctionAndCheck(
-                NAME2,
+                NAME2.setCaseSensitivity(CASE_SENSITIVITY),
                 VALUES,
                 CONTEXT,
-                FUNCTION2
+                FUNCTION2.setName(
+                        Optional.of(
+                                NAME2.setCaseSensitivity(CASE_SENSITIVITY)
+                        )
+                )
         );
     }
 
@@ -150,7 +174,11 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
         this.expressionFunctionAndCheck(
                 ExpressionFunctionSelector.parse(NAME1 + ""),
                 CONTEXT,
-                FUNCTION1
+                FUNCTION1.setName(
+                        Optional.of(
+                                NAME1.setCaseSensitivity(CASE_SENSITIVITY)
+                        )
+                )
         );
     }
 
@@ -159,7 +187,11 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
         this.expressionFunctionAndCheck(
                 ExpressionFunctionSelector.parse(NAME2 + ""),
                 CONTEXT,
-                FUNCTION2
+                FUNCTION2.setName(
+                        Optional.of(
+                                NAME2.setCaseSensitivity(CASE_SENSITIVITY)
+                        )
+                )
         );
     }
 
@@ -181,6 +213,7 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
     @Override
     public ExpressionFunctionProviderCollection createExpressionFunctionProvider() {
         return ExpressionFunctionProviderCollection.with(
+                CASE_SENSITIVITY,
                         Sets.of(
                                 ExpressionFunctionProviders.basic(
                                         BASE_URL,
@@ -198,6 +231,11 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
                                 )
                         )
                 );
+    }
+
+    @Override
+    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+        return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
     }
 
     // toString.........................................................................................................

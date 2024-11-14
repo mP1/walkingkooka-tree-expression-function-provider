@@ -18,6 +18,7 @@
 package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -52,6 +53,12 @@ public interface ExpressionFunctionProviderDelegator extends ExpressionFunctionP
     default ExpressionFunctionInfoSet expressionFunctionInfos() {
         return this.expressionFunctionProvider()
                 .expressionFunctionInfos();
+    }
+
+    @Override
+    default CaseSensitivity expressionFunctionNameCaseSensitivity() {
+        return this.expressionFunctionProvider()
+                .expressionFunctionNameCaseSensitivity();
     }
 
     ExpressionFunctionProvider expressionFunctionProvider();

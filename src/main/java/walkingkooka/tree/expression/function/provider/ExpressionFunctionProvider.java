@@ -19,6 +19,7 @@ package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.plugin.Provider;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -47,4 +48,9 @@ public interface ExpressionFunctionProvider extends Provider {
      * Returns all known {@link ExpressionFunctionInfo}.
      */
     ExpressionFunctionInfoSet expressionFunctionInfos();
+
+    /**
+     * Getter that returns the {@link CaseSensitivity} for {@link ExpressionFunctionName} lookups etc.
+     */
+    CaseSensitivity expressionFunctionNameCaseSensitivity();
 }

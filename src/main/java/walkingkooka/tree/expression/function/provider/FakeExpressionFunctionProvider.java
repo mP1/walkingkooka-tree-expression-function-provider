@@ -18,6 +18,7 @@
 package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -42,6 +43,11 @@ public class FakeExpressionFunctionProvider implements ExpressionFunctionProvide
 
     @Override
     public ExpressionFunctionInfoSet expressionFunctionInfos() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
         throw new UnsupportedOperationException();
     }
 }

@@ -264,6 +264,11 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
         );
     }
 
+    @Override
+    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+        return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
+    }
+
     // toString.........................................................................................................
 
     @Test
