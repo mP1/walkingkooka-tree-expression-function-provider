@@ -77,7 +77,11 @@ final class FilteredMappedExpressionFunctionProvider implements ExpressionFuncti
         Objects.requireNonNull(context, "context");
 
         return this.provider.expressionFunction(
-                this.mapper.name(name),
+                this.mapper.name(
+                        name.setCaseSensitivity(
+                                this.expressionFunctionNameCaseSensitivity()
+                        )
+                ),
                 values,
                 context
         ).setName(
