@@ -64,7 +64,9 @@ final class FilteredExpressionFunctionProvider implements ExpressionFunctionProv
                                                                                  final List<?> values,
                                                                                  final ProviderContext context) {
         return this.provider.expressionFunction(
-                this.guard.name(name),
+                this.guard.name(
+                        name.setCaseSensitivity(this.expressionFunctionNameCaseSensitivity())
+                ),
                 Objects.requireNonNull(values, "values"),
                 Objects.requireNonNull(context, "context")
         );

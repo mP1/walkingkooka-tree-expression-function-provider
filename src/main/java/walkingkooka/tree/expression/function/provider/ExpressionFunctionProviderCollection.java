@@ -98,7 +98,10 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
         Objects.requireNonNull(context, "context");
 
         return this.providers.get(
-                selector,
+                selector.setName(
+                        selector.name()
+                                .setCaseSensitivity(this.expressionFunctionNameCaseSensitivity)
+                ),
                 context
         );
     }
@@ -112,7 +115,7 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
         Objects.requireNonNull(context, "context");
 
         return this.providers.get(
-                name,
+                name.setCaseSensitivity(this.expressionFunctionNameCaseSensitivity),
                 values,
                 context
         );

@@ -76,7 +76,23 @@ final class MergedMappedExpressionFunctionProvider implements ExpressionFunction
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
-        return this.provider.expressionFunction(
+        return this.expressionFunction0(
+                name.setCaseSensitivity(this.expressionFunctionNameCaseSensitivity()),
+                values,
+                context
+        );
+    }
+
+    private ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction0(final ExpressionFunctionName name,
+                                                                                   final List<?> values,
+                                                                                   final ProviderContext context) {
+        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(values, "values");
+        Objects.requireNonNull(context, "context");
+
+        final ExpressionFunctionProvider provider = this.provider;
+
+        return provider.expressionFunction(
                 this.mapper.name(name),
                 values,
                 context

@@ -70,12 +70,26 @@ final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvi
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
+        return this.expressionFunction0(
+                name.setCaseSensitivity(this.expressionFunctionNameCaseSensitivity()),
+                values,
+                context
+        );
+    }
+
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction0(final ExpressionFunctionName name,
+                                                                                  final List<?> values,
+                                                                                  final ProviderContext context) {
         ExpressionFunction<?, ExpressionEvaluationContext> function;
 
         final ExpressionFunctionAliasSet aliases = this.aliases;
         final ExpressionFunctionProvider provider = this.provider;
 
-        final Optional<ExpressionFunctionSelector> selector = aliases.aliasSelector(name);
+        final Optional<ExpressionFunctionSelector> selector = aliases.aliasSelector(
+                name.setCaseSensitivity(
+                        provider.expressionFunctionNameCaseSensitivity()
+                )
+        );
         if (selector.isPresent()) {
             if (false == values.isEmpty()) {
                 throw new IllegalArgumentException("Alias " + name + " should have no values");

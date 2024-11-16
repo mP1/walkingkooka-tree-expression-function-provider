@@ -120,7 +120,9 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
-        final ExpressionFunction<?, ExpressionEvaluationContext> function = this.nameToFunction.get(name);
+        final ExpressionFunction<?, ExpressionEvaluationContext> function = this.nameToFunction.get(
+                name.setCaseSensitivity(this.nameCaseSensitivity)
+        );
         if(null == function) {
             throw new UnknownExpressionFunctionException(name);
         }
