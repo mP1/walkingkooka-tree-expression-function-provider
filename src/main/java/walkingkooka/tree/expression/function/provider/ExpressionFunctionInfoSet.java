@@ -34,6 +34,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * A read only {@link Set} of {@link ExpressionFunctionInfo} sorted by {@link ExpressionFunctionName}.
@@ -128,6 +129,13 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
     public ExpressionFunctionInfoSet deleteAll(final Collection<ExpressionFunctionInfo> infos) {
         return this.setElements(
                 this.pluginInfoSet.deleteAll(infos)
+        );
+    }
+
+    @Override
+    public ExpressionFunctionInfoSet deleteIf(final Predicate<? super ExpressionFunctionInfo> predicate) {
+        return this.setElements(
+                this.pluginInfoSet.deleteIf(predicate)
         );
     }
 
