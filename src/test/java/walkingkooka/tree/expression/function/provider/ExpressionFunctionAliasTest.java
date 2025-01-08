@@ -33,11 +33,11 @@ public final class ExpressionFunctionAliasTest implements PluginAliasLikeTesting
     private final static ExpressionFunctionName NAME = ExpressionFunctionName.with("Hello");
 
     private final static Optional<ExpressionFunctionSelector> SELECTOR = Optional.of(
-            ExpressionFunctionSelector.parse("function123")
+        ExpressionFunctionSelector.parse("function123")
     );
 
     private final static Optional<AbsoluteUrl> URL = Optional.of(
-            Url.parseAbsolute("https://example.com/function123")
+        Url.parseAbsolute("https://example.com/function123")
     );
 
     // with.............................................................................................................
@@ -45,36 +45,36 @@ public final class ExpressionFunctionAliasTest implements PluginAliasLikeTesting
     @Test
     public void testWithNullNameFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> ExpressionFunctionAlias.with(
-                        null,
-                        SELECTOR,
-                        URL
-                )
+            NullPointerException.class,
+            () -> ExpressionFunctionAlias.with(
+                null,
+                SELECTOR,
+                URL
+            )
         );
     }
 
     @Test
     public void testWithNullSelectorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> ExpressionFunctionAlias.with(
-                        NAME,
-                        null,
-                        URL
-                )
+            NullPointerException.class,
+            () -> ExpressionFunctionAlias.with(
+                NAME,
+                null,
+                URL
+            )
         );
     }
 
     @Test
     public void testWithNullUrlFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> ExpressionFunctionAlias.with(
-                        NAME,
-                        SELECTOR,
-                        null
-                )
+            NullPointerException.class,
+            () -> ExpressionFunctionAlias.with(
+                NAME,
+                SELECTOR,
+                null
+            )
         );
     }
 
@@ -83,16 +83,16 @@ public final class ExpressionFunctionAliasTest implements PluginAliasLikeTesting
     @Test
     public void testParse() {
         this.parseStringAndCheck(
-                "alias1 name1 https://example.com",
-                ExpressionFunctionAlias.with(
-                        ExpressionFunctionName.with("alias1"),
-                        Optional.of(
-                                ExpressionFunctionSelector.parse("name1")
-                        ),
-                        Optional.of(
-                                Url.parseAbsolute("https://example.com")
-                        )
+            "alias1 name1 https://example.com",
+            ExpressionFunctionAlias.with(
+                ExpressionFunctionName.with("alias1"),
+                Optional.of(
+                    ExpressionFunctionSelector.parse("name1")
+                ),
+                Optional.of(
+                    Url.parseAbsolute("https://example.com")
                 )
+            )
         );
     }
 
@@ -106,9 +106,9 @@ public final class ExpressionFunctionAliasTest implements PluginAliasLikeTesting
     @Override
     public ExpressionFunctionAlias createComparable() {
         return ExpressionFunctionAlias.with(
-                NAME,
-                SELECTOR,
-                URL
+            NAME,
+            SELECTOR,
+            URL
         );
     }
 

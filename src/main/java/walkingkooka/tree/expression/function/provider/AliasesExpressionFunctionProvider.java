@@ -36,8 +36,8 @@ final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvi
     static AliasesExpressionFunctionProvider with(final ExpressionFunctionAliasSet aliases,
                                                   final ExpressionFunctionProvider provider) {
         return new AliasesExpressionFunctionProvider(
-                Objects.requireNonNull(aliases, "aliases"),
-                Objects.requireNonNull(provider, "provider")
+            Objects.requireNonNull(aliases, "aliases"),
+            Objects.requireNonNull(provider, "provider")
         );
     }
 
@@ -53,12 +53,12 @@ final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvi
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
                                                                                  final ProviderContext context) {
         return this.provider.expressionFunction(
-                this.aliases.selector(selector),
-                context
+            this.aliases.selector(selector),
+            context
         ).setName(
-                Optional.of(
-                        selector.name()
-                )
+            Optional.of(
+                selector.name()
+            )
         );
     }
 
@@ -71,9 +71,9 @@ final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvi
         Objects.requireNonNull(context, "context");
 
         return this.expressionFunction0(
-                name.setCaseSensitivity(this.expressionFunctionNameCaseSensitivity()),
-                values,
-                context
+            name.setCaseSensitivity(this.expressionFunctionNameCaseSensitivity()),
+            values,
+            context
         );
     }
 
@@ -86,9 +86,9 @@ final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvi
         final ExpressionFunctionProvider provider = this.provider;
 
         final Optional<ExpressionFunctionSelector> selector = aliases.aliasSelector(
-                name.setCaseSensitivity(
-                        provider.expressionFunctionNameCaseSensitivity()
-                )
+            name.setCaseSensitivity(
+                provider.expressionFunctionNameCaseSensitivity()
+            )
         );
         if (selector.isPresent()) {
             if (false == values.isEmpty()) {
@@ -96,17 +96,17 @@ final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvi
             }
             // assumes that $provider caches selectors to function
             function = provider.expressionFunction(
-                    selector.get(),
-                    context
+                selector.get(),
+                context
             ).setName(
-                    Optional.of(name)
+                Optional.of(name)
             );
         } else {
             function = provider.expressionFunction(
-                    aliases.aliasOrName(name)
-                            .orElseThrow(() -> new UnknownExpressionFunctionException(name)),
-                    values,
-                    context
+                aliases.aliasOrName(name)
+                    .orElseThrow(() -> new UnknownExpressionFunctionException(name)),
+                values,
+                context
             );
         }
 

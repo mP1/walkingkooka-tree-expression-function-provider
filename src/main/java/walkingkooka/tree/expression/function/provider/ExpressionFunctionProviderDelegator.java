@@ -25,16 +25,16 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.util.List;
 
-public interface ExpressionFunctionProviderDelegator extends ExpressionFunctionProvider{
+public interface ExpressionFunctionProviderDelegator extends ExpressionFunctionProvider {
 
     @Override
     default ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
                                                                                   final ProviderContext context) {
         return this.expressionFunctionProvider()
-                .expressionFunction(
-                        selector,
-                        context
-                );
+            .expressionFunction(
+                selector,
+                context
+            );
     }
 
     @Override
@@ -42,23 +42,23 @@ public interface ExpressionFunctionProviderDelegator extends ExpressionFunctionP
                                                                                   final List<?> values,
                                                                                   final ProviderContext context) {
         return this.expressionFunctionProvider()
-                .expressionFunction(
-                        name,
-                        values,
-                        context
-                );
+            .expressionFunction(
+                name,
+                values,
+                context
+            );
     }
 
     @Override
     default ExpressionFunctionInfoSet expressionFunctionInfos() {
         return this.expressionFunctionProvider()
-                .expressionFunctionInfos();
+            .expressionFunctionInfos();
     }
 
     @Override
     default CaseSensitivity expressionFunctionNameCaseSensitivity() {
         return this.expressionFunctionProvider()
-                .expressionFunctionNameCaseSensitivity();
+            .expressionFunctionNameCaseSensitivity();
     }
 
     ExpressionFunctionProvider expressionFunctionProvider();

@@ -30,7 +30,7 @@ import walkingkooka.tree.expression.function.ExpressionFunctions;
 import java.util.List;
 
 public final class FilteredExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<FilteredExpressionFunctionProvider>,
-        ToStringTesting<FilteredExpressionFunctionProvider> {
+    ToStringTesting<FilteredExpressionFunctionProvider> {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
@@ -40,15 +40,15 @@ public final class FilteredExpressionFunctionProviderTest implements ExpressionF
         final List<?> values = Lists.empty();
 
         this.expressionFunctionAndCheck(
-                name,
-                values,
-                CONTEXT,
-                ExpressionFunctionProviders.expressionFunctions()
-                        .expressionFunction(
-                                name,
-                                values,
-                                CONTEXT
-                        )
+            name,
+            values,
+            CONTEXT,
+            ExpressionFunctionProviders.expressionFunctions()
+                .expressionFunction(
+                    name,
+                    values,
+                    CONTEXT
+                )
         );
     }
 
@@ -58,36 +58,36 @@ public final class FilteredExpressionFunctionProviderTest implements ExpressionF
         final List<?> values = Lists.empty();
 
         this.expressionFunctionAndCheck(
-                ExpressionFunctionProviders.expressionFunctions(),
-                name,
-                values,
-                CONTEXT,
-                ExpressionFunctions.nodeName()
+            ExpressionFunctionProviders.expressionFunctions(),
+            name,
+            values,
+            CONTEXT,
+            ExpressionFunctions.nodeName()
         );
 
         this.expressionFunctionFails(
-                name,
-                values,
-                CONTEXT
+            name,
+            values,
+            CONTEXT
         );
     }
 
     @Test
     public void testExpressionFunctionInfos() {
         this.expressionFunctionInfosAndCheck(
-                ExpressionFunctionInfoSet.EMPTY.concat(
-                        ExpressionFunctionInfo.parse("https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/node node")
-                )
+            ExpressionFunctionInfoSet.EMPTY.concat(
+                ExpressionFunctionInfo.parse("https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/node node")
+            )
         );
     }
 
     @Override
     public FilteredExpressionFunctionProvider createExpressionFunctionProvider() {
         return FilteredExpressionFunctionProvider.with(
-                ExpressionFunctionProviders.expressionFunctions(),
-                ExpressionFunctionInfoSet.EMPTY.concat(
-                        ExpressionFunctionInfo.parse("https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/node node")
-                )
+            ExpressionFunctionProviders.expressionFunctions(),
+            ExpressionFunctionInfoSet.EMPTY.concat(
+                ExpressionFunctionInfo.parse("https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/node node")
+            )
         );
     }
 
@@ -109,7 +109,7 @@ public final class FilteredExpressionFunctionProviderTest implements ExpressionF
     @Override
     public CaseSensitivity expressionFunctionNameCaseSensitivity() {
         return ExpressionFunctionProviders.expressionFunctions()
-                .expressionFunctionNameCaseSensitivity();
+            .expressionFunctionNameCaseSensitivity();
     }
 
     // ToString.........................................................................................................
@@ -117,8 +117,8 @@ public final class FilteredExpressionFunctionProviderTest implements ExpressionF
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createExpressionFunctionProvider(),
-                "TreeExpressionFunctionProvider"
+            this.createExpressionFunctionProvider(),
+            "TreeExpressionFunctionProvider"
         );
     }
 

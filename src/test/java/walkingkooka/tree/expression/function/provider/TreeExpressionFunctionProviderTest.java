@@ -28,36 +28,36 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctions;
 
 public final class TreeExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<TreeExpressionFunctionProvider>,
-        ToStringTesting<TreeExpressionFunctionProvider> {
+    ToStringTesting<TreeExpressionFunctionProvider> {
 
     @Test
     public void testExpressionFunctionNode() {
         this.expressionFunctionAndCheck2(
-                ExpressionFunctions.node()
+            ExpressionFunctions.node()
         );
     }
 
     @Test
     public void testExpressionFunctionNodeName() {
         this.expressionFunctionAndCheck2(
-                ExpressionFunctions.nodeName()
+            ExpressionFunctions.nodeName()
         );
     }
 
     @Test
     public void testExpressionFunctionTypeName() {
         this.expressionFunctionAndCheck2(
-                ExpressionFunctions.typeName()
+            ExpressionFunctions.typeName()
         );
     }
 
     private void expressionFunctionAndCheck2(final ExpressionFunction<?, ?> function) {
         this.expressionFunctionAndCheck(
-                function.name()
-                        .get(),
-                Lists.empty(),
-                ProviderContexts.fake(),
-                function
+            function.name()
+                .get(),
+            Lists.empty(),
+            ProviderContexts.fake(),
+            function
         );
     }
 
@@ -76,8 +76,8 @@ public final class TreeExpressionFunctionProviderTest implements ExpressionFunct
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createExpressionFunctionProvider(),
-                TreeExpressionFunctionProvider.class.getSimpleName()
+            this.createExpressionFunctionProvider(),
+            TreeExpressionFunctionProvider.class.getSimpleName()
         );
     }
 

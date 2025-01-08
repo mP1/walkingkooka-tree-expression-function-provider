@@ -42,17 +42,17 @@ import java.util.function.Predicate;
 public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunctionInfo> implements PluginInfoSetLike<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector, ExpressionFunctionAlias, ExpressionFunctionAliasSet> {
 
     public final static ExpressionFunctionInfoSet EMPTY = new ExpressionFunctionInfoSet(
-            PluginInfoSet.with(
-                    Sets.<ExpressionFunctionInfo>empty()
-            )
+        PluginInfoSet.with(
+            Sets.<ExpressionFunctionInfo>empty()
+        )
     );
 
     public static ExpressionFunctionInfoSet parse(final String text) {
         return new ExpressionFunctionInfoSet(
-                PluginInfoSet.parse(
-                        text,
-                        ExpressionFunctionInfo::parse
-                )
+            PluginInfoSet.parse(
+                text,
+                ExpressionFunctionInfo::parse
+            )
         );
     }
 
@@ -61,8 +61,8 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
 
         final PluginInfoSet<ExpressionFunctionName, ExpressionFunctionInfo> pluginInfoSet = PluginInfoSet.with(infos);
         return pluginInfoSet.isEmpty() ?
-                EMPTY :
-                new ExpressionFunctionInfoSet(pluginInfoSet);
+            EMPTY :
+            new ExpressionFunctionInfoSet(pluginInfoSet);
     }
 
     private ExpressionFunctionInfoSet(final PluginInfoSet<ExpressionFunctionName, ExpressionFunctionInfo> pluginInfoSet) {
@@ -89,53 +89,53 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
     @Override
     public ExpressionFunctionInfoSet filter(final ExpressionFunctionInfoSet infos) {
         return this.setElements(
-                this.pluginInfoSet.filter(
-                        infos.pluginInfoSet
-                )
+            this.pluginInfoSet.filter(
+                infos.pluginInfoSet
+            )
         );
     }
 
     @Override
     public ExpressionFunctionInfoSet renameIfPresent(ExpressionFunctionInfoSet renameInfos) {
         return this.setElements(
-                this.pluginInfoSet.renameIfPresent(
-                        renameInfos.pluginInfoSet
-                )
+            this.pluginInfoSet.renameIfPresent(
+                renameInfos.pluginInfoSet
+            )
         );
     }
 
     @Override
     public ExpressionFunctionInfoSet concat(final ExpressionFunctionInfo info) {
         return this.setElements(
-                this.pluginInfoSet.concat(info)
+            this.pluginInfoSet.concat(info)
         );
     }
 
     @Override
     public ExpressionFunctionInfoSet concatAll(final Collection<ExpressionFunctionInfo> infos) {
         return this.setElements(
-                this.pluginInfoSet.concatAll(infos)
+            this.pluginInfoSet.concatAll(infos)
         );
     }
 
     @Override
     public ExpressionFunctionInfoSet delete(final ExpressionFunctionInfo info) {
         return this.setElements(
-                this.pluginInfoSet.delete(info)
+            this.pluginInfoSet.delete(info)
         );
     }
 
     @Override
     public ExpressionFunctionInfoSet deleteAll(final Collection<ExpressionFunctionInfo> infos) {
         return this.setElements(
-                this.pluginInfoSet.deleteAll(infos)
+            this.pluginInfoSet.deleteAll(infos)
         );
     }
 
     @Override
     public ExpressionFunctionInfoSet deleteIf(final Predicate<? super ExpressionFunctionInfo> predicate) {
         return this.setElements(
-                this.pluginInfoSet.deleteIf(predicate)
+            this.pluginInfoSet.deleteIf(predicate)
         );
     }
 
@@ -143,30 +143,30 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
     public ExpressionFunctionInfoSet replace(final ExpressionFunctionInfo oldInfo,
                                              final ExpressionFunctionInfo newInfo) {
         return this.setElements(
-                this.pluginInfoSet.replace(
-                        oldInfo,
-                        newInfo
-                )
+            this.pluginInfoSet.replace(
+                oldInfo,
+                newInfo
+            )
         );
     }
 
     @Override
     public ImmutableSet<ExpressionFunctionInfo> setElementsFailIfDifferent(final Set<ExpressionFunctionInfo> infos) {
         return this.setElements(
-                this.pluginInfoSet.setElementsFailIfDifferent(
-                        infos
-                )
+            this.pluginInfoSet.setElementsFailIfDifferent(
+                infos
+            )
         );
     }
 
     @Override
     public ExpressionFunctionInfoSet setElements(final Set<ExpressionFunctionInfo> infos) {
         final ExpressionFunctionInfoSet after = new ExpressionFunctionInfoSet(
-                this.pluginInfoSet.setElements(infos)
+            this.pluginInfoSet.setElements(infos)
         );
         return this.pluginInfoSet.equals(infos) ?
-                this :
-                after;
+            this :
+            after;
     }
 
     @Override
@@ -217,10 +217,10 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
     static ExpressionFunctionInfoSet unmarshall(final JsonNode node,
                                                 final JsonNodeUnmarshallContext context) {
         return with(
-                context.unmarshallSet(
-                        node,
-                        ExpressionFunctionInfo.class
-                )
+            context.unmarshallSet(
+                node,
+                ExpressionFunctionInfo.class
+            )
         );
     }
 
@@ -228,10 +228,10 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
         ExpressionFunctionInfo.register(); // force registration
 
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(ExpressionFunctionInfoSet.class),
-                ExpressionFunctionInfoSet::unmarshall,
-                ExpressionFunctionInfoSet::marshall,
-                ExpressionFunctionInfoSet.class
+            JsonNodeContext.computeTypeName(ExpressionFunctionInfoSet.class),
+            ExpressionFunctionInfoSet::unmarshall,
+            ExpressionFunctionInfoSet::marshall,
+            ExpressionFunctionInfoSet.class
         );
     }
 }

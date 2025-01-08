@@ -38,33 +38,33 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     @Test
     default void testExpressionFunctionSelectorWithNullSelectorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createExpressionFunctionProvider()
-                        .expressionFunction(
-                                null,
-                                ProviderContexts.fake()
-                        )
+            NullPointerException.class,
+            () -> this.createExpressionFunctionProvider()
+                .expressionFunction(
+                    null,
+                    ProviderContexts.fake()
+                )
         );
     }
 
     @Test
     default void testExpressionFunctionSelectorWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createExpressionFunctionProvider()
-                        .expressionFunction(
-                                ExpressionFunctionSelector.parse("selector"),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createExpressionFunctionProvider()
+                .expressionFunction(
+                    ExpressionFunctionSelector.parse("selector"),
+                    null
+                )
         );
     }
 
     default void expressionFunctionFails(final ExpressionFunctionSelector selector,
                                          final ProviderContext context) {
         this.expressionFunctionFails(
-                this.createExpressionFunctionProvider(),
-                selector,
-                context
+            this.createExpressionFunctionProvider(),
+            selector,
+            context
         );
     }
 
@@ -72,11 +72,11 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
                                          final ExpressionFunctionSelector selector,
                                          final ProviderContext context) {
         assertThrows(
-                RuntimeException.class,
-                () -> provider.expressionFunction(
-                        selector,
-                        context
-                )
+            RuntimeException.class,
+            () -> provider.expressionFunction(
+                selector,
+                context
+            )
         );
     }
 
@@ -84,10 +84,10 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
                                             final ProviderContext context,
                                             final ExpressionFunction<?, ?> expected) {
         this.expressionFunctionAndCheck(
-                this.createExpressionFunctionProvider(),
-                selector,
-                context,
-                expected
+            this.createExpressionFunctionProvider(),
+            selector,
+            context,
+            expected
         );
     }
 
@@ -96,23 +96,23 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
                                             final ProviderContext context,
                                             final ExpressionFunction<?, ?> expected) {
         final ExpressionFunction<?, ?> function = provider.expressionFunction(
-                selector,
-                context
+            selector,
+            context
         );
 
         this.checkEquals(
-                expected,
-                function,
-                () -> selector.toString()
+            expected,
+            function,
+            () -> selector.toString()
         );
 
         final CaseSensitivity expressionFunctionNameCaseSensitivity = this.expressionFunctionNameCaseSensitivity();
         this.checkEquals(
-                expressionFunctionNameCaseSensitivity,
-                function.name()
-                        .get()
-                        .caseSensitivity(),
-                () -> "function name has wrong case sensitivity"
+            expressionFunctionNameCaseSensitivity,
+            function.name()
+                .get()
+                .caseSensitivity(),
+            () -> "function name has wrong case sensitivity"
         );
     }
 
@@ -121,39 +121,39 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     @Test
     default void testExpressionFunctionNameWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createExpressionFunctionProvider()
-                        .expressionFunction(
-                                null,
-                                Lists.empty(),
-                                ProviderContexts.fake()
-                        )
+            NullPointerException.class,
+            () -> this.createExpressionFunctionProvider()
+                .expressionFunction(
+                    null,
+                    Lists.empty(),
+                    ProviderContexts.fake()
+                )
         );
     }
 
     @Test
     default void testExpressionFunctionNameWithNullValuesFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createExpressionFunctionProvider()
-                        .expressionFunction(
-                                ExpressionFunctionName.with("dummy"),
-                                null,
-                                ProviderContexts.fake()
-                        )
+            NullPointerException.class,
+            () -> this.createExpressionFunctionProvider()
+                .expressionFunction(
+                    ExpressionFunctionName.with("dummy"),
+                    null,
+                    ProviderContexts.fake()
+                )
         );
     }
 
     @Test
     default void testExpressionFunctionNameWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createExpressionFunctionProvider()
-                        .expressionFunction(
-                                ExpressionFunctionName.with("ignore"),
-                                Lists.empty(),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createExpressionFunctionProvider()
+                .expressionFunction(
+                    ExpressionFunctionName.with("ignore"),
+                    Lists.empty(),
+                    null
+                )
         );
     }
 
@@ -161,10 +161,10 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
                                          final List<?> values,
                                          final ProviderContext context) {
         this.expressionFunctionFails(
-                this.createExpressionFunctionProvider(),
-                name,
-                values,
-                context
+            this.createExpressionFunctionProvider(),
+            name,
+            values,
+            context
         );
     }
 
@@ -173,12 +173,12 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
                                          final List<?> values,
                                          final ProviderContext context) {
         assertThrows(
-                RuntimeException.class,
-                () -> provider.expressionFunction(
-                        name,
-                        values,
-                        context
-                )
+            RuntimeException.class,
+            () -> provider.expressionFunction(
+                name,
+                values,
+                context
+            )
         );
     }
 
@@ -187,11 +187,11 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
                                             final ProviderContext context,
                                             final ExpressionFunction<?, ?> expected) {
         this.expressionFunctionAndCheck(
-                this.createExpressionFunctionProvider(),
-                name,
-                values,
-                context,
-                expected
+            this.createExpressionFunctionProvider(),
+            name,
+            values,
+            context,
+            expected
         );
     }
 
@@ -201,34 +201,34 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
                                             final ProviderContext context,
                                             final ExpressionFunction<?, ?> expected) {
         final ExpressionFunction<?, ?> function = provider.expressionFunction(
-                name,
-                values,
-                context
+            name,
+            values,
+            context
         );
 
         this.checkEquals(
-                expected,
-                function,
-                () -> name.toString()
+            expected,
+            function,
+            () -> name.toString()
         );
 
         final CaseSensitivity expressionFunctionNameCaseSensitivity = provider.expressionFunctionNameCaseSensitivity();
         this.checkEquals(
-                expressionFunctionNameCaseSensitivity,
-                function.name()
-                        .get()
-                        .caseSensitivity(),
-                () -> "function name has wrong case sensitivity"
+            expressionFunctionNameCaseSensitivity,
+            function.name()
+                .get()
+                .caseSensitivity(),
+            () -> "function name has wrong case sensitivity"
         );
     }
 
     @Test
     default void testExpressionFunctionInfosReadOnly() {
         assertThrows(
-                UnsupportedOperationException.class,
-                () -> this.createExpressionFunctionProvider()
-                        .expressionFunctionInfos()
-                        .add(ExpressionFunctionInfo.parse("https://example.com/" + this.getClass().getName() + " " + this.getClass().getSimpleName()))
+            UnsupportedOperationException.class,
+            () -> this.createExpressionFunctionProvider()
+                .expressionFunctionInfos()
+                .add(ExpressionFunctionInfo.parse("https://example.com/" + this.getClass().getName() + " " + this.getClass().getSimpleName()))
         );
     }
 
@@ -236,34 +236,34 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
 
     default void expressionFunctionInfosAndCheck(final ExpressionFunctionInfo... expected) {
         this.expressionFunctionInfosAndCheck(
-                this.createExpressionFunctionProvider(),
-                expected
+            this.createExpressionFunctionProvider(),
+            expected
         );
     }
 
     default void expressionFunctionInfosAndCheck(final ExpressionFunctionProvider provider,
                                                  final ExpressionFunctionInfo... expected) {
         this.expressionFunctionInfosAndCheck(
-                provider,
-                ExpressionFunctionInfoSet.with(
-                    Sets.of(expected)
-                )
+            provider,
+            ExpressionFunctionInfoSet.with(
+                Sets.of(expected)
+            )
         );
     }
 
     default void expressionFunctionInfosAndCheck(final ExpressionFunctionInfoSet expected) {
         this.expressionFunctionInfosAndCheck(
-                this.createExpressionFunctionProvider(),
-                expected
+            this.createExpressionFunctionProvider(),
+            expected
         );
     }
 
     default void expressionFunctionInfosAndCheck(final ExpressionFunctionProvider provider,
                                                  final ExpressionFunctionInfoSet expected) {
         this.checkEquals(
-                expected,
-                provider.expressionFunctionInfos(),
-                () -> provider.toString()
+            expected,
+            provider.expressionFunctionInfos(),
+            () -> provider.toString()
         );
     }
 
@@ -272,25 +272,25 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
     @Test
     default void testExpressionFunctionNameCaseSensitivityNotNull() {
         this.checkNotEquals(
-                null,
-                this.createExpressionFunctionProvider()
-                        .expressionFunctionNameCaseSensitivity()
+            null,
+            this.createExpressionFunctionProvider()
+                .expressionFunctionNameCaseSensitivity()
         );
     }
 
     @Test
     default void testExpressionFunctionNameCaseSensitivity() {
         this.expressionFunctionNameCaseSensitivityAndCheck(
-                this.createExpressionFunctionProvider(),
-                this.expressionFunctionNameCaseSensitivity()
+            this.createExpressionFunctionProvider(),
+            this.expressionFunctionNameCaseSensitivity()
         );
     }
 
     default void expressionFunctionNameCaseSensitivityAndCheck(final T provider,
                                                                final CaseSensitivity expected) {
         this.checkEquals(
-                expected,
-                provider.expressionFunctionNameCaseSensitivity()
+            expected,
+            provider.expressionFunctionNameCaseSensitivity()
         );
     }
 

@@ -35,16 +35,16 @@ final class FilteredExpressionFunctionProvider implements ExpressionFunctionProv
     static FilteredExpressionFunctionProvider with(final ExpressionFunctionProvider provider,
                                                    final ExpressionFunctionInfoSet infos) {
         return new FilteredExpressionFunctionProvider(
-                Objects.requireNonNull(provider, "provider"),
-                Objects.requireNonNull(infos, "infos")
+            Objects.requireNonNull(provider, "provider"),
+            Objects.requireNonNull(infos, "infos")
         );
     }
 
     private FilteredExpressionFunctionProvider(final ExpressionFunctionProvider provider,
                                                final ExpressionFunctionInfoSet infos) {
         this.guard = FilteredProviderGuard.with(
-                infos.names(),
-                ExpressionFunctionPluginHelper.INSTANCE
+            infos.names(),
+            ExpressionFunctionPluginHelper.INSTANCE
         );
         this.provider = provider;
         this.infos = infos;
@@ -54,8 +54,8 @@ final class FilteredExpressionFunctionProvider implements ExpressionFunctionProv
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
                                                                                  final ProviderContext context) {
         return this.provider.expressionFunction(
-                this.guard.selector(selector),
-                Objects.requireNonNull(context, "context")
+            this.guard.selector(selector),
+            Objects.requireNonNull(context, "context")
         );
     }
 
@@ -64,11 +64,11 @@ final class FilteredExpressionFunctionProvider implements ExpressionFunctionProv
                                                                                  final List<?> values,
                                                                                  final ProviderContext context) {
         return this.provider.expressionFunction(
-                this.guard.name(
-                        name.setCaseSensitivity(this.expressionFunctionNameCaseSensitivity())
-                ),
-                Objects.requireNonNull(values, "values"),
-                Objects.requireNonNull(context, "context")
+            this.guard.name(
+                name.setCaseSensitivity(this.expressionFunctionNameCaseSensitivity())
+            ),
+            Objects.requireNonNull(values, "values"),
+            Objects.requireNonNull(context, "context")
         );
     }
 

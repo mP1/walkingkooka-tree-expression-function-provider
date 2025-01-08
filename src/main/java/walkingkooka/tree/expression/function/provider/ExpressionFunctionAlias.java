@@ -31,10 +31,10 @@ public final class ExpressionFunctionAlias implements PluginAliasLike<Expression
 
     public static ExpressionFunctionAlias parse(final String text) {
         return ExpressionFunctionAlias.with(
-                PluginAlias.parse(
-                        text,
-                        ExpressionFunctionPluginHelper.INSTANCE
-                )
+            PluginAlias.parse(
+                text,
+                ExpressionFunctionPluginHelper.INSTANCE
+            )
         );
     }
 
@@ -42,17 +42,17 @@ public final class ExpressionFunctionAlias implements PluginAliasLike<Expression
                                                final Optional<ExpressionFunctionSelector> selector,
                                                final Optional<AbsoluteUrl> url) {
         return with(
-                PluginAlias.with(
-                        name,
-                        selector,
-                        url
-                )
+            PluginAlias.with(
+                name,
+                selector,
+                url
+            )
         );
     }
 
     static ExpressionFunctionAlias with(final PluginAlias<ExpressionFunctionName, ExpressionFunctionSelector> pluginAlias) {
         return new ExpressionFunctionAlias(
-                Objects.requireNonNull(pluginAlias, "pluginAlias")
+            Objects.requireNonNull(pluginAlias, "pluginAlias")
         );
     }
 

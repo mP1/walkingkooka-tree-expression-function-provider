@@ -37,15 +37,15 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class FilteredMappedExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<FilteredMappedExpressionFunctionProvider>,
-        ToStringTesting<FilteredMappedExpressionFunctionProvider> {
+    ToStringTesting<FilteredMappedExpressionFunctionProvider> {
 
     private final static AbsoluteUrl URL = Url.parseAbsolute("https://example.com/function123");
 
     private final static ExpressionFunctionName NAME = ExpressionFunctionName.with("different-function-name-123")
-            .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
     private final static ExpressionFunctionName ORIGINAL_NAME = ExpressionFunctionName.with("original-function-123")
-            .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
     private static ExpressionFunction<?, ExpressionEvaluationContext> function(final ExpressionFunctionName name) {
         return new FakeExpressionFunction() {
@@ -82,117 +82,117 @@ public final class FilteredMappedExpressionFunctionProviderTest implements Expre
     @Test
     public void testWithNullViewFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> FilteredMappedExpressionFunctionProvider.with(
-                        null,
-                        ExpressionFunctionProviders.fake()
-                )
+            NullPointerException.class,
+            () -> FilteredMappedExpressionFunctionProvider.with(
+                null,
+                ExpressionFunctionProviders.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullProviderFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> FilteredMappedExpressionFunctionProvider.with(
-                        ExpressionFunctionInfoSet.EMPTY,
-                        null
-                )
+            NullPointerException.class,
+            () -> FilteredMappedExpressionFunctionProvider.with(
+                ExpressionFunctionInfoSet.EMPTY,
+                null
+            )
         );
     }
 
     @Test
     public void testExpressionFunctionName() {
         this.expressionFunctionAndCheck(
-                NAME,
-                VALUES,
-                CONTEXT,
-                function(NAME)
+            NAME,
+            VALUES,
+            CONTEXT,
+            function(NAME)
         );
     }
 
     @Test
     public void testExpressionFunctionNameUnknownFails() {
         this.expressionFunctionFails(
-                ExpressionFunctionName.with("unknown"),
-                VALUES,
-                CONTEXT
+            ExpressionFunctionName.with("unknown"),
+            VALUES,
+            CONTEXT
         );
     }
 
     @Test
     public void testExpressionFunctionSelector() {
         this.expressionFunctionAndCheck(
-                ExpressionFunctionSelector.parse(NAME + ""),
-                CONTEXT,
-                function(NAME)
+            ExpressionFunctionSelector.parse(NAME + ""),
+            CONTEXT,
+            function(NAME)
         );
     }
 
     @Test
     public void testExpressionFunctionSelectorUnknownFails() {
         this.expressionFunctionFails(
-                ExpressionFunctionSelector.parse("unknown"),
-                CONTEXT
+            ExpressionFunctionSelector.parse("unknown"),
+            CONTEXT
         );
     }
 
     @Test
     public void testInfos() {
         this.expressionFunctionInfosAndCheck(
-                ExpressionFunctionInfo.with(
-                        URL,
-                        NAME
-                )
+            ExpressionFunctionInfo.with(
+                URL,
+                NAME
+            )
         );
     }
 
     @Override
     public FilteredMappedExpressionFunctionProvider createExpressionFunctionProvider() {
         return FilteredMappedExpressionFunctionProvider.with(
-                ExpressionFunctionInfoSet.EMPTY.concat(
-                        ExpressionFunctionInfo.with(
-                                URL,
-                                NAME
-                        )
-                ),
-                new FakeExpressionFunctionProvider() {
+            ExpressionFunctionInfoSet.EMPTY.concat(
+                ExpressionFunctionInfo.with(
+                    URL,
+                    NAME
+                )
+            ),
+            new FakeExpressionFunctionProvider() {
 
-                    @Override
-                    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                                 final List<?> values,
-                                                                                                 final ProviderContext context) {
-                        if(false == name.equals(ORIGINAL_NAME)) {
-                            throw new IllegalArgumentException("Unknown function " + name);
-                        }
-                        return function(ORIGINAL_NAME);
+                @Override
+                public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                             final List<?> values,
+                                                                                             final ProviderContext context) {
+                    if (false == name.equals(ORIGINAL_NAME)) {
+                        throw new IllegalArgumentException("Unknown function " + name);
                     }
-
-                    @Override
-                    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                                                 final ProviderContext context) {
-                        return selector.evaluateValueText(
-                                this,
-                                context
-                        );
-                    }
-
-                    @Override
-                    public ExpressionFunctionInfoSet expressionFunctionInfos() {
-                        return ExpressionFunctionInfoSet.EMPTY.concat(
-                                ExpressionFunctionInfo.with(
-                                        URL,
-                                        ORIGINAL_NAME
-                                )
-                        );
-                    }
-
-                    @Override
-                    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
-                        return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
-                    }
-
+                    return function(ORIGINAL_NAME);
                 }
+
+                @Override
+                public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
+                                                                                             final ProviderContext context) {
+                    return selector.evaluateValueText(
+                        this,
+                        context
+                    );
+                }
+
+                @Override
+                public ExpressionFunctionInfoSet expressionFunctionInfos() {
+                    return ExpressionFunctionInfoSet.EMPTY.concat(
+                        ExpressionFunctionInfo.with(
+                            URL,
+                            ORIGINAL_NAME
+                        )
+                    );
+                }
+
+                @Override
+                public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+                    return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
+                }
+
+            }
         );
     }
 
@@ -206,8 +206,8 @@ public final class FilteredMappedExpressionFunctionProviderTest implements Expre
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createExpressionFunctionProvider(),
-                "https://example.com/function123 different-function-name-123"
+            this.createExpressionFunctionProvider(),
+            "https://example.com/function123 different-function-name-123"
         );
     }
 

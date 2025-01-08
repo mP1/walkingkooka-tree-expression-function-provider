@@ -37,22 +37,22 @@ import java.util.Optional;
 import java.util.SortedSet;
 
 public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunctionAlias>
-        implements PluginAliasSetLike<ExpressionFunctionName,
-        ExpressionFunctionInfo,
-        ExpressionFunctionInfoSet,
-        ExpressionFunctionSelector,
-        ExpressionFunctionAlias,
-        ExpressionFunctionAliasSet>,
-        ImmutableSortedSetDefaults<ExpressionFunctionAliasSet, ExpressionFunctionAlias> {
+    implements PluginAliasSetLike<ExpressionFunctionName,
+    ExpressionFunctionInfo,
+    ExpressionFunctionInfoSet,
+    ExpressionFunctionSelector,
+    ExpressionFunctionAlias,
+    ExpressionFunctionAliasSet>,
+    ImmutableSortedSetDefaults<ExpressionFunctionAliasSet, ExpressionFunctionAlias> {
 
     /**
      * An empty {@link ExpressionFunctionAliasSet}.
      */
     public final static ExpressionFunctionAliasSet EMPTY = new ExpressionFunctionAliasSet(
-            PluginAliasSet.with(
-                    SortedSets.empty(),
-                    ExpressionFunctionPluginHelper.INSTANCE
-            )
+        PluginAliasSet.with(
+            SortedSets.empty(),
+            ExpressionFunctionPluginHelper.INSTANCE
+        )
     );
 
     /**
@@ -69,10 +69,10 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
 
     public static ExpressionFunctionAliasSet parse(final String text) {
         return new ExpressionFunctionAliasSet(
-                PluginAliasSet.parse(
-                        text,
-                        ExpressionFunctionPluginHelper.INSTANCE
-                )
+            PluginAliasSet.parse(
+                text,
+                ExpressionFunctionPluginHelper.INSTANCE
+            )
         );
     }
 
@@ -108,21 +108,21 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
     @Override
     public ExpressionFunctionAliasSet concatOrReplace(final ExpressionFunctionAlias alias) {
         return new ExpressionFunctionAliasSet(
-                this.pluginAliasSet.concatOrReplace(alias)
+            this.pluginAliasSet.concatOrReplace(alias)
         );
     }
 
     @Override
     public ExpressionFunctionAliasSet deleteAliasOrNameAll(final Collection<ExpressionFunctionName> aliasOrNames) {
         return this.setElements(
-                this.pluginAliasSet.deleteAliasOrNameAll(aliasOrNames)
+            this.pluginAliasSet.deleteAliasOrNameAll(aliasOrNames)
         );
     }
 
     @Override
     public ExpressionFunctionAliasSet keepAliasOrNameAll(final Collection<ExpressionFunctionName> aliasOrNames) {
         return this.setElements(
-                this.pluginAliasSet.keepAliasOrNameAll(aliasOrNames)
+            this.pluginAliasSet.keepAliasOrNameAll(aliasOrNames)
         );
     }
 
@@ -146,11 +146,11 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
     @Override
     public ExpressionFunctionAliasSet setElements(final SortedSet<ExpressionFunctionAlias> aliases) {
         final ExpressionFunctionAliasSet after = new ExpressionFunctionAliasSet(
-                this.pluginAliasSet.setElements(aliases)
+            this.pluginAliasSet.setElements(aliases)
         );
         return this.pluginAliasSet.equals(aliases) ?
-                this :
-                after;
+            this :
+            after;
     }
 
     @Override
@@ -167,52 +167,52 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
     public ExpressionFunctionAliasSet subSet(final ExpressionFunctionAlias from,
                                              final ExpressionFunctionAlias to) {
         return this.setElements(
-                this.pluginAliasSet.subSet(
-                        from,
-                        to
-                )
+            this.pluginAliasSet.subSet(
+                from,
+                to
+            )
         );
     }
 
     @Override
     public ExpressionFunctionAliasSet headSet(final ExpressionFunctionAlias alias) {
         return this.setElements(
-                this.pluginAliasSet.headSet(alias)
+            this.pluginAliasSet.headSet(alias)
         );
     }
 
     @Override
     public ExpressionFunctionAliasSet tailSet(final ExpressionFunctionAlias alias) {
         return this.setElements(
-                this.pluginAliasSet.tailSet(alias)
+            this.pluginAliasSet.tailSet(alias)
         );
     }
 
     @Override
     public ExpressionFunctionAliasSet concat(final ExpressionFunctionAlias alias) {
         return this.setElements(
-                this.pluginAliasSet.concat(alias)
+            this.pluginAliasSet.concat(alias)
         );
     }
 
     @Override
     public ExpressionFunctionAliasSet concatAll(final Collection<ExpressionFunctionAlias> aliases) {
         return this.setElements(
-                this.pluginAliasSet.concatAll(aliases)
+            this.pluginAliasSet.concatAll(aliases)
         );
     }
 
     @Override
     public ExpressionFunctionAliasSet delete(final ExpressionFunctionAlias alias) {
         return this.setElements(
-                this.pluginAliasSet.delete(alias)
+            this.pluginAliasSet.delete(alias)
         );
     }
 
     @Override
     public ExpressionFunctionAliasSet deleteAll(final Collection<ExpressionFunctionAlias> aliases) {
         return this.setElements(
-                this.pluginAliasSet.deleteAll(aliases)
+            this.pluginAliasSet.deleteAll(aliases)
         );
     }
 
@@ -220,10 +220,10 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
     public ExpressionFunctionAliasSet replace(final ExpressionFunctionAlias oldAlias,
                                               final ExpressionFunctionAlias newAlias) {
         return this.setElements(
-                this.pluginAliasSet.replace(
-                        oldAlias,
-                        newAlias
-                )
+            this.pluginAliasSet.replace(
+                oldAlias,
+                newAlias
+            )
         );
     }
 
@@ -257,23 +257,23 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(
-                this.pluginAliasSet.text()
-    );
+            this.pluginAliasSet.text()
+        );
     }
 
     static ExpressionFunctionAliasSet unmarshall(final JsonNode node,
                                                  final JsonNodeUnmarshallContext context) {
         return parse(
-                node.stringOrFail()
+            node.stringOrFail()
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(ExpressionFunctionAliasSet.class),
-                walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet::unmarshall,
-                ExpressionFunctionAliasSet::marshall,
-                ExpressionFunctionAliasSet.class
+            JsonNodeContext.computeTypeName(ExpressionFunctionAliasSet.class),
+            walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet::unmarshall,
+            ExpressionFunctionAliasSet::marshall,
+            ExpressionFunctionAliasSet.class
         );
         ExpressionFunctionInfoSet.EMPTY.size(); // trigger static init and json marshall/unmarshall registry
     }

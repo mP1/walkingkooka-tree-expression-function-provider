@@ -31,8 +31,8 @@ public final class ExpressionFunctionSelectorTest implements PluginSelectorLikeT
     public ExpressionFunctionSelector createPluginSelectorLike(final ExpressionFunctionName name,
                                                                final String text) {
         return ExpressionFunctionSelector.with(
-                name,
-                text
+            name,
+            text
         );
     }
 
@@ -47,11 +47,11 @@ public final class ExpressionFunctionSelectorTest implements PluginSelectorLikeT
         final String patternText = "@@";
 
         this.parseStringAndCheck(
-                name + " " + patternText,
-                ExpressionFunctionSelector.with(
-                        ExpressionFunctionName.with(name),
-                        patternText
-                )
+            name + " " + patternText,
+            ExpressionFunctionSelector.with(
+                ExpressionFunctionName.with(name),
+                patternText
+            )
         );
     }
 
@@ -77,16 +77,16 @@ public final class ExpressionFunctionSelectorTest implements PluginSelectorLikeT
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-                this.createJsonNodeMarshallingValue(),
-                "\"function123 @@\""
+            this.createJsonNodeMarshallingValue(),
+            "\"function123 @@\""
         );
     }
 
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-                "\"function123 @@\"",
-                this.createJsonNodeMarshallingValue()
+            "\"function123 @@\"",
+            this.createJsonNodeMarshallingValue()
         );
     }
 
@@ -94,17 +94,17 @@ public final class ExpressionFunctionSelectorTest implements PluginSelectorLikeT
     public ExpressionFunctionSelector unmarshall(final JsonNode json,
                                                  final JsonNodeUnmarshallContext context) {
         return ExpressionFunctionSelector.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 
     @Override
     public ExpressionFunctionSelector createJsonNodeMarshallingValue() {
         return ExpressionFunctionSelector.with(
-                ExpressionFunctionName.with("function123")
-                        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity),
-                "@@"
+            ExpressionFunctionName.with("function123")
+                .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity),
+            "@@"
         );
     }
 

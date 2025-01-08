@@ -33,7 +33,7 @@ public final class ExpressionFunctionProviders implements PublicStaticHelper {
      * function will be appended to this base.
      */
     public final static AbsoluteUrl BASE_URL = Url.parseAbsolute(
-            "https://github.com/mP1/walkingkooka-tree-expression-function-provider/" + ExpressionFunction.class.getSimpleName()
+        "https://github.com/mP1/walkingkooka-tree-expression-function-provider/" + ExpressionFunction.class.getSimpleName()
     );
 
     /**
@@ -42,8 +42,8 @@ public final class ExpressionFunctionProviders implements PublicStaticHelper {
     public static ExpressionFunctionProvider aliases(final ExpressionFunctionAliasSet aliases,
                                                      final ExpressionFunctionProvider provider) {
         return AliasesExpressionFunctionProvider.with(
-                aliases,
-                provider
+            aliases,
+            provider
         );
     }
 
@@ -54,9 +54,9 @@ public final class ExpressionFunctionProviders implements PublicStaticHelper {
                                                    final CaseSensitivity nameCaseSensitivity,
                                                    final Set<ExpressionFunction<?, ExpressionEvaluationContext>> functions) {
         return BasicExpressionFunctionProvider.with(
-                baseUrl,
-                nameCaseSensitivity,
-                functions
+            baseUrl,
+            nameCaseSensitivity,
+            functions
         );
     }
 
@@ -66,8 +66,8 @@ public final class ExpressionFunctionProviders implements PublicStaticHelper {
     public static ExpressionFunctionProvider collection(final CaseSensitivity expressionFunctionNameCaseSensitivity,
                                                         final Set<ExpressionFunctionProvider> providers) {
         return ExpressionFunctionProviderCollection.with(
-                expressionFunctionNameCaseSensitivity,
-                providers
+            expressionFunctionNameCaseSensitivity,
+            providers
         );
     }
 
@@ -98,8 +98,8 @@ public final class ExpressionFunctionProviders implements PublicStaticHelper {
     public static ExpressionFunctionProvider filtered(final ExpressionFunctionProvider provider,
                                                       final ExpressionFunctionInfoSet infos) {
         return FilteredExpressionFunctionProvider.with(
-                provider,
-                infos
+            provider,
+            infos
         );
     }
 
@@ -109,8 +109,8 @@ public final class ExpressionFunctionProviders implements PublicStaticHelper {
     public static ExpressionFunctionProvider filteredMapped(final ExpressionFunctionInfoSet infos,
                                                             final ExpressionFunctionProvider provider) {
         return FilteredMappedExpressionFunctionProvider.with(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 
@@ -118,10 +118,10 @@ public final class ExpressionFunctionProviders implements PublicStaticHelper {
      * {@see MergedMappedExpressionFunctionProvider}
      */
     public static ExpressionFunctionProvider mergedMapped(final ExpressionFunctionInfoSet infos,
-                                                           final ExpressionFunctionProvider provider) {
+                                                          final ExpressionFunctionProvider provider) {
         return MergedMappedExpressionFunctionProvider.with(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 

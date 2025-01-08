@@ -29,8 +29,8 @@ public final class EmptyExpressionFunctionProviderTest implements ExpressionFunc
     @Test
     public void testWithNullCaseSensitivityFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> EmptyExpressionFunctionProvider.with(null)
+            NullPointerException.class,
+            () -> EmptyExpressionFunctionProvider.with(null)
         );
     }
 

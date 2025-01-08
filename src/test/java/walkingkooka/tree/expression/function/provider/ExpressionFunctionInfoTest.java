@@ -32,8 +32,8 @@ public final class ExpressionFunctionInfoTest implements PluginInfoLikeTesting<E
         final String text = "https://example.com/123 test-function-!-name";
 
         this.parseStringInvalidCharacterFails(
-                text,
-                text.indexOf('!')
+            text,
+            text.indexOf('!')
         );
     }
 
@@ -43,15 +43,15 @@ public final class ExpressionFunctionInfoTest implements PluginInfoLikeTesting<E
         final ExpressionFunctionName different = ExpressionFunctionName.with("different");
 
         this.setNameAndCheck(
-                ExpressionFunctionInfo.with(
-                        url,
-                        ExpressionFunctionName.with("original-function-name")
-                ),
-                different,
-                ExpressionFunctionInfo.with(
-                        url,
-                        different
-                )
+            ExpressionFunctionInfo.with(
+                url,
+                ExpressionFunctionName.with("original-function-name")
+            ),
+            different,
+            ExpressionFunctionInfo.with(
+                url,
+                different
+            )
         );
     }
 
@@ -64,8 +64,8 @@ public final class ExpressionFunctionInfoTest implements PluginInfoLikeTesting<E
     public ExpressionFunctionInfo createPluginInfoLike(final AbsoluteUrl url,
                                                        final ExpressionFunctionName name) {
         return ExpressionFunctionInfo.with(
-                url,
-                name
+            url,
+            name
         );
     }
 
@@ -78,8 +78,8 @@ public final class ExpressionFunctionInfoTest implements PluginInfoLikeTesting<E
     public ExpressionFunctionInfo unmarshall(final JsonNode json,
                                              final JsonNodeUnmarshallContext context) {
         return ExpressionFunctionInfo.unmarshall(
-                json,
-                context
+            json,
+            context
         );
     }
 

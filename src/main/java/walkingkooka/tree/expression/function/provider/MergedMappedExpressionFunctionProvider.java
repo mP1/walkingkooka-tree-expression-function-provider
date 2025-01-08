@@ -39,8 +39,8 @@ final class MergedMappedExpressionFunctionProvider implements ExpressionFunction
         Objects.requireNonNull(provider, "provider");
 
         return new MergedMappedExpressionFunctionProvider(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 
@@ -48,9 +48,9 @@ final class MergedMappedExpressionFunctionProvider implements ExpressionFunction
     private MergedMappedExpressionFunctionProvider(final ExpressionFunctionInfoSet infos,
                                                    final ExpressionFunctionProvider provider) {
         this.mapper = MergedProviderMapper.with(
-                infos,
-                provider.expressionFunctionInfos(),
-                ExpressionFunctionPluginHelper.INSTANCE
+            infos,
+            provider.expressionFunctionInfos(),
+            ExpressionFunctionPluginHelper.INSTANCE
         );
 
         this.provider = provider;
@@ -63,8 +63,8 @@ final class MergedMappedExpressionFunctionProvider implements ExpressionFunction
         Objects.requireNonNull(context, "context");
 
         return selector.evaluateValueText(
-                this,
-                context
+            this,
+            context
         );
     }
 
@@ -77,9 +77,9 @@ final class MergedMappedExpressionFunctionProvider implements ExpressionFunction
         Objects.requireNonNull(context, "context");
 
         return this.expressionFunction0(
-                name.setCaseSensitivity(this.expressionFunctionNameCaseSensitivity()),
-                values,
-                context
+            name.setCaseSensitivity(this.expressionFunctionNameCaseSensitivity()),
+            values,
+            context
         );
     }
 
@@ -93,11 +93,11 @@ final class MergedMappedExpressionFunctionProvider implements ExpressionFunction
         final ExpressionFunctionProvider provider = this.provider;
 
         return provider.expressionFunction(
-                this.mapper.name(name),
-                values,
-                context
+            this.mapper.name(name),
+            values,
+            context
         ).setName(
-                Optional.of(name)
+            Optional.of(name)
         );
     }
 

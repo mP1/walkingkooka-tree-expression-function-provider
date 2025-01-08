@@ -34,9 +34,11 @@ final class EmptyExpressionFunctionProvider implements ExpressionFunctionProvide
 
     static EmptyExpressionFunctionProvider with(final CaseSensitivity caseSensitivity) {
         return new EmptyExpressionFunctionProvider(
-                Objects.requireNonNull(caseSensitivity, "caseSensitivity")
+            Objects.requireNonNull(caseSensitivity, "caseSensitivity")
         );
-    };
+    }
+
+    ;
 
     private EmptyExpressionFunctionProvider(final CaseSensitivity caseSensitivity) {
         super();
@@ -55,7 +57,7 @@ final class EmptyExpressionFunctionProvider implements ExpressionFunctionProvide
         Objects.requireNonNull(context, "context");
 
         throw new UnknownExpressionFunctionException(
-                selector.name()
+            selector.name()
         );
     }
 

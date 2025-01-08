@@ -40,17 +40,17 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<BasicExpressionFunctionProvider>,
-        ToStringTesting<BasicExpressionFunctionProvider> {
+    ToStringTesting<BasicExpressionFunctionProvider> {
 
     private final static AbsoluteUrl BASE_URL = Url.parseAbsolute("https://example.com/base/");
 
     private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
 
     private final static ExpressionFunctionName NAME1 = ExpressionFunctionName.with("testExpressionFunction1")
-            .setCaseSensitivity(CASE_SENSITIVITY);
+        .setCaseSensitivity(CASE_SENSITIVITY);
 
     private final static ExpressionFunctionName NAME2 = ExpressionFunctionName.with("testExpressionFunction2")
-            .setCaseSensitivity(CASE_SENSITIVITY);
+        .setCaseSensitivity(CASE_SENSITIVITY);
 
     private static final FakeExpressionFunction FUNCTION1 = new FakeExpressionFunction() {
         @Override
@@ -66,8 +66,8 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
     };
 
     private final static Set<ExpressionFunction<?, ExpressionEvaluationContext>> FUNCTIONS = Sets.of(
-            FUNCTION1,
-            FUNCTION2
+        FUNCTION1,
+        FUNCTION2
     );
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
@@ -75,48 +75,48 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
     @Test
     public void testWithNullBaseUrlFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicExpressionFunctionProvider.with(
-                        null,
-                        CASE_SENSITIVITY,
-                        FUNCTIONS
-                )
+            NullPointerException.class,
+            () -> BasicExpressionFunctionProvider.with(
+                null,
+                CASE_SENSITIVITY,
+                FUNCTIONS
+            )
         );
     }
 
     @Test
     public void testWithNullNameCaseSensitivityFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicExpressionFunctionProvider.with(
-                        BASE_URL,
-                        null,
-                        FUNCTIONS
-                )
+            NullPointerException.class,
+            () -> BasicExpressionFunctionProvider.with(
+                BASE_URL,
+                null,
+                FUNCTIONS
+            )
         );
     }
 
     @Test
     public void testWithNullFunctionsFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicExpressionFunctionProvider.with(
-                        BASE_URL,
-                        CASE_SENSITIVITY,
-                        null
-                )
+            NullPointerException.class,
+            () -> BasicExpressionFunctionProvider.with(
+                BASE_URL,
+                CASE_SENSITIVITY,
+                null
+            )
         );
     }
 
     @Test
     public void testWithEmptyFunctionFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> BasicExpressionFunctionProvider.with(
-                        BASE_URL,
-                        CASE_SENSITIVITY,
-                        Sets.empty()
-                )
+            IllegalArgumentException.class,
+            () -> BasicExpressionFunctionProvider.with(
+                BASE_URL,
+                CASE_SENSITIVITY,
+                Sets.empty()
+            )
         );
     }
 
@@ -127,52 +127,52 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
         final CaseSensitivity caseSensitivity = CaseSensitivity.SENSITIVE;
 
         this.expressionFunctionAndCheck(
-                this.createExpressionFunctionProvider(caseSensitivity),
-                NAME1.setCaseSensitivity(caseSensitivity),
-                VALUES,
-                CONTEXT,
-                FUNCTION1.setName(
-                        Optional.of(
-                                NAME1.setCaseSensitivity(caseSensitivity)
-                        )
+            this.createExpressionFunctionProvider(caseSensitivity),
+            NAME1.setCaseSensitivity(caseSensitivity),
+            VALUES,
+            CONTEXT,
+            FUNCTION1.setName(
+                Optional.of(
+                    NAME1.setCaseSensitivity(caseSensitivity)
                 )
+            )
         );
     }
 
     @Test
     public void testExpressionFunctionNameLookupWhenCaseInsensitive() {
         this.expressionFunctionAndCheck(
-                this.createExpressionFunctionProvider(),
-                NAME1,
-                VALUES,
-                CONTEXT,
-                FUNCTION1
+            this.createExpressionFunctionProvider(),
+            NAME1,
+            VALUES,
+            CONTEXT,
+            FUNCTION1
         );
     }
 
     @Test
     public void testExpressionFunctionNameLookupWhenCaseInsensitive2() {
         this.expressionFunctionAndCheck(
-                this.createExpressionFunctionProvider(),
-                NAME2,
-                VALUES,
-                CONTEXT,
-                FUNCTION2
+            this.createExpressionFunctionProvider(),
+            NAME2,
+            VALUES,
+            CONTEXT,
+            FUNCTION2
         );
     }
 
     @Test
     public void testExpressionFunctionNameLookupDifferentCaseCaseSensitiveFails() {
         this.expressionFunctionFails(
-                this.createExpressionFunctionProvider(
-                        CaseSensitivity.SENSITIVE
-                ),
-                ExpressionFunctionName.with(
-                        NAME2.value()
-                                .toUpperCase()
-                ),
-                VALUES,
-                CONTEXT
+            this.createExpressionFunctionProvider(
+                CaseSensitivity.SENSITIVE
+            ),
+            ExpressionFunctionName.with(
+                NAME2.value()
+                    .toUpperCase()
+            ),
+            VALUES,
+            CONTEXT
         );
     }
 
@@ -181,25 +181,25 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
         final CaseSensitivity caseSensitivity = CaseSensitivity.INSENSITIVE;
 
         this.expressionFunctionAndCheck(
-                this.createExpressionFunctionProvider(caseSensitivity),
-                NAME2.setCaseSensitivity(caseSensitivity),
-                VALUES,
-                CONTEXT,
-                FUNCTION2
+            this.createExpressionFunctionProvider(caseSensitivity),
+            NAME2.setCaseSensitivity(caseSensitivity),
+            VALUES,
+            CONTEXT,
+            FUNCTION2
         );
     }
 
     @Test
     public void testExpressionFunctionSelector() {
         this.expressionFunctionAndCheck(
-                this.createExpressionFunctionProvider(
-                        CaseSensitivity.INSENSITIVE
-                ),
-                ExpressionFunctionSelector.parse(
-                        NAME2 + ""
-                ),
-                CONTEXT,
-                FUNCTION2
+            this.createExpressionFunctionProvider(
+                CaseSensitivity.INSENSITIVE
+            ),
+            ExpressionFunctionSelector.parse(
+                NAME2 + ""
+            ),
+            CONTEXT,
+            FUNCTION2
         );
     }
 
@@ -217,50 +217,50 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
         final ExpressionFunctionProvider provider = this.createExpressionFunctionProvider(caseSensitivity);
 
         this.expressionFunctionInfosAndCheck(
-                provider,
-                ExpressionFunctionInfo.with(
-                        Url.parseAbsolute("https://example.com/base/testExpressionFunction1"),
-                        NAME1
-                ),
-                ExpressionFunctionInfo.with(
-                        Url.parseAbsolute("https://example.com/base/testExpressionFunction2"),
-                        NAME2
-                )
+            provider,
+            ExpressionFunctionInfo.with(
+                Url.parseAbsolute("https://example.com/base/testExpressionFunction1"),
+                NAME1
+            ),
+            ExpressionFunctionInfo.with(
+                Url.parseAbsolute("https://example.com/base/testExpressionFunction2"),
+                NAME2
+            )
         );
 
         final ExpressionFunctionInfoSet infos = provider.expressionFunctionInfos();
 
         this.checkEquals(
-                Lists.empty(),
-                infos.names()
-                        .stream()
-                        .filter(i -> i.caseSensitivity() != caseSensitivity)
-                        .collect(Collectors.toList()),
-                () -> ExpressionFunctionInfoSet.class.getSimpleName() + ".names ExpressionFunctionName#value name case sensitivity incorrect"
+            Lists.empty(),
+            infos.names()
+                .stream()
+                .filter(i -> i.caseSensitivity() != caseSensitivity)
+                .collect(Collectors.toList()),
+            () -> ExpressionFunctionInfoSet.class.getSimpleName() + ".names ExpressionFunctionName#value name case sensitivity incorrect"
         );
 
         this.checkEquals(
-                Lists.empty(),
-                infos.stream()
-                        .map(i -> i.name())
-                        .filter(n -> n.caseSensitivity() != caseSensitivity)
-                        .collect(Collectors.toList()),
-                () -> ExpressionFunctionInfoSet.class.getSimpleName() + ".info ExpressionFunctionInfo#name case sensitivity incorrect"
+            Lists.empty(),
+            infos.stream()
+                .map(i -> i.name())
+                .filter(n -> n.caseSensitivity() != caseSensitivity)
+                .collect(Collectors.toList()),
+            () -> ExpressionFunctionInfoSet.class.getSimpleName() + ".info ExpressionFunctionInfo#name case sensitivity incorrect"
         );
     }
 
     @Override
     public BasicExpressionFunctionProvider createExpressionFunctionProvider() {
         return this.createExpressionFunctionProvider(
-                CASE_SENSITIVITY
+            CASE_SENSITIVITY
         );
     }
 
     private BasicExpressionFunctionProvider createExpressionFunctionProvider(final CaseSensitivity caseSensitivity) {
         return BasicExpressionFunctionProvider.with(
-                BASE_URL,
-                caseSensitivity,
-                FUNCTIONS
+            BASE_URL,
+            caseSensitivity,
+            FUNCTIONS
         );
     }
 
@@ -274,8 +274,8 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createExpressionFunctionProvider(),
-                "testExpressionFunction1, testExpressionFunction2"
+            this.createExpressionFunctionProvider(),
+            "testExpressionFunction1, testExpressionFunction2"
         );
     }
 
