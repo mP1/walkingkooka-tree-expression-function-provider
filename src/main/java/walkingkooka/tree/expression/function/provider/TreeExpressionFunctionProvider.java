@@ -46,25 +46,25 @@ final class TreeExpressionFunctionProvider implements ExpressionFunctionProvider
         super();
 
         this.infos = ExpressionFunctionInfoSet.with(
-                Sets.of(
-                        nameToExpressionFunctionInfo(ExpressionFunctions.node()),
-                        nameToExpressionFunctionInfo(ExpressionFunctions.nodeName()),
-                        nameToExpressionFunctionInfo(ExpressionFunctions.typeName())
-                )
+            Sets.of(
+                nameToExpressionFunctionInfo(ExpressionFunctions.node()),
+                nameToExpressionFunctionInfo(ExpressionFunctions.nodeName()),
+                nameToExpressionFunctionInfo(ExpressionFunctions.typeName())
+            )
         );
     }
 
     private static ExpressionFunctionInfo nameToExpressionFunctionInfo(final ExpressionFunction<?, ?> function) {
         final ExpressionFunctionName name = function.name()
-                .get();
+            .get();
 
         return ExpressionFunctionInfo.with(
-                ExpressionFunctionProviders.BASE_URL.appendPath(
-                        UrlPath.parse(
-                                name.value()
-                        )
-                ),
-                name
+            ExpressionFunctionProviders.BASE_URL.appendPath(
+                UrlPath.parse(
+                    name.value()
+                )
+            ),
+            name
         );
     }
 
@@ -79,8 +79,8 @@ final class TreeExpressionFunctionProvider implements ExpressionFunctionProvider
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
                                                                                  final ProviderContext context) {
         return selector.evaluateValueText(
-                this,
-                context
+            this,
+            context
         );
     }
 
@@ -120,7 +120,7 @@ final class TreeExpressionFunctionProvider implements ExpressionFunctionProvider
     }
 
     private void checkNoValues(final List<?> values) {
-        if(false == values.isEmpty()) {
+        if (false == values.isEmpty()) {
             throw new IllegalArgumentException("Got " + values.size() + " expected 0");
         }
     }

@@ -30,50 +30,50 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTesting<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector, ExpressionFunctionAlias, ExpressionFunctionAliasSet>,
-        ClassTesting<ExpressionFunctionInfoSet> {
+    ClassTesting<ExpressionFunctionInfoSet> {
 
     @Test
     public void testImmutableSet() {
         final ExpressionFunctionInfoSet set = this.createSet();
 
         assertSame(
-                set,
-                Sets.immutable(set)
+            set,
+            Sets.immutable(set)
         );
     }
 
     @Test
     public void testDelete() {
         final ExpressionFunctionInfo info1 = ExpressionFunctionInfo.with(
-                Url.parseAbsolute("https://example.com/function1"),
-                ExpressionFunctionName.with("function1")
+            Url.parseAbsolute("https://example.com/function1"),
+            ExpressionFunctionName.with("function1")
         );
 
         final ExpressionFunctionInfo info2 = ExpressionFunctionInfo.with(
-                Url.parseAbsolute("https://example.com/function2"),
-                ExpressionFunctionName.with("function2")
+            Url.parseAbsolute("https://example.com/function2"),
+            ExpressionFunctionName.with("function2")
         );
 
         final ExpressionFunctionInfo info3 = ExpressionFunctionInfo.with(
-                Url.parseAbsolute("https://example.com/function3"),
-                ExpressionFunctionName.with("function3")
+            Url.parseAbsolute("https://example.com/function3"),
+            ExpressionFunctionName.with("function3")
         );
 
         this.deleteAndCheck(
-                ExpressionFunctionInfoSet.with(
-                        Sets.of(
-                                info1,
-                                info2,
-                                info3
-                        )
-                ),
-                info1,
-                ExpressionFunctionInfoSet.with(
-                        Sets.of(
-                                info2,
-                                info3
-                        )
+            ExpressionFunctionInfoSet.with(
+                Sets.of(
+                    info1,
+                    info2,
+                    info3
                 )
+            ),
+            info1,
+            ExpressionFunctionInfoSet.with(
+                Sets.of(
+                    info2,
+                    info3
+                )
+            )
         );
     }
 
@@ -94,17 +94,17 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
     @Override
     public ExpressionFunctionInfoSet createSet() {
         return ExpressionFunctionInfoSet.with(
-                Sets.of(
-                        this.info()
-                )
+            Sets.of(
+                this.info()
+            )
         );
     }
 
     @Override
     public ExpressionFunctionInfo info() {
         return ExpressionFunctionInfo.with(
-                Url.parseAbsolute("https://example.com/test-function-1"),
-                ExpressionFunctionName.with("test-function-1")
+            Url.parseAbsolute("https://example.com/test-function-1"),
+            ExpressionFunctionName.with("test-function-1")
         );
     }
 
@@ -113,27 +113,27 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
     @Test
     public void testMarshallEmpty() {
         this.marshallAndCheck(
-                ExpressionFunctionInfoSet.with(Sets.empty()),
-                JsonNode.array()
+            ExpressionFunctionInfoSet.with(Sets.empty()),
+            JsonNode.array()
         );
     }
 
     @Test
     public void testMarshallNotEmpty() {
         final ExpressionFunctionInfoSet set = ExpressionFunctionInfoSet.with(
-                Sets.of(
-                        ExpressionFunctionInfo.with(
-                                Url.parseAbsolute("https://example.com/1"),
-                                ExpressionFunctionName.with("test-function-1")
-                        )
+            Sets.of(
+                ExpressionFunctionInfo.with(
+                    Url.parseAbsolute("https://example.com/1"),
+                    ExpressionFunctionName.with("test-function-1")
                 )
+            )
         );
 
         this.marshallAndCheck(
-                set,
-                "[\n" +
-                        "  \"https://example.com/1 test-function-1\"\n" +
-                        "]"
+            set,
+            "[\n" +
+                "  \"https://example.com/1 test-function-1\"\n" +
+                "]"
         );
     }
 
@@ -143,24 +143,24 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
     public ExpressionFunctionInfoSet unmarshall(final JsonNode node,
                                                 final JsonNodeUnmarshallContext context) {
         return ExpressionFunctionInfoSet.unmarshall(
-                node,
-                context
+            node,
+            context
         );
     }
 
     @Override
     public ExpressionFunctionInfoSet createJsonNodeMarshallingValue() {
         return ExpressionFunctionInfoSet.with(
-                Sets.of(
-                        ExpressionFunctionInfo.with(
-                                Url.parseAbsolute("https://example.com/test-function-1"),
-                                ExpressionFunctionName.with("test-function-1")
-                        ),
-                        ExpressionFunctionInfo.with(
-                                Url.parseAbsolute("https://example.com/test-function-2"),
-                                ExpressionFunctionName.with("test-function-2")
-                        )
+            Sets.of(
+                ExpressionFunctionInfo.with(
+                    Url.parseAbsolute("https://example.com/test-function-1"),
+                    ExpressionFunctionName.with("test-function-1")
+                ),
+                ExpressionFunctionInfo.with(
+                    Url.parseAbsolute("https://example.com/test-function-2"),
+                    ExpressionFunctionName.with("test-function-2")
                 )
+            )
         );
     }
 

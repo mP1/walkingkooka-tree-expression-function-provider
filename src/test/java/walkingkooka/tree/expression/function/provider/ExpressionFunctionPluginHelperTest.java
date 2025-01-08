@@ -22,12 +22,12 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 
 public final class ExpressionFunctionPluginHelperTest implements PluginHelperTesting<ExpressionFunctionPluginHelper,
-        ExpressionFunctionName,
-        ExpressionFunctionInfo,
-        ExpressionFunctionInfoSet,
-        ExpressionFunctionSelector,
-        ExpressionFunctionAlias,
-        ExpressionFunctionAliasSet> {
+    ExpressionFunctionName,
+    ExpressionFunctionInfo,
+    ExpressionFunctionInfoSet,
+    ExpressionFunctionSelector,
+    ExpressionFunctionAlias,
+    ExpressionFunctionAliasSet> {
 
     @Override
     public void testParseNameWithNullContextFails() {

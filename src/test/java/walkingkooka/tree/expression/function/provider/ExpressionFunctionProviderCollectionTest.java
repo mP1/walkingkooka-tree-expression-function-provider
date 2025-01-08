@@ -37,7 +37,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ExpressionFunctionProviderCollectionTest implements ExpressionFunctionProviderTesting<ExpressionFunctionProviderCollection>,
-        ToStringTesting<ExpressionFunctionProviderCollection> {
+    ToStringTesting<ExpressionFunctionProviderCollection> {
 
     private final static AbsoluteUrl BASE_URL = Url.parseAbsolute("https://example.com/base/");
 
@@ -67,170 +67,170 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
     @Test
     public void testWithNullNameCaseSensitivityFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> ExpressionFunctionProviderCollection.with(
-                        null,
-                        Sets.empty()
-                )
+            NullPointerException.class,
+            () -> ExpressionFunctionProviderCollection.with(
+                null,
+                Sets.empty()
+            )
         );
     }
 
     @Test
     public void testWithNullProvidersFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> ExpressionFunctionProviderCollection.with(
-                        CASE_SENSITIVITY,
-                        null
-                )
+            NullPointerException.class,
+            () -> ExpressionFunctionProviderCollection.with(
+                CASE_SENSITIVITY,
+                null
+            )
         );
     }
 
     @Test
     public void testWithEmptyProvidersFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> ExpressionFunctionProviderCollection.with(
-                        CASE_SENSITIVITY,
-                        Sets.empty()
-                )
+            IllegalArgumentException.class,
+            () -> ExpressionFunctionProviderCollection.with(
+                CASE_SENSITIVITY,
+                Sets.empty()
+            )
         );
     }
 
     @Test
     public void testExpressionFunctionNameDuplicateUnknown() {
         final ExpressionFunctionProviderCollection provider = ExpressionFunctionProviderCollection.with(
-                CASE_SENSITIVITY,
-                Sets.of(
-                        ExpressionFunctionProviders.basic(
-                                BASE_URL.appendPath(UrlPath.parse("1")),
-                                CaseSensitivity.SENSITIVE,
-                                Sets.of(
-                                        FUNCTION1,
-                                        FUNCTION2
-                                )
-                        ),
-                        ExpressionFunctionProviders.basic(
-                                BASE_URL.appendPath(UrlPath.parse("2")),
-                                CaseSensitivity.SENSITIVE,
-                                Sets.of(
-                                        FUNCTION1
-                                )
-                        ),
-                        ExpressionFunctionProviders.basic(
-                                BASE_URL.appendPath(UrlPath.parse("3")),
-                                CaseSensitivity.SENSITIVE,
-                                Sets.of(
-                                        FUNCTION2
-                                )
-                        )
+            CASE_SENSITIVITY,
+            Sets.of(
+                ExpressionFunctionProviders.basic(
+                    BASE_URL.appendPath(UrlPath.parse("1")),
+                    CaseSensitivity.SENSITIVE,
+                    Sets.of(
+                        FUNCTION1,
+                        FUNCTION2
+                    )
+                ),
+                ExpressionFunctionProviders.basic(
+                    BASE_URL.appendPath(UrlPath.parse("2")),
+                    CaseSensitivity.SENSITIVE,
+                    Sets.of(
+                        FUNCTION1
+                    )
+                ),
+                ExpressionFunctionProviders.basic(
+                    BASE_URL.appendPath(UrlPath.parse("3")),
+                    CaseSensitivity.SENSITIVE,
+                    Sets.of(
+                        FUNCTION2
+                    )
                 )
+            )
         );
 
         this.expressionFunctionFails(
-                provider,
-                NAME1,
-                VALUES,
-                CONTEXT
+            provider,
+            NAME1,
+            VALUES,
+            CONTEXT
         );
         this.expressionFunctionFails(
-                provider,
-                NAME2,
-                VALUES,
-                CONTEXT
+            provider,
+            NAME2,
+            VALUES,
+            CONTEXT
         );
     }
 
     @Test
     public void testExpressionFunctionNameLookup1() {
         this.expressionFunctionAndCheck(
-                NAME1.setCaseSensitivity(CASE_SENSITIVITY),
-                VALUES,
-                CONTEXT,
-                FUNCTION1.setName(
-                        Optional.of(
-                                NAME1.setCaseSensitivity(CASE_SENSITIVITY)
-                        )
+            NAME1.setCaseSensitivity(CASE_SENSITIVITY),
+            VALUES,
+            CONTEXT,
+            FUNCTION1.setName(
+                Optional.of(
+                    NAME1.setCaseSensitivity(CASE_SENSITIVITY)
                 )
+            )
         );
     }
 
     @Test
     public void testExpressionFunctionNameLookup2() {
         this.expressionFunctionAndCheck(
-                NAME2.setCaseSensitivity(CASE_SENSITIVITY),
-                VALUES,
-                CONTEXT,
-                FUNCTION2.setName(
-                        Optional.of(
-                                NAME2.setCaseSensitivity(CASE_SENSITIVITY)
-                        )
+            NAME2.setCaseSensitivity(CASE_SENSITIVITY),
+            VALUES,
+            CONTEXT,
+            FUNCTION2.setName(
+                Optional.of(
+                    NAME2.setCaseSensitivity(CASE_SENSITIVITY)
                 )
+            )
         );
     }
 
     @Test
     public void testExpressionFunctionSelectorLookup1() {
         this.expressionFunctionAndCheck(
-                ExpressionFunctionSelector.parse(NAME1 + ""),
-                CONTEXT,
-                FUNCTION1.setName(
-                        Optional.of(
-                                NAME1.setCaseSensitivity(CASE_SENSITIVITY)
-                        )
+            ExpressionFunctionSelector.parse(NAME1 + ""),
+            CONTEXT,
+            FUNCTION1.setName(
+                Optional.of(
+                    NAME1.setCaseSensitivity(CASE_SENSITIVITY)
                 )
+            )
         );
     }
 
     @Test
     public void testExpressionFunctionSelectorLookup2() {
         this.expressionFunctionAndCheck(
-                ExpressionFunctionSelector.parse(NAME2 + ""),
-                CONTEXT,
-                FUNCTION2.setName(
-                        Optional.of(
-                                NAME2.setCaseSensitivity(CASE_SENSITIVITY)
-                        )
+            ExpressionFunctionSelector.parse(NAME2 + ""),
+            CONTEXT,
+            FUNCTION2.setName(
+                Optional.of(
+                    NAME2.setCaseSensitivity(CASE_SENSITIVITY)
                 )
+            )
         );
     }
 
     @Test
     public void testExpressionFunctionInfos() {
         this.expressionFunctionInfosAndCheck(
-                this.createExpressionFunctionProvider(),
-                ExpressionFunctionInfo.with(
-                        Url.parseAbsolute("https://example.com/base/testfunction1"),
-                        NAME1
-                ),
-                ExpressionFunctionInfo.with(
-                        Url.parseAbsolute("https://example.com/base/testfunction2"),
-                        NAME2
-                )
+            this.createExpressionFunctionProvider(),
+            ExpressionFunctionInfo.with(
+                Url.parseAbsolute("https://example.com/base/testfunction1"),
+                NAME1
+            ),
+            ExpressionFunctionInfo.with(
+                Url.parseAbsolute("https://example.com/base/testfunction2"),
+                NAME2
+            )
         );
     }
 
     @Override
     public ExpressionFunctionProviderCollection createExpressionFunctionProvider() {
         return ExpressionFunctionProviderCollection.with(
-                CASE_SENSITIVITY,
-                        Sets.of(
-                                ExpressionFunctionProviders.basic(
-                                        BASE_URL,
-                                        CaseSensitivity.SENSITIVE,
-                                        Sets.of(
-                                                FUNCTION1
-                                        )
-                                ),
-                                ExpressionFunctionProviders.basic(
-                                        BASE_URL,
-                                        CaseSensitivity.SENSITIVE,
-                                        Sets.of(
-                                                FUNCTION2
-                                        )
-                                )
-                        )
-                );
+            CASE_SENSITIVITY,
+            Sets.of(
+                ExpressionFunctionProviders.basic(
+                    BASE_URL,
+                    CaseSensitivity.SENSITIVE,
+                    Sets.of(
+                        FUNCTION1
+                    )
+                ),
+                ExpressionFunctionProviders.basic(
+                    BASE_URL,
+                    CaseSensitivity.SENSITIVE,
+                    Sets.of(
+                        FUNCTION2
+                    )
+                )
+            )
+        );
     }
 
     @Override
@@ -243,8 +243,8 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createExpressionFunctionProvider(),
-                "testfunction1, testfunction2"
+            this.createExpressionFunctionProvider(),
+            "testfunction1, testfunction2"
         );
     }
 

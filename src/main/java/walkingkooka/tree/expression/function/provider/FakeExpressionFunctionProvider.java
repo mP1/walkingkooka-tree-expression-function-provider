@@ -25,7 +25,7 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.util.List;
 
-public class FakeExpressionFunctionProvider implements ExpressionFunctionProvider{
+public class FakeExpressionFunctionProvider implements ExpressionFunctionProvider {
 
     @Override
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,

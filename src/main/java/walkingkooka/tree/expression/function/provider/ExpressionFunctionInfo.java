@@ -29,24 +29,24 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFunctionInfo, ExpressionFunctionName>,
-        HateosResource<ExpressionFunctionName> {
+    HateosResource<ExpressionFunctionName> {
 
     public static ExpressionFunctionInfo parse(final String text) {
         return new ExpressionFunctionInfo(
-                PluginInfo.parse(
-                        text,
-                        ExpressionFunctionName::with
-                )
+            PluginInfo.parse(
+                text,
+                ExpressionFunctionName::with
+            )
         );
     }
 
     public static ExpressionFunctionInfo with(final AbsoluteUrl url,
                                               final ExpressionFunctionName name) {
         return new ExpressionFunctionInfo(
-                PluginInfo.with(
-                        url,
-                        name
-                )
+            PluginInfo.with(
+                url,
+                name
+            )
         );
     }
 
@@ -71,10 +71,10 @@ public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFu
     @Override
     public ExpressionFunctionInfo setName(final ExpressionFunctionName name) {
         return this.name().equals(name) ?
-                this :
-                new ExpressionFunctionInfo(
-                        this.pluginInfo.setName(name)
-                );
+            this :
+            new ExpressionFunctionInfo(
+                this.pluginInfo.setName(name)
+            );
     }
 
     private final PluginInfo<ExpressionFunctionName> pluginInfo;
@@ -96,8 +96,8 @@ public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFu
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof ExpressionFunctionInfo &&
-                        this.equals0(Cast.to(other));
+            other instanceof ExpressionFunctionInfo &&
+                this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final ExpressionFunctionInfo other) {
@@ -122,16 +122,16 @@ public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFu
     static ExpressionFunctionInfo unmarshall(final JsonNode node,
                                              final JsonNodeUnmarshallContext context) {
         return ExpressionFunctionInfo.parse(
-                node.stringOrFail()
+            node.stringOrFail()
         );
     }
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(ExpressionFunctionInfo.class),
-                ExpressionFunctionInfo::unmarshall,
-                ExpressionFunctionInfo::marshall,
-                ExpressionFunctionInfo.class
+            JsonNodeContext.computeTypeName(ExpressionFunctionInfo.class),
+            ExpressionFunctionInfo::unmarshall,
+            ExpressionFunctionInfo::marshall,
+            ExpressionFunctionInfo.class
         );
         ExpressionFunctionName.with("hello"); // trigger static init and json marshall/unmarshall registry
     }

@@ -45,11 +45,11 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
                                                 final CaseSensitivity nameCaseSensitivity,
                                                 final Set<ExpressionFunction<?, ExpressionEvaluationContext>> functions) {
         return new BasicExpressionFunctionProvider(
-                Objects.requireNonNull(baseUrl, "baseUrl"),
-                Objects.requireNonNull(nameCaseSensitivity, "nameCaseSensitivity"),
-                Sets.immutable(
-                        Objects.requireNonNull(functions, "functions")
-                )
+            Objects.requireNonNull(baseUrl, "baseUrl"),
+            Objects.requireNonNull(nameCaseSensitivity, "nameCaseSensitivity"),
+            Sets.immutable(
+                Objects.requireNonNull(functions, "functions")
+            )
         );
     }
 
@@ -65,38 +65,38 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
         final Map<ExpressionFunctionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction = Maps.sorted();
         for (final ExpressionFunction<?, ExpressionEvaluationContext> function : functions) {
             final ExpressionFunctionName name = function.name()
-                    .orElseThrow(
-                            () -> new IllegalArgumentException("Cannot add unnamed functions to provider")
-                    );
+                .orElseThrow(
+                    () -> new IllegalArgumentException("Cannot add unnamed functions to provider")
+                );
             nameToFunction.put(
-                    name.setCaseSensitivity(nameCaseSensitivity),
-                    function.setName(
-                            function.name()
-                                    .map(n -> n.setCaseSensitivity(nameCaseSensitivity))
-                    )
+                name.setCaseSensitivity(nameCaseSensitivity),
+                function.setName(
+                    function.name()
+                        .map(n -> n.setCaseSensitivity(nameCaseSensitivity))
+                )
             );
         }
 
         this.nameToFunction = nameToFunction;
 
         this.expressionFunctionInfos = ExpressionFunctionInfoSet.with(
-                Sets.readOnly(
-                        functions.stream()
-                                .map(
-                                        f -> {
-                                            final ExpressionFunctionName name = f.name()
-                                                    .get();
-                                            return ExpressionFunctionInfo.with(
-                                                    baseUrl.appendPath(
-                                                            UrlPath.parse(
-                                                                    name.value()
-                                                            )
-                                                    ),
-                                                    name.setCaseSensitivity(nameCaseSensitivity)
-                                            );
-                                        }
-                                ).collect(Collectors.toCollection(SortedSets::tree))
-                )
+            Sets.readOnly(
+                functions.stream()
+                    .map(
+                        f -> {
+                            final ExpressionFunctionName name = f.name()
+                                .get();
+                            return ExpressionFunctionInfo.with(
+                                baseUrl.appendPath(
+                                    UrlPath.parse(
+                                        name.value()
+                                    )
+                                ),
+                                name.setCaseSensitivity(nameCaseSensitivity)
+                            );
+                        }
+                    ).collect(Collectors.toCollection(SortedSets::tree))
+            )
         );
     }
 
@@ -107,8 +107,8 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
         Objects.requireNonNull(context, "context");
 
         return selector.evaluateValueText(
-                this,
-                context
+            this,
+            context
         );
     }
 
@@ -121,9 +121,9 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
         Objects.requireNonNull(context, "context");
 
         final ExpressionFunction<?, ExpressionEvaluationContext> function = this.nameToFunction.get(
-                name.setCaseSensitivity(this.nameCaseSensitivity)
+            name.setCaseSensitivity(this.nameCaseSensitivity)
         );
-        if(null == function) {
+        if (null == function) {
             throw new UnknownExpressionFunctionException(name);
         }
         return function;
@@ -148,8 +148,8 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
     @Override
     public String toString() {
         return this.nameToFunction.keySet()
-                .stream()
-                .map(Object::toString)
-                .collect(Collectors.joining(", "));
+            .stream()
+            .map(Object::toString)
+            .collect(Collectors.joining(", "));
     }
 }

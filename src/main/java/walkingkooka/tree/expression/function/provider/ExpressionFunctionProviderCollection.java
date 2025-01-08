@@ -37,55 +37,55 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
     static ExpressionFunctionProviderCollection with(final CaseSensitivity expressionFunctionNameCaseSensitivity,
                                                      final Set<ExpressionFunctionProvider> providers) {
         return new ExpressionFunctionProviderCollection(
-                Objects.requireNonNull(expressionFunctionNameCaseSensitivity, "expressionFunctionNameCaseSensitivity"),
-                Objects.requireNonNull(providers, "providers")
+            Objects.requireNonNull(expressionFunctionNameCaseSensitivity, "expressionFunctionNameCaseSensitivity"),
+            Objects.requireNonNull(providers, "providers")
         );
     }
 
     private ExpressionFunctionProviderCollection(final CaseSensitivity expressionFunctionNameCaseSensitivity,
                                                  final Set<ExpressionFunctionProvider> providers) {
         this.providers = ProviderCollection.with(
-                new ProviderCollectionProviderGetter<>() {
-                    @Override
-                    public ExpressionFunction<?, ExpressionEvaluationContext> get(final ExpressionFunctionProvider provider,
-                                                                                  final ExpressionFunctionName name,
-                                                                                  final List<?> values,
-                                                                                  final ProviderContext context) {
-                        return this.fixNameCaseSensitivity(
-                                provider.expressionFunction(
-                                        name.setCaseSensitivity(provider.expressionFunctionNameCaseSensitivity()),
-                                        values,
-                                        context
-                                )
-                        );
-                    }
+            new ProviderCollectionProviderGetter<>() {
+                @Override
+                public ExpressionFunction<?, ExpressionEvaluationContext> get(final ExpressionFunctionProvider provider,
+                                                                              final ExpressionFunctionName name,
+                                                                              final List<?> values,
+                                                                              final ProviderContext context) {
+                    return this.fixNameCaseSensitivity(
+                        provider.expressionFunction(
+                            name.setCaseSensitivity(provider.expressionFunctionNameCaseSensitivity()),
+                            values,
+                            context
+                        )
+                    );
+                }
 
-                    @Override
-                    public ExpressionFunction<?, ExpressionEvaluationContext> get(final ExpressionFunctionProvider provider,
-                                                                                  final ExpressionFunctionSelector selector,
-                                                                                  final ProviderContext context) {
-                        // FIX the name case sensitivity before invoking provider and unfix name of returned function
-                        return this.fixNameCaseSensitivity(
-                                provider.expressionFunction(
-                                        selector.setName(
-                                                selector.name()
-                                                        .setCaseSensitivity(provider.expressionFunctionNameCaseSensitivity())
-                                        ),
-                                        context
-                                )
-                        );
-                    }
+                @Override
+                public ExpressionFunction<?, ExpressionEvaluationContext> get(final ExpressionFunctionProvider provider,
+                                                                              final ExpressionFunctionSelector selector,
+                                                                              final ProviderContext context) {
+                    // FIX the name case sensitivity before invoking provider and unfix name of returned function
+                    return this.fixNameCaseSensitivity(
+                        provider.expressionFunction(
+                            selector.setName(
+                                selector.name()
+                                    .setCaseSensitivity(provider.expressionFunctionNameCaseSensitivity())
+                            ),
+                            context
+                        )
+                    );
+                }
 
-                    private ExpressionFunction<?, ExpressionEvaluationContext> fixNameCaseSensitivity(final ExpressionFunction<?, ExpressionEvaluationContext> function) {
-                        return function.setName(
-                                function.name()
-                                        .map(n -> n.setCaseSensitivity(expressionFunctionNameCaseSensitivity))
-                        );
-                    }
-                },
-                ExpressionFunctionProvider::expressionFunctionInfos,
-                ExpressionFunction.class.getSimpleName(),
-                providers
+                private ExpressionFunction<?, ExpressionEvaluationContext> fixNameCaseSensitivity(final ExpressionFunction<?, ExpressionEvaluationContext> function) {
+                    return function.setName(
+                        function.name()
+                            .map(n -> n.setCaseSensitivity(expressionFunctionNameCaseSensitivity))
+                    );
+                }
+            },
+            ExpressionFunctionProvider::expressionFunctionInfos,
+            ExpressionFunction.class.getSimpleName(),
+            providers
         );
 
         this.expressionFunctionNameCaseSensitivity = expressionFunctionNameCaseSensitivity;
@@ -98,11 +98,11 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
         Objects.requireNonNull(context, "context");
 
         return this.providers.get(
-                selector.setName(
-                        selector.name()
-                                .setCaseSensitivity(this.expressionFunctionNameCaseSensitivity)
-                ),
-                context
+            selector.setName(
+                selector.name()
+                    .setCaseSensitivity(this.expressionFunctionNameCaseSensitivity)
+            ),
+            context
         );
     }
 
@@ -115,16 +115,16 @@ final class ExpressionFunctionProviderCollection implements ExpressionFunctionPr
         Objects.requireNonNull(context, "context");
 
         return this.providers.get(
-                name.setCaseSensitivity(this.expressionFunctionNameCaseSensitivity),
-                values,
-                context
+            name.setCaseSensitivity(this.expressionFunctionNameCaseSensitivity),
+            values,
+            context
         );
     }
 
     @Override
     public ExpressionFunctionInfoSet expressionFunctionInfos() {
         return ExpressionFunctionInfoSet.with(
-                this.providers.infos()
+            this.providers.infos()
         );
     }
 

@@ -45,10 +45,10 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
      */
     public static ExpressionFunctionSelector parse(final String text) {
         return new ExpressionFunctionSelector(
-                PluginSelector.parse(
-                        text,
-                        (n) -> ExpressionFunctionName.with(n).setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity)
-                )
+            PluginSelector.parse(
+                text,
+                (n) -> ExpressionFunctionName.with(n).setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity)
+            )
         );
     }
 
@@ -58,10 +58,10 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
     public static ExpressionFunctionSelector with(final ExpressionFunctionName name,
                                                   final String text) {
         return new ExpressionFunctionSelector(
-                PluginSelector.with(
-                        name,
-                        text
-                )
+            PluginSelector.with(
+                name,
+                text
+            )
         );
     }
 
@@ -85,13 +85,13 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
         Objects.requireNonNull(name, "name");
 
         return this.name().equals(name) ?
-                this :
-                new ExpressionFunctionSelector(
-                        PluginSelector.with(
-                                name,
-                                this.valueText()
-                        )
-                );
+            this :
+            new ExpressionFunctionSelector(
+                PluginSelector.with(
+                    name,
+                    this.valueText()
+                )
+            );
     }
 
     /**
@@ -106,8 +106,8 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
     public ExpressionFunctionSelector setValueText(final String valueText) {
         final PluginSelector<ExpressionFunctionName> different = this.selector.setValueText(valueText);
         return this.selector.equals(different) ?
-                this :
-                new ExpressionFunctionSelector(different);
+            this :
+            new ExpressionFunctionSelector(different);
     }
 
     private final PluginSelector<ExpressionFunctionName> selector;
@@ -118,8 +118,8 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
     public ExpressionFunctionSelector setValues(final List<?> values) {
         final PluginSelector<ExpressionFunctionName> different = this.selector.setValues(values);
         return this.selector.equals(different) ?
-                this :
-                new ExpressionFunctionSelector(different);
+            this :
+            new ExpressionFunctionSelector(different);
     }
 
     /**
@@ -131,17 +131,17 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
         Objects.requireNonNull(context, "context");
 
         return this.selector.evaluateValueText(
-                ExpressionFunctionSelector::parseName,
-                provider::expressionFunction,
-                context
+            ExpressionFunctionSelector::parseName,
+            provider::expressionFunction,
+            context
         );
     }
 
     private static Optional<ExpressionFunctionName> parseName(final TextCursor cursor,
                                                               final ParserContext context) {
         return ExpressionFunctionName.PARSER.apply(
-                cursor,
-                context
+            cursor,
+            context
         ).map(n -> n.setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity));
     }
 
@@ -155,7 +155,7 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof ExpressionFunctionSelector && this.equals0((ExpressionFunctionSelector) other);
+            other instanceof ExpressionFunctionSelector && this.equals0((ExpressionFunctionSelector) other);
     }
 
     private boolean equals0(final ExpressionFunctionSelector other) {
@@ -187,10 +187,10 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(ExpressionFunctionSelector.class),
-                ExpressionFunctionSelector::unmarshall,
-                ExpressionFunctionSelector::marshall,
-                ExpressionFunctionSelector.class
+            JsonNodeContext.computeTypeName(ExpressionFunctionSelector.class),
+            ExpressionFunctionSelector::unmarshall,
+            ExpressionFunctionSelector::marshall,
+            ExpressionFunctionSelector.class
         );
     }
 

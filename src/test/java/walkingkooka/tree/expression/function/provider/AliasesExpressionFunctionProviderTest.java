@@ -40,19 +40,19 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     private final static String NAME1_STRING = "function1";
 
     private final static ExpressionFunctionName NAME1 = ExpressionFunctionName.with(NAME1_STRING)
-            .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
     private final static ExpressionFunctionInfo INFO1 = ExpressionFunctionInfo.parse("https://example.com/function1 " + NAME1);
 
     private final static ExpressionFunctionName ALIAS2 = ExpressionFunctionName.with("alias2")
-            .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
     private final static ExpressionFunction<?, ExpressionEvaluationContext> FUNCTION1 = function(NAME1);
 
     private final static String NAME2_STRING = "function2";
 
     private final static ExpressionFunctionName NAME2 = ExpressionFunctionName.with(NAME2_STRING)
-            .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
     private final static ExpressionFunction<?, ExpressionEvaluationContext> FUNCTION2 = function(NAME2);
 
@@ -61,7 +61,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     private final static String NAME3_STRING = "function3";
 
     private final static ExpressionFunctionName NAME3 = ExpressionFunctionName.with(NAME3_STRING)
-            .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
     private final static ExpressionFunction<?, ExpressionEvaluationContext> FUNCTION3 = function(NAME3);
 
@@ -72,7 +72,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     private final static String NAME4_STRING = "custom4";
 
     private final static ExpressionFunctionName NAME4 = ExpressionFunctionName.with(NAME4_STRING)
-            .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
     private final static ExpressionFunctionInfo INFO4 = ExpressionFunctionInfo.parse("https://example.com/custom4 " + NAME4);
 
@@ -88,10 +88,10 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
                 Objects.requireNonNull(n, "name");
 
                 return this.name().equals(n) ?
-                        this :
-                        Cast.to(
-                                function(n.get())
-                        );
+                    this :
+                    Cast.to(
+                        function(n.get())
+                    );
             }
 
             @Override
@@ -111,8 +111,8 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
             @Override
             public String toString() {
                 return this.name()
-                        .get()
-                        .toString();
+                    .get()
+                    .toString();
             }
         };
     }
@@ -122,92 +122,92 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     @Test
     public void testWithUnknownFunctionName() {
         AliasesExpressionFunctionProvider.with(
-                ExpressionFunctionAliasSet.parse("unknown-function404"),
-                new FakeExpressionFunctionProvider() {
-                    @Override
-                    public ExpressionFunctionInfoSet expressionFunctionInfos() {
-                        return ExpressionFunctionInfoSet.parse("https://example.com/function111 function111");
-                    }
-
-                    @Override
-                    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
-                        return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
-                    }
+            ExpressionFunctionAliasSet.parse("unknown-function404"),
+            new FakeExpressionFunctionProvider() {
+                @Override
+                public ExpressionFunctionInfoSet expressionFunctionInfos() {
+                    return ExpressionFunctionInfoSet.parse("https://example.com/function111 function111");
                 }
+
+                @Override
+                public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+                    return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
+                }
+            }
         );
     }
 
     @Test
     public void testExpressionFunctionNameWithName() {
         this.expressionFunctionAndCheck(
-                NAME1,
-                Lists.empty(),
-                CONTEXT,
-                FUNCTION1
+            NAME1,
+            Lists.empty(),
+            CONTEXT,
+            FUNCTION1
         );
     }
 
     @Test
     public void testExpressionFunctionSelectorWithName() {
         this.expressionFunctionAndCheck(
-                ExpressionFunctionSelector.parse(NAME1 + ""),
-                CONTEXT,
-                FUNCTION1
+            ExpressionFunctionSelector.parse(NAME1 + ""),
+            CONTEXT,
+            FUNCTION1
         );
     }
 
     @Test
     public void testExpressionFunctionNameWithAlias() {
         this.expressionFunctionAndCheck(
-                ALIAS2,
-                Lists.empty(),
-                CONTEXT,
-                FUNCTION2.setName(
-                        Optional.of(ALIAS2)
-                )
+            ALIAS2,
+            Lists.empty(),
+            CONTEXT,
+            FUNCTION2.setName(
+                Optional.of(ALIAS2)
+            )
         );
     }
 
     @Test
     public void testExpressionFunctionSelectorWithAlias() {
         this.expressionFunctionAndCheck(
-                ExpressionFunctionSelector.parse(ALIAS2 + ""),
-                CONTEXT,
-                FUNCTION2.setName(
-                        Optional.of(ALIAS2)
-                )
+            ExpressionFunctionSelector.parse(ALIAS2 + ""),
+            CONTEXT,
+            FUNCTION2.setName(
+                Optional.of(ALIAS2)
+            )
         );
     }
 
     @Test
     public void testExpressionFunctionNameWithSelector() {
         this.expressionFunctionAndCheck(
-                NAME4,
-                Lists.empty(),
-                CONTEXT,
-                FUNCTION3.setName(
-                        Optional.of(NAME4)
-                )
+            NAME4,
+            Lists.empty(),
+            CONTEXT,
+            FUNCTION3.setName(
+                Optional.of(NAME4)
+            )
         );
     }
 
     @Test
     public void testExpressionFunctionSelectorWithSelector() {
         this.expressionFunctionAndCheck(
-                ExpressionFunctionSelector.parse(NAME4 + ""),
-                CONTEXT,
-                FUNCTION3.setName(
-                        Optional.of(NAME4)
-                )
+            ExpressionFunctionSelector.parse(NAME4 + ""),
+            CONTEXT,
+            FUNCTION3.setName(
+                Optional.of(NAME4)
+            )
         );
     }
 
     @Test
     public void testInfos() {
         this.expressionFunctionInfosAndCheck(
-                INFO1,
-                INFO2.setName(ALIAS2),
-                INFO4.setName(NAME4) // from ExpressionFunctionAliasSet
+            INFO1,
+            INFO2.setName(ALIAS2),
+            INFO4.setName(NAME4) // from ExpressionFunctionAliasSet
         );
     }
 
@@ -216,64 +216,64 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
         final String aliases = "function1, alias2 function2, custom4 function3(\"Value3\") https://example.com/custom4";
 
         this.checkEquals(
-                NAME1 + ", " + ALIAS2 + " " + NAME2 + ", " + NAME4 + " " + NAME3 + "(\"" + VALUE3 + "\") " + INFO4.url(),
-                aliases
+            NAME1 + ", " + ALIAS2 + " " + NAME2 + ", " + NAME4 + " " + NAME3 + "(\"" + VALUE3 + "\") " + INFO4.url(),
+            aliases
         );
 
         return AliasesExpressionFunctionProvider.with(
-                ExpressionFunctionAliasSet.parse(aliases),
-                new FakeExpressionFunctionProvider() {
-                    @Override
-                    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                                                 final ProviderContext context) {
-                        return selector.evaluateValueText(
-                                this,
-                                context
-                        );
-                    }
-
-                    @Override
-                    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                                 final List<?> values,
-                                                                                                 final ProviderContext context) {
-                        ExpressionFunction<?, ExpressionEvaluationContext> function;
-
-                        switch (name.toString()) {
-                            case NAME1_STRING:
-                                checkEquals(Lists.empty(), values, "values");
-                                function = FUNCTION1;
-                                break;
-                            case NAME2_STRING:
-                                checkEquals(Lists.empty(), values, "values");
-                                function = FUNCTION2;
-                                break;
-                            case NAME3_STRING:
-                                checkEquals(Lists.of(VALUE3), values, "values");
-                                function = FUNCTION3;
-                                break;
-                            default:
-                                throw new UnknownExpressionFunctionException(name);
-                        }
-
-                        return function;
-                    }
-
-                    @Override
-                    public ExpressionFunctionInfoSet expressionFunctionInfos() {
-                        return ExpressionFunctionInfoSet.with(
-                                Sets.of(
-                                        INFO1,
-                                        INFO2,
-                                        INFO3
-                                )
-                        );
-                    }
-
-                    @Override
-                    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
-                        return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
-                    }
+            ExpressionFunctionAliasSet.parse(aliases),
+            new FakeExpressionFunctionProvider() {
+                @Override
+                public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
+                                                                                             final ProviderContext context) {
+                    return selector.evaluateValueText(
+                        this,
+                        context
+                    );
                 }
+
+                @Override
+                public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                             final List<?> values,
+                                                                                             final ProviderContext context) {
+                    ExpressionFunction<?, ExpressionEvaluationContext> function;
+
+                    switch (name.toString()) {
+                        case NAME1_STRING:
+                            checkEquals(Lists.empty(), values, "values");
+                            function = FUNCTION1;
+                            break;
+                        case NAME2_STRING:
+                            checkEquals(Lists.empty(), values, "values");
+                            function = FUNCTION2;
+                            break;
+                        case NAME3_STRING:
+                            checkEquals(Lists.of(VALUE3), values, "values");
+                            function = FUNCTION3;
+                            break;
+                        default:
+                            throw new UnknownExpressionFunctionException(name);
+                    }
+
+                    return function;
+                }
+
+                @Override
+                public ExpressionFunctionInfoSet expressionFunctionInfos() {
+                    return ExpressionFunctionInfoSet.with(
+                        Sets.of(
+                            INFO1,
+                            INFO2,
+                            INFO3
+                        )
+                    );
+                }
+
+                @Override
+                public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+                    return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
+                }
+            }
         );
     }
 

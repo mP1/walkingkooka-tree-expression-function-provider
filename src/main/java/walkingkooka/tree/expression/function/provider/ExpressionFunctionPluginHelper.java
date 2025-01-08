@@ -40,11 +40,11 @@ import java.util.function.Function;
  * TODO https://github.com/mP1/walkingkooka-tree-expression-function-provider/issues/118
  */
 final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFunctionName,
-        ExpressionFunctionInfo,
-        ExpressionFunctionInfoSet,
-        ExpressionFunctionSelector,
-        ExpressionFunctionAlias,
-        ExpressionFunctionAliasSet> {
+    ExpressionFunctionInfo,
+    ExpressionFunctionInfoSet,
+    ExpressionFunctionSelector,
+    ExpressionFunctionAlias,
+    ExpressionFunctionAliasSet> {
 
     /**
      * Singleton
@@ -59,17 +59,17 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
     @Override
     public ExpressionFunctionName name(final String text) {
         return ExpressionFunctionName.with(text)
-                .setCaseSensitivity(this.caseSensitivity);
+            .setCaseSensitivity(this.caseSensitivity);
     }
 
     @Override
     public Optional<ExpressionFunctionName> parseName(final TextCursor cursor,
                                                       final ParserContext context) {
         return ExpressionFunctionName.PARSER.apply(
-                cursor,
-                context
+            cursor,
+            context
         ).map(
-                n -> n.setCaseSensitivity(this.caseSensitivity)
+            n -> n.setCaseSensitivity(this.caseSensitivity)
         );
     }
 
@@ -97,8 +97,8 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
     public ExpressionFunctionInfo info(final AbsoluteUrl url,
                                        final ExpressionFunctionName name) {
         return ExpressionFunctionInfo.with(
-                url,
-                name
+            url,
+            name
         );
     }
 
@@ -117,9 +117,9 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
                                          final Optional<ExpressionFunctionSelector> selector,
                                          final Optional<AbsoluteUrl> url) {
         return ExpressionFunctionAlias.with(
-                name,
-                selector,
-                url
+            name,
+            selector,
+            url
         );
     }
 

@@ -39,8 +39,8 @@ final class FilteredMappedExpressionFunctionProvider implements ExpressionFuncti
         Objects.requireNonNull(provider, "provider");
 
         return new FilteredMappedExpressionFunctionProvider(
-                infos,
-                provider
+            infos,
+            provider
         );
     }
 
@@ -48,9 +48,9 @@ final class FilteredMappedExpressionFunctionProvider implements ExpressionFuncti
     private FilteredMappedExpressionFunctionProvider(final ExpressionFunctionInfoSet infos,
                                                      final ExpressionFunctionProvider provider) {
         this.mapper = FilteredProviderMapper.with(
-                infos,
-                provider.expressionFunctionInfos(),
-                ExpressionFunctionPluginHelper.INSTANCE
+            infos,
+            provider.expressionFunctionInfos(),
+            ExpressionFunctionPluginHelper.INSTANCE
         );
 
         this.provider = provider;
@@ -63,8 +63,8 @@ final class FilteredMappedExpressionFunctionProvider implements ExpressionFuncti
         Objects.requireNonNull(context, "context");
 
         return selector.evaluateValueText(
-                this,
-                context
+            this,
+            context
         );
     }
 
@@ -77,15 +77,15 @@ final class FilteredMappedExpressionFunctionProvider implements ExpressionFuncti
         Objects.requireNonNull(context, "context");
 
         return this.provider.expressionFunction(
-                this.mapper.name(
-                        name.setCaseSensitivity(
-                                this.expressionFunctionNameCaseSensitivity()
-                        )
-                ),
-                values,
-                context
+            this.mapper.name(
+                name.setCaseSensitivity(
+                    this.expressionFunctionNameCaseSensitivity()
+                )
+            ),
+            values,
+            context
         ).setName(
-                Optional.of(name)
+            Optional.of(name)
         );
     }
 

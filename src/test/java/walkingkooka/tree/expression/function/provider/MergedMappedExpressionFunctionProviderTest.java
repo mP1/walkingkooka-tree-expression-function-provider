@@ -38,20 +38,20 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MergedMappedExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<MergedMappedExpressionFunctionProvider>,
-        ToStringTesting<MergedMappedExpressionFunctionProvider> {
+    ToStringTesting<MergedMappedExpressionFunctionProvider> {
 
     private final static AbsoluteUrl RENAMED_URL = Url.parseAbsolute("https://example.com/renamed-function111");
 
     private final static ExpressionFunctionName RENAME_NAME = ExpressionFunctionName.with("rename-renamed-function-111")
-            .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
     private final static ExpressionFunctionName RENAME_PROVIDER_NAME = ExpressionFunctionName.with("provider-renamed-function-111")
-            .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
     private final static AbsoluteUrl PROVIDER_ONLY_URL = Url.parseAbsolute("https://example.com/provider-only-function-222");
 
     private final static ExpressionFunctionName PROVIDER_ONLY_NAME = ExpressionFunctionName.with("provider-only-function-222")
-            .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
     private static ExpressionFunction<?, ExpressionEvaluationContext> function(final ExpressionFunctionName name) {
         return new FakeExpressionFunction() {
@@ -88,151 +88,151 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
     @Test
     public void testWithNullInfosFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> MergedMappedExpressionFunctionProvider.with(
-                        null,
-                        ExpressionFunctionProviders.fake()
-                )
+            NullPointerException.class,
+            () -> MergedMappedExpressionFunctionProvider.with(
+                null,
+                ExpressionFunctionProviders.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullProviderFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> MergedMappedExpressionFunctionProvider.with(
-                        ExpressionFunctionInfoSet.EMPTY,
-                        null
-                )
+            NullPointerException.class,
+            () -> MergedMappedExpressionFunctionProvider.with(
+                ExpressionFunctionInfoSet.EMPTY,
+                null
+            )
         );
     }
 
     @Test
     public void testExpressionFunctionNameRename() {
         this.expressionFunctionAndCheck(
-                RENAME_NAME,
-                VALUES,
-                CONTEXT,
-                function(RENAME_NAME)
+            RENAME_NAME,
+            VALUES,
+            CONTEXT,
+            function(RENAME_NAME)
         );
     }
 
     @Test
     public void testExpressionFunctionNameProviderOnly() {
         this.expressionFunctionAndCheck(
-                PROVIDER_ONLY_NAME,
-                VALUES,
-                CONTEXT,
-                function(PROVIDER_ONLY_NAME)
+            PROVIDER_ONLY_NAME,
+            VALUES,
+            CONTEXT,
+            function(PROVIDER_ONLY_NAME)
         );
     }
 
     @Test
     public void testExpressionFunctionNameUnknownFails() {
         this.expressionFunctionFails(
-                ExpressionFunctionName.with("unknown")
-                        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity),
-                VALUES,
-                CONTEXT
+            ExpressionFunctionName.with("unknown")
+                .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity),
+            VALUES,
+            CONTEXT
         );
     }
 
     @Test
     public void testExpressionFunctionSelectorRenameName() {
         this.expressionFunctionAndCheck(
-                ExpressionFunctionSelector.parse(RENAME_NAME + ""),
-                CONTEXT,
-                function(RENAME_NAME)
+            ExpressionFunctionSelector.parse(RENAME_NAME + ""),
+            CONTEXT,
+            function(RENAME_NAME)
         );
     }
 
     @Test
     public void testExpressionFunctionSelectorProviderName() {
         this.expressionFunctionAndCheck(
-                ExpressionFunctionSelector.parse(PROVIDER_ONLY_NAME + ""),
-                CONTEXT,
-                function(PROVIDER_ONLY_NAME)
+            ExpressionFunctionSelector.parse(PROVIDER_ONLY_NAME + ""),
+            CONTEXT,
+            function(PROVIDER_ONLY_NAME)
         );
     }
 
     @Test
     public void testExpressionFunctionSelectorUnknownFails() {
         this.expressionFunctionFails(
-                ExpressionFunctionSelector.parse("unknown"),
-                CONTEXT
+            ExpressionFunctionSelector.parse("unknown"),
+            CONTEXT
         );
     }
 
     @Test
     public void testInfos() {
         this.expressionFunctionInfosAndCheck(
-                ExpressionFunctionInfo.with(
-                        RENAMED_URL,
-                        RENAME_NAME
-                ),
-                ExpressionFunctionInfo.with(
-                        PROVIDER_ONLY_URL,
-                        PROVIDER_ONLY_NAME
-                )
+            ExpressionFunctionInfo.with(
+                RENAMED_URL,
+                RENAME_NAME
+            ),
+            ExpressionFunctionInfo.with(
+                PROVIDER_ONLY_URL,
+                PROVIDER_ONLY_NAME
+            )
         );
     }
 
     @Override
     public MergedMappedExpressionFunctionProvider createExpressionFunctionProvider() {
         return MergedMappedExpressionFunctionProvider.with(
-                ExpressionFunctionInfoSet.with(
-                        Sets.of(
-                                ExpressionFunctionInfo.with(
-                                        RENAMED_URL,
-                                        RENAME_NAME
-                                )
-                        )
-                ),
-        new FakeExpressionFunctionProvider() {
+            ExpressionFunctionInfoSet.with(
+                Sets.of(
+                    ExpressionFunctionInfo.with(
+                        RENAMED_URL,
+                        RENAME_NAME
+                    )
+                )
+            ),
+            new FakeExpressionFunctionProvider() {
 
-            @Override
-            public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                         final List<?> values,
-                                                                                         final ProviderContext context) {
-                if (name.equals(RENAME_PROVIDER_NAME)) {
-                    return function(RENAME_PROVIDER_NAME);
+                @Override
+                public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                             final List<?> values,
+                                                                                             final ProviderContext context) {
+                    if (name.equals(RENAME_PROVIDER_NAME)) {
+                        return function(RENAME_PROVIDER_NAME);
+                    }
+                    if (name.equals(PROVIDER_ONLY_NAME)) {
+                        return function(PROVIDER_ONLY_NAME);
+                    }
+                    throw new IllegalArgumentException("Unknown function " + name);
                 }
-                if (name.equals(PROVIDER_ONLY_NAME)) {
-                    return function(PROVIDER_ONLY_NAME);
-                }
-                throw new IllegalArgumentException("Unknown function " + name);
-            }
 
-            @Override
-            public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                                         final ProviderContext context) {
-                return selector.evaluateValueText(
+                @Override
+                public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
+                                                                                             final ProviderContext context) {
+                    return selector.evaluateValueText(
                         this,
                         context
-                );
-            }
+                    );
+                }
 
-            @Override
-            public ExpressionFunctionInfoSet expressionFunctionInfos() {
-                return ExpressionFunctionInfoSet.with(
+                @Override
+                public ExpressionFunctionInfoSet expressionFunctionInfos() {
+                    return ExpressionFunctionInfoSet.with(
                         Sets.of(
-                                ExpressionFunctionInfo.with(
-                                        RENAMED_URL,
-                                        RENAME_PROVIDER_NAME
-                                ),
-                                ExpressionFunctionInfo.with(
-                                        PROVIDER_ONLY_URL,
-                                        PROVIDER_ONLY_NAME
-                                )
+                            ExpressionFunctionInfo.with(
+                                RENAMED_URL,
+                                RENAME_PROVIDER_NAME
+                            ),
+                            ExpressionFunctionInfo.with(
+                                PROVIDER_ONLY_URL,
+                                PROVIDER_ONLY_NAME
+                            )
                         )
-                );
-            }
+                    );
+                }
 
-            @Override
-            public CaseSensitivity expressionFunctionNameCaseSensitivity() {
-                return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
+                @Override
+                public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+                    return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
+                }
             }
-        }
         );
     }
 
@@ -246,8 +246,8 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createExpressionFunctionProvider(),
-                "https://example.com/provider-only-function-222 provider-only-function-222,https://example.com/renamed-function111 rename-renamed-function-111"
+            this.createExpressionFunctionProvider(),
+            "https://example.com/provider-only-function-222 provider-only-function-222,https://example.com/renamed-function111 rename-renamed-function-111"
         );
     }
 
