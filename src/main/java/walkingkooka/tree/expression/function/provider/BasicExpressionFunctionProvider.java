@@ -62,7 +62,10 @@ final class BasicExpressionFunctionProvider<C extends ExpressionEvaluationContex
 
         this.nameCaseSensitivity = nameCaseSensitivity;
 
-        final Map<ExpressionFunctionName, ExpressionFunction<?, C>> nameToFunction = Maps.sorted();
+        final Map<ExpressionFunctionName, ExpressionFunction<?, C>> nameToFunction = Maps.sorted(
+            ExpressionFunctionName.comparator(nameCaseSensitivity)
+        );
+
         for (final ExpressionFunction<?, C> function : functions) {
             final ExpressionFunctionName name = function.name()
                 .orElseThrow(
