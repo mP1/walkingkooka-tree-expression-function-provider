@@ -125,8 +125,8 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
     /**
      * Parses the text as an expression that may contain String literals, numbers or {@link ExpressionFunctionName}.
      */
-    public ExpressionFunction<?, ExpressionEvaluationContext> evaluateValueText(final ExpressionFunctionProvider provider,
-                                                                                final ProviderContext context) {
+    public <C extends ExpressionEvaluationContext> ExpressionFunction<?, C> evaluateValueText(final ExpressionFunctionProvider<C> provider,
+                                                                                              final ProviderContext context) {
         Objects.requireNonNull(provider, "provider");
         Objects.requireNonNull(context, "context");
 

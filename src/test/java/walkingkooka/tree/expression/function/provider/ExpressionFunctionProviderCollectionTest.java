@@ -18,6 +18,7 @@
 package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
@@ -29,6 +30,7 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
+import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 
 import java.util.List;
@@ -36,8 +38,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ExpressionFunctionProviderCollectionTest implements ExpressionFunctionProviderTesting<ExpressionFunctionProviderCollection>,
-    ToStringTesting<ExpressionFunctionProviderCollection> {
+public final class ExpressionFunctionProviderCollectionTest implements ExpressionFunctionProviderTesting<ExpressionFunctionProviderCollection<FakeExpressionEvaluationContext>, FakeExpressionEvaluationContext>,
+    ToStringTesting<ExpressionFunctionProviderCollection<FakeExpressionEvaluationContext>> {
 
     private final static AbsoluteUrl BASE_URL = Url.parseAbsolute("https://example.com/base/");
 
@@ -45,13 +47,13 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
 
     private final static ExpressionFunctionName NAME2 = ExpressionFunctionName.with("testfunction2");
 
-    private static final FakeExpressionFunction FUNCTION1 = new FakeExpressionFunction() {
+    private static final FakeExpressionFunction<Object, FakeExpressionEvaluationContext> FUNCTION1 = new FakeExpressionFunction<>() {
         @Override
         public Optional<ExpressionFunctionName> name() {
             return Optional.of(NAME1);
         }
     };
-    private static final FakeExpressionFunction FUNCTION2 = new FakeExpressionFunction() {
+    private static final FakeExpressionFunction<Object, FakeExpressionEvaluationContext> FUNCTION2 = new FakeExpressionFunction<>() {
         @Override
         public Optional<ExpressionFunctionName> name() {
             return Optional.of(NAME2);
@@ -251,8 +253,8 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
     // class............................................................................................................
 
     @Override
-    public Class<ExpressionFunctionProviderCollection> type() {
-        return ExpressionFunctionProviderCollection.class;
+    public Class<ExpressionFunctionProviderCollection<FakeExpressionEvaluationContext>> type() {
+        return Cast.to(ExpressionFunctionProviderCollection.class);
     }
 
     @Override

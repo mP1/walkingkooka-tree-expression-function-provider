@@ -18,19 +18,21 @@
 package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunctions;
 
 import java.util.List;
 
-public final class FilteredExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<FilteredExpressionFunctionProvider>,
-    ToStringTesting<FilteredExpressionFunctionProvider> {
+public final class FilteredExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<FilteredExpressionFunctionProvider<ExpressionEvaluationContext>, ExpressionEvaluationContext>,
+    ToStringTesting<FilteredExpressionFunctionProvider<ExpressionEvaluationContext>> {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
@@ -125,8 +127,10 @@ public final class FilteredExpressionFunctionProviderTest implements ExpressionF
     // class............................................................................................................
 
     @Override
-    public Class<FilteredExpressionFunctionProvider> type() {
-        return FilteredExpressionFunctionProvider.class;
+    public Class<FilteredExpressionFunctionProvider<ExpressionEvaluationContext>> type() {
+        return Cast.to(
+            FilteredExpressionFunctionProvider.class
+        );
     }
 
     @Override

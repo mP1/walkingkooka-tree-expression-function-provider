@@ -25,19 +25,19 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.util.List;
 
-public class FakeExpressionFunctionProvider implements ExpressionFunctionProvider {
+public class FakeExpressionFunctionProvider<C extends ExpressionEvaluationContext> implements ExpressionFunctionProvider<C> {
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                                 final ProviderContext context) {
+    public ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionSelector selector,
+                                                       final ProviderContext context) {
         throw new UnsupportedOperationException();
     }
 
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                 final List<?> values,
-                                                                                 final ProviderContext context) {
+    public ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionName name,
+                                                       final List<?> values,
+                                                       final ProviderContext context) {
         throw new UnsupportedOperationException();
     }
 

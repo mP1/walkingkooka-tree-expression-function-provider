@@ -29,20 +29,20 @@ import java.util.List;
 /**
  * A provider that supports listing available {@link ExpressionFunctionInfo} and fetching implementations by {@link ExpressionFunctionName}.
  */
-public interface ExpressionFunctionProvider extends Provider {
+public interface ExpressionFunctionProvider<C extends ExpressionEvaluationContext> extends Provider {
 
     /**
      * Getter that attempts to return a {@link ExpressionFunction} with the given {@link ExpressionFunctionSelector} or throws an {@link IllegalArgumentException}.
      */
-    ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                          final ProviderContext context);
+    ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionSelector selector,
+                                                final ProviderContext context);
 
     /**
      * Getter that attempts to return a {@link ExpressionFunction} with the given {@link ExpressionFunctionName} or throws an {@link IllegalArgumentException}.
      */
-    ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                          final List<?> values,
-                                                                          final ProviderContext context);
+    ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionName name,
+                                                final List<?> values,
+                                                final ProviderContext context);
 
     /**
      * Returns all known {@link ExpressionFunctionInfo}.

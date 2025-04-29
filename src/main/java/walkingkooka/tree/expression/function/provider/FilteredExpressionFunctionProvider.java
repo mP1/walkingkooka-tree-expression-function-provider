@@ -30,17 +30,17 @@ import java.util.Objects;
 /**
  * A {@link ExpressionFunctionProvider} that provides functions from one provider but lists more {@link ExpressionFunctionInfo}.
  */
-final class FilteredExpressionFunctionProvider implements ExpressionFunctionProvider {
+final class FilteredExpressionFunctionProvider<C extends ExpressionEvaluationContext> implements ExpressionFunctionProvider<C> {
 
-    static FilteredExpressionFunctionProvider with(final ExpressionFunctionProvider provider,
-                                                   final ExpressionFunctionInfoSet infos) {
-        return new FilteredExpressionFunctionProvider(
+    static <C extends ExpressionEvaluationContext> FilteredExpressionFunctionProvider<C> with(final ExpressionFunctionProvider<C> provider,
+                                                                                              final ExpressionFunctionInfoSet infos) {
+        return new FilteredExpressionFunctionProvider<>(
             Objects.requireNonNull(provider, "provider"),
             Objects.requireNonNull(infos, "infos")
         );
     }
 
-    private FilteredExpressionFunctionProvider(final ExpressionFunctionProvider provider,
+    private FilteredExpressionFunctionProvider(final ExpressionFunctionProvider<C> provider,
                                                final ExpressionFunctionInfoSet infos) {
         this.guard = FilteredProviderGuard.with(
             infos.names(),
@@ -51,8 +51,8 @@ final class FilteredExpressionFunctionProvider implements ExpressionFunctionProv
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                                 final ProviderContext context) {
+    public ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionSelector selector,
+                                                       final ProviderContext context) {
         return this.provider.expressionFunction(
             this.guard.selector(selector),
             Objects.requireNonNull(context, "context")
@@ -60,9 +60,9 @@ final class FilteredExpressionFunctionProvider implements ExpressionFunctionProv
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                 final List<?> values,
-                                                                                 final ProviderContext context) {
+    public ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionName name,
+                                                       final List<?> values,
+                                                       final ProviderContext context) {
         return this.provider.expressionFunction(
             this.guard.name(
                 name.setCaseSensitivity(this.expressionFunctionNameCaseSensitivity())
@@ -74,7 +74,7 @@ final class FilteredExpressionFunctionProvider implements ExpressionFunctionProv
 
     private final FilteredProviderGuard<ExpressionFunctionName, ExpressionFunctionSelector> guard;
 
-    private final ExpressionFunctionProvider provider;
+    private final ExpressionFunctionProvider<C> provider;
 
     @Override
     public ExpressionFunctionInfoSet expressionFunctionInfos() {

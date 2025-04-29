@@ -30,10 +30,10 @@ import java.util.Objects;
 /**
  * A {@link ExpressionFunctionProvider} that is always empty and returns no {@link ExpressionFunctionInfo} or {@link ExpressionFunction}.
  */
-final class EmptyExpressionFunctionProvider implements ExpressionFunctionProvider {
+final class EmptyExpressionFunctionProvider<C extends ExpressionEvaluationContext> implements ExpressionFunctionProvider<C> {
 
-    static EmptyExpressionFunctionProvider with(final CaseSensitivity caseSensitivity) {
-        return new EmptyExpressionFunctionProvider(
+    static <C extends ExpressionEvaluationContext> EmptyExpressionFunctionProvider<C> with(final CaseSensitivity caseSensitivity) {
+        return new EmptyExpressionFunctionProvider<>(
             Objects.requireNonNull(caseSensitivity, "caseSensitivity")
         );
     }
@@ -51,8 +51,8 @@ final class EmptyExpressionFunctionProvider implements ExpressionFunctionProvide
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                                 final ProviderContext context) {
+    public ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionSelector selector,
+                                                       final ProviderContext context) {
         Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
 
@@ -62,9 +62,9 @@ final class EmptyExpressionFunctionProvider implements ExpressionFunctionProvide
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                 final List<?> values,
-                                                                                 final ProviderContext context) {
+    public ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionName name,
+                                                       final List<?> values,
+                                                       final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");

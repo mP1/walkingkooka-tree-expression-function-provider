@@ -18,6 +18,7 @@
 package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
@@ -37,8 +38,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class MergedMappedExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<MergedMappedExpressionFunctionProvider>,
-    ToStringTesting<MergedMappedExpressionFunctionProvider> {
+public final class MergedMappedExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<MergedMappedExpressionFunctionProvider<ExpressionEvaluationContext>, ExpressionEvaluationContext>,
+    ToStringTesting<MergedMappedExpressionFunctionProvider<ExpressionEvaluationContext>> {
 
     private final static AbsoluteUrl RENAMED_URL = Url.parseAbsolute("https://example.com/renamed-function111");
 
@@ -54,7 +55,7 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
         .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
     private static ExpressionFunction<?, ExpressionEvaluationContext> function(final ExpressionFunctionName name) {
-        return new FakeExpressionFunction() {
+        return new FakeExpressionFunction<>() {
             @Override
             public Optional<ExpressionFunctionName> name() {
                 return Optional.of(name);
@@ -188,7 +189,7 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
                     )
                 )
             ),
-            new FakeExpressionFunctionProvider() {
+            new FakeExpressionFunctionProvider<>() {
 
                 @Override
                 public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
@@ -254,8 +255,8 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
     // class............................................................................................................
 
     @Override
-    public Class<MergedMappedExpressionFunctionProvider> type() {
-        return MergedMappedExpressionFunctionProvider.class;
+    public Class<MergedMappedExpressionFunctionProvider<ExpressionEvaluationContext>> type() {
+        return Cast.to(MergedMappedExpressionFunctionProvider.class);
     }
 
     @Override

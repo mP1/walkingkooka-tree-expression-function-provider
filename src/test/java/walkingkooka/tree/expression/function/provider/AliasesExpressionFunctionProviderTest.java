@@ -25,8 +25,8 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
+import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class AliasesExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<AliasesExpressionFunctionProvider> {
+public final class AliasesExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<AliasesExpressionFunctionProvider<FakeExpressionEvaluationContext>, FakeExpressionEvaluationContext> {
 
     private final static String NAME1_STRING = "function1";
 
@@ -47,14 +47,14 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     private final static ExpressionFunctionName ALIAS2 = ExpressionFunctionName.with("alias2")
         .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
-    private final static ExpressionFunction<?, ExpressionEvaluationContext> FUNCTION1 = function(NAME1);
+    private final static ExpressionFunction<?, FakeExpressionEvaluationContext> FUNCTION1 = function(NAME1);
 
     private final static String NAME2_STRING = "function2";
 
     private final static ExpressionFunctionName NAME2 = ExpressionFunctionName.with(NAME2_STRING)
         .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
-    private final static ExpressionFunction<?, ExpressionEvaluationContext> FUNCTION2 = function(NAME2);
+    private final static ExpressionFunction<?, FakeExpressionEvaluationContext> FUNCTION2 = function(NAME2);
 
     private final static ExpressionFunctionInfo INFO2 = ExpressionFunctionInfo.parse("https://example.com/function2 " + NAME2);
 
@@ -63,7 +63,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     private final static ExpressionFunctionName NAME3 = ExpressionFunctionName.with(NAME3_STRING)
         .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
-    private final static ExpressionFunction<?, ExpressionEvaluationContext> FUNCTION3 = function(NAME3);
+    private final static ExpressionFunction<?, FakeExpressionEvaluationContext> FUNCTION3 = function(NAME3);
 
     private final static ExpressionFunctionInfo INFO3 = ExpressionFunctionInfo.parse("https://example.com/function3 " + NAME3);
 
@@ -76,7 +76,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
 
     private final static ExpressionFunctionInfo INFO4 = ExpressionFunctionInfo.parse("https://example.com/custom4 " + NAME4);
 
-    private static ExpressionFunction<?, ExpressionEvaluationContext> function(final ExpressionFunctionName name) {
+    private static ExpressionFunction<?, FakeExpressionEvaluationContext> function(final ExpressionFunctionName name) {
         return new FakeExpressionFunction<>() {
             @Override
             public Optional<ExpressionFunctionName> name() {
@@ -84,7 +84,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
             }
 
             @Override
-            public ExpressionFunction<Object, ExpressionEvaluationContext> setName(final Optional<ExpressionFunctionName> n) {
+            public ExpressionFunction<Object, FakeExpressionEvaluationContext> setName(final Optional<ExpressionFunctionName> n) {
                 Objects.requireNonNull(n, "name");
 
                 return this.name().equals(n) ?
@@ -222,10 +222,10 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
 
         return AliasesExpressionFunctionProvider.with(
             ExpressionFunctionAliasSet.parse(aliases),
-            new FakeExpressionFunctionProvider() {
+            new FakeExpressionFunctionProvider<FakeExpressionEvaluationContext>() {
                 @Override
-                public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                                             final ProviderContext context) {
+                public ExpressionFunction<?, FakeExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
+                                                                                                 final ProviderContext context) {
                     return selector.evaluateValueText(
                         this,
                         context
@@ -233,10 +233,10 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
                 }
 
                 @Override
-                public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                             final List<?> values,
-                                                                                             final ProviderContext context) {
-                    ExpressionFunction<?, ExpressionEvaluationContext> function;
+                public ExpressionFunction<?, FakeExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                                 final List<?> values,
+                                                                                                 final ProviderContext context) {
+                    ExpressionFunction<?, FakeExpressionEvaluationContext> function;
 
                     switch (name.toString()) {
                         case NAME1_STRING:
@@ -285,8 +285,8 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     // class............................................................................................................
 
     @Override
-    public Class<AliasesExpressionFunctionProvider> type() {
-        return AliasesExpressionFunctionProvider.class;
+    public Class<AliasesExpressionFunctionProvider<FakeExpressionEvaluationContext>> type() {
+        return Cast.to(AliasesExpressionFunctionProvider.class);
     }
 
     @Override
