@@ -18,6 +18,7 @@
 package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.AbsoluteUrl;
@@ -26,8 +27,8 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
+import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 
@@ -36,8 +37,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class FilteredMappedExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<FilteredMappedExpressionFunctionProvider>,
-    ToStringTesting<FilteredMappedExpressionFunctionProvider> {
+public final class FilteredMappedExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<FilteredMappedExpressionFunctionProvider<FakeExpressionEvaluationContext>, FakeExpressionEvaluationContext>,
+    ToStringTesting<FilteredMappedExpressionFunctionProvider<FakeExpressionEvaluationContext>> {
 
     private final static AbsoluteUrl URL = Url.parseAbsolute("https://example.com/function123");
 
@@ -47,8 +48,8 @@ public final class FilteredMappedExpressionFunctionProviderTest implements Expre
     private final static ExpressionFunctionName ORIGINAL_NAME = ExpressionFunctionName.with("original-function-123")
         .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
 
-    private static ExpressionFunction<?, ExpressionEvaluationContext> function(final ExpressionFunctionName name) {
-        return new FakeExpressionFunction() {
+    private static ExpressionFunction<?, FakeExpressionEvaluationContext> function(final ExpressionFunctionName name) {
+        return new FakeExpressionFunction<>() {
             @Override
             public Optional<ExpressionFunctionName> name() {
                 return Optional.of(name);
@@ -156,12 +157,12 @@ public final class FilteredMappedExpressionFunctionProviderTest implements Expre
                     NAME
                 )
             ),
-            new FakeExpressionFunctionProvider() {
+            new FakeExpressionFunctionProvider<FakeExpressionEvaluationContext>() {
 
                 @Override
-                public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                             final List<?> values,
-                                                                                             final ProviderContext context) {
+                public ExpressionFunction<?, FakeExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                                 final List<?> values,
+                                                                                                 final ProviderContext context) {
                     if (false == name.equals(ORIGINAL_NAME)) {
                         throw new IllegalArgumentException("Unknown function " + name);
                     }
@@ -169,8 +170,8 @@ public final class FilteredMappedExpressionFunctionProviderTest implements Expre
                 }
 
                 @Override
-                public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                                             final ProviderContext context) {
+                public ExpressionFunction<?, FakeExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
+                                                                                                 final ProviderContext context) {
                     return selector.evaluateValueText(
                         this,
                         context
@@ -214,8 +215,8 @@ public final class FilteredMappedExpressionFunctionProviderTest implements Expre
     // class............................................................................................................
 
     @Override
-    public Class<FilteredMappedExpressionFunctionProvider> type() {
-        return FilteredMappedExpressionFunctionProvider.class;
+    public Class<FilteredMappedExpressionFunctionProvider<FakeExpressionEvaluationContext>> type() {
+        return Cast.to(FilteredMappedExpressionFunctionProvider.class);
     }
 
     @Override

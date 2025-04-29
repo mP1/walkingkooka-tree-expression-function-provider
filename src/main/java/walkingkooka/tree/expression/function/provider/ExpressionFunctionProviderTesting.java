@@ -24,6 +24,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.ProviderTesting;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
@@ -31,7 +32,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionProvider> extends ProviderTesting<T> {
+public interface ExpressionFunctionProviderTesting<P extends ExpressionFunctionProvider<C>, C extends ExpressionEvaluationContext> extends ProviderTesting<P> {
 
     // expressionFunction(ExpressionFunctionSelector, ProviderContext)..................................................
 
@@ -68,7 +69,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
         );
     }
 
-    default void expressionFunctionFails(final ExpressionFunctionProvider provider,
+    default void expressionFunctionFails(final ExpressionFunctionProvider<C> provider,
                                          final ExpressionFunctionSelector selector,
                                          final ProviderContext context) {
         assertThrows(
@@ -91,7 +92,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
         );
     }
 
-    default void expressionFunctionAndCheck(final ExpressionFunctionProvider provider,
+    default void expressionFunctionAndCheck(final ExpressionFunctionProvider<C> provider,
                                             final ExpressionFunctionSelector selector,
                                             final ProviderContext context,
                                             final ExpressionFunction<?, ?> expected) {
@@ -195,12 +196,12 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
         );
     }
 
-    default void expressionFunctionAndCheck(final ExpressionFunctionProvider provider,
+    default void expressionFunctionAndCheck(final ExpressionFunctionProvider<C> provider,
                                             final ExpressionFunctionName name,
                                             final List<?> values,
                                             final ProviderContext context,
                                             final ExpressionFunction<?, ?> expected) {
-        final ExpressionFunction<?, ?> function = provider.expressionFunction(
+        final ExpressionFunction<?, C> function = provider.expressionFunction(
             name,
             values,
             context
@@ -241,7 +242,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
         );
     }
 
-    default void expressionFunctionInfosAndCheck(final ExpressionFunctionProvider provider,
+    default void expressionFunctionInfosAndCheck(final ExpressionFunctionProvider<C> provider,
                                                  final ExpressionFunctionInfo... expected) {
         this.expressionFunctionInfosAndCheck(
             provider,
@@ -258,7 +259,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
         );
     }
 
-    default void expressionFunctionInfosAndCheck(final ExpressionFunctionProvider provider,
+    default void expressionFunctionInfosAndCheck(final ExpressionFunctionProvider<C> provider,
                                                  final ExpressionFunctionInfoSet expected) {
         this.checkEquals(
             expected,
@@ -286,7 +287,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
         );
     }
 
-    default void expressionFunctionNameCaseSensitivityAndCheck(final T provider,
+    default void expressionFunctionNameCaseSensitivityAndCheck(final P provider,
                                                                final CaseSensitivity expected) {
         this.checkEquals(
             expected,
@@ -294,7 +295,7 @@ public interface ExpressionFunctionProviderTesting<T extends ExpressionFunctionP
         );
     }
 
-    T createExpressionFunctionProvider();
+    P createExpressionFunctionProvider();
 
     CaseSensitivity expressionFunctionNameCaseSensitivity();
 }

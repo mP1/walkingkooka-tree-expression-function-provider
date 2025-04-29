@@ -31,14 +31,14 @@ import java.util.Optional;
 /**
  * A {@link ExpressionFunctionProvider} that wraps a view of new {@link ExpressionFunctionName} to a wrapped {@link ExpressionFunctionProvider}.
  */
-final class FilteredMappedExpressionFunctionProvider implements ExpressionFunctionProvider {
+final class FilteredMappedExpressionFunctionProvider<C extends ExpressionEvaluationContext> implements ExpressionFunctionProvider<C> {
 
-    static FilteredMappedExpressionFunctionProvider with(final ExpressionFunctionInfoSet infos,
-                                                         final ExpressionFunctionProvider provider) {
+    static <C extends ExpressionEvaluationContext> FilteredMappedExpressionFunctionProvider<C> with(final ExpressionFunctionInfoSet infos,
+                                                                                                    final ExpressionFunctionProvider<C> provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
 
-        return new FilteredMappedExpressionFunctionProvider(
+        return new FilteredMappedExpressionFunctionProvider<>(
             infos,
             provider
         );
@@ -46,7 +46,7 @@ final class FilteredMappedExpressionFunctionProvider implements ExpressionFuncti
 
 
     private FilteredMappedExpressionFunctionProvider(final ExpressionFunctionInfoSet infos,
-                                                     final ExpressionFunctionProvider provider) {
+                                                     final ExpressionFunctionProvider<C> provider) {
         this.mapper = FilteredProviderMapper.with(
             infos,
             provider.expressionFunctionInfos(),
@@ -57,8 +57,8 @@ final class FilteredMappedExpressionFunctionProvider implements ExpressionFuncti
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                                 final ProviderContext context) {
+    public ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionSelector selector,
+                                                       final ProviderContext context) {
         Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
 
@@ -69,9 +69,9 @@ final class FilteredMappedExpressionFunctionProvider implements ExpressionFuncti
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                 final List<?> values,
-                                                                                 final ProviderContext context) {
+    public ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionName name,
+                                                       final List<?> values,
+                                                       final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
@@ -97,7 +97,7 @@ final class FilteredMappedExpressionFunctionProvider implements ExpressionFuncti
     /**
      * The original wrapped {@link ExpressionFunctionProvider}.
      */
-    private final ExpressionFunctionProvider provider;
+    private final ExpressionFunctionProvider<C> provider;
 
     @Override
     public ExpressionFunctionInfoSet expressionFunctionInfos() {

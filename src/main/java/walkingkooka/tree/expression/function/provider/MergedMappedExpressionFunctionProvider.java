@@ -31,14 +31,14 @@ import java.util.Optional;
 /**
  * A {@link ExpressionFunctionProvider} that supports renamed {@link ExpressionFunctionName} before invoking a wrapped {@link ExpressionFunctionProvider}.
  */
-final class MergedMappedExpressionFunctionProvider implements ExpressionFunctionProvider {
+final class MergedMappedExpressionFunctionProvider<C extends ExpressionEvaluationContext> implements ExpressionFunctionProvider<C> {
 
-    static MergedMappedExpressionFunctionProvider with(final ExpressionFunctionInfoSet infos,
-                                                       final ExpressionFunctionProvider provider) {
+    static <C extends ExpressionEvaluationContext> MergedMappedExpressionFunctionProvider<C> with(final ExpressionFunctionInfoSet infos,
+                                                                                                  final ExpressionFunctionProvider<C> provider) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(provider, "provider");
 
-        return new MergedMappedExpressionFunctionProvider(
+        return new MergedMappedExpressionFunctionProvider<>(
             infos,
             provider
         );
@@ -46,7 +46,7 @@ final class MergedMappedExpressionFunctionProvider implements ExpressionFunction
 
 
     private MergedMappedExpressionFunctionProvider(final ExpressionFunctionInfoSet infos,
-                                                   final ExpressionFunctionProvider provider) {
+                                                   final ExpressionFunctionProvider<C> provider) {
         this.mapper = MergedProviderMapper.with(
             infos,
             provider.expressionFunctionInfos(),
@@ -57,8 +57,8 @@ final class MergedMappedExpressionFunctionProvider implements ExpressionFunction
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                                 final ProviderContext context) {
+    public ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionSelector selector,
+                                                       final ProviderContext context) {
         Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
 
@@ -69,9 +69,9 @@ final class MergedMappedExpressionFunctionProvider implements ExpressionFunction
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                 final List<?> values,
-                                                                                 final ProviderContext context) {
+    public ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionName name,
+                                                       final List<?> values,
+                                                       final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
@@ -83,14 +83,14 @@ final class MergedMappedExpressionFunctionProvider implements ExpressionFunction
         );
     }
 
-    private ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction0(final ExpressionFunctionName name,
-                                                                                   final List<?> values,
-                                                                                   final ProviderContext context) {
+    private ExpressionFunction<?, C> expressionFunction0(final ExpressionFunctionName name,
+                                                         final List<?> values,
+                                                         final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
-        final ExpressionFunctionProvider provider = this.provider;
+        final ExpressionFunctionProvider<C> provider = this.provider;
 
         return provider.expressionFunction(
             this.mapper.name(name),
@@ -109,7 +109,7 @@ final class MergedMappedExpressionFunctionProvider implements ExpressionFunction
     /**
      * The original wrapped {@link ExpressionFunctionProvider}.
      */
-    private final ExpressionFunctionProvider provider;
+    private final ExpressionFunctionProvider<C> provider;
 
     @Override
     public ExpressionFunctionInfoSet expressionFunctionInfos() {

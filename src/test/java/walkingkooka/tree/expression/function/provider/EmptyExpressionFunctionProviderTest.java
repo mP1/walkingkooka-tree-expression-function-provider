@@ -18,13 +18,15 @@
 package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
+import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class EmptyExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<EmptyExpressionFunctionProvider> {
+public final class EmptyExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<EmptyExpressionFunctionProvider<FakeExpressionEvaluationContext>, FakeExpressionEvaluationContext> {
 
     @Test
     public void testWithNullCaseSensitivityFails() {
@@ -35,7 +37,7 @@ public final class EmptyExpressionFunctionProviderTest implements ExpressionFunc
     }
 
     @Override
-    public EmptyExpressionFunctionProvider createExpressionFunctionProvider() {
+    public EmptyExpressionFunctionProvider<FakeExpressionEvaluationContext> createExpressionFunctionProvider() {
         return EmptyExpressionFunctionProvider.with(ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY);
     }
 
@@ -47,8 +49,8 @@ public final class EmptyExpressionFunctionProviderTest implements ExpressionFunc
     // class............................................................................................................
 
     @Override
-    public Class<EmptyExpressionFunctionProvider> type() {
-        return EmptyExpressionFunctionProvider.class;
+    public Class<EmptyExpressionFunctionProvider<FakeExpressionEvaluationContext>> type() {
+        return Cast.to(EmptyExpressionFunctionProvider.class);
     }
 
     @Override

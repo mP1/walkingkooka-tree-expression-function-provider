@@ -35,12 +35,19 @@ import java.util.Objects;
 /**
  * A {@link ExpressionFunctionProvider} for {@link ExpressionFunctions}.
  */
-final class TreeExpressionFunctionProvider implements ExpressionFunctionProvider {
+final class TreeExpressionFunctionProvider<C extends ExpressionEvaluationContext> implements ExpressionFunctionProvider<C> {
+
+    /**
+     * Type safe getter.
+     */
+    static <C extends ExpressionEvaluationContext> TreeExpressionFunctionProvider<C> instance() {
+        return Cast.to(INSTANCE);
+    }
 
     /**
      * Singleton
      */
-    final static TreeExpressionFunctionProvider INSTANCE = new TreeExpressionFunctionProvider();
+    private final static TreeExpressionFunctionProvider<?> INSTANCE = new TreeExpressionFunctionProvider<>();
 
     private TreeExpressionFunctionProvider() {
         super();
@@ -76,7 +83,7 @@ final class TreeExpressionFunctionProvider implements ExpressionFunctionProvider
     private final ExpressionFunctionInfoSet infos;
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
+    public ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionSelector selector,
                                                                                  final ProviderContext context) {
         return selector.evaluateValueText(
             this,
@@ -85,7 +92,7 @@ final class TreeExpressionFunctionProvider implements ExpressionFunctionProvider
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+    public ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionName name,
                                                                                  final List<?> values,
                                                                                  final ProviderContext context) {
         Objects.requireNonNull(name, "name");
@@ -94,7 +101,7 @@ final class TreeExpressionFunctionProvider implements ExpressionFunctionProvider
 
         final List<?> copy = Lists.immutable(values);
 
-        final ExpressionFunction function;
+        final ExpressionFunction<?, C> function;
 
         switch (name.value()) {
             case "name":
@@ -105,7 +112,9 @@ final class TreeExpressionFunctionProvider implements ExpressionFunctionProvider
             case "node":
                 checkNoValues(copy);
 
-                function = ExpressionFunctions.node();
+                function = Cast.to(
+                    ExpressionFunctions.node()
+                );
                 break;
             case "typeName":
                 checkNoValues(copy);

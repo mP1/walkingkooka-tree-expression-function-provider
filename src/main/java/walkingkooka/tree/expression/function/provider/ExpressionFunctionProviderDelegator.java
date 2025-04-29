@@ -25,11 +25,11 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.util.List;
 
-public interface ExpressionFunctionProviderDelegator extends ExpressionFunctionProvider {
+public interface ExpressionFunctionProviderDelegator<C extends ExpressionEvaluationContext> extends ExpressionFunctionProvider<C> {
 
     @Override
-    default ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                                  final ProviderContext context) {
+    default ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionSelector selector,
+                                                        final ProviderContext context) {
         return this.expressionFunctionProvider()
             .expressionFunction(
                 selector,
@@ -38,9 +38,9 @@ public interface ExpressionFunctionProviderDelegator extends ExpressionFunctionP
     }
 
     @Override
-    default ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                  final List<?> values,
-                                                                                  final ProviderContext context) {
+    default ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionName name,
+                                                        final List<?> values,
+                                                        final ProviderContext context) {
         return this.expressionFunctionProvider()
             .expressionFunction(
                 name,
@@ -61,5 +61,5 @@ public interface ExpressionFunctionProviderDelegator extends ExpressionFunctionP
             .expressionFunctionNameCaseSensitivity();
     }
 
-    ExpressionFunctionProvider expressionFunctionProvider();
+    ExpressionFunctionProvider<C> expressionFunctionProvider();
 }

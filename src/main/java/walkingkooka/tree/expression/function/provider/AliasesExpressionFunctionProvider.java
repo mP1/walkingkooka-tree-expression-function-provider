@@ -31,18 +31,18 @@ import java.util.Optional;
 /**
  * A {@link ExpressionFunctionProvider} that uses the given aliases definition and {@link ExpressionFunctionProvider} to present another view.
  */
-final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvider {
+final class AliasesExpressionFunctionProvider<C extends ExpressionEvaluationContext> implements ExpressionFunctionProvider<C> {
 
-    static AliasesExpressionFunctionProvider with(final ExpressionFunctionAliasSet aliases,
-                                                  final ExpressionFunctionProvider provider) {
-        return new AliasesExpressionFunctionProvider(
+    static <C extends ExpressionEvaluationContext> AliasesExpressionFunctionProvider<C> with(final ExpressionFunctionAliasSet aliases,
+                                                                                             final ExpressionFunctionProvider<C> provider) {
+        return new AliasesExpressionFunctionProvider<>(
             Objects.requireNonNull(aliases, "aliases"),
             Objects.requireNonNull(provider, "provider")
         );
     }
 
     private AliasesExpressionFunctionProvider(final ExpressionFunctionAliasSet aliases,
-                                              final ExpressionFunctionProvider provider) {
+                                              final ExpressionFunctionProvider<C> provider) {
         this.aliases = aliases;
         this.provider = provider;
 
@@ -50,8 +50,8 @@ final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvi
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                                 final ProviderContext context) {
+    public ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionSelector selector,
+                                                       final ProviderContext context) {
         return this.provider.expressionFunction(
             this.aliases.selector(selector),
             context
@@ -63,9 +63,9 @@ final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvi
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                 final List<?> values,
-                                                                                 final ProviderContext context) {
+    public ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionName name,
+                                                       final List<?> values,
+                                                       final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
@@ -77,13 +77,13 @@ final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvi
         );
     }
 
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction0(final ExpressionFunctionName name,
-                                                                                  final List<?> values,
-                                                                                  final ProviderContext context) {
-        ExpressionFunction<?, ExpressionEvaluationContext> function;
+    public ExpressionFunction<?, C> expressionFunction0(final ExpressionFunctionName name,
+                                                        final List<?> values,
+                                                        final ProviderContext context) {
+        ExpressionFunction<?, C> function;
 
         final ExpressionFunctionAliasSet aliases = this.aliases;
-        final ExpressionFunctionProvider provider = this.provider;
+        final ExpressionFunctionProvider<C> provider = this.provider;
 
         final Optional<ExpressionFunctionSelector> selector = aliases.aliasSelector(
             name.setCaseSensitivity(
@@ -127,7 +127,7 @@ final class AliasesExpressionFunctionProvider implements ExpressionFunctionProvi
         return this.provider.expressionFunctionNameCaseSensitivity();
     }
 
-    private final ExpressionFunctionProvider provider;
+    private final ExpressionFunctionProvider<C> provider;
 
     @Override
     public String toString() {

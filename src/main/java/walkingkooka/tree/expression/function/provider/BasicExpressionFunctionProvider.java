@@ -39,12 +39,12 @@ import java.util.stream.Collectors;
  * A simple {@link ExpressionFunctionProvider} that supports an easy approach to batches of functions using a base
  * {@link walkingkooka.net.Url} and appending the function name.
  */
-final class BasicExpressionFunctionProvider implements ExpressionFunctionProvider {
+final class BasicExpressionFunctionProvider<C extends ExpressionEvaluationContext> implements ExpressionFunctionProvider<C> {
 
-    static BasicExpressionFunctionProvider with(final AbsoluteUrl baseUrl,
-                                                final CaseSensitivity nameCaseSensitivity,
-                                                final Set<ExpressionFunction<?, ExpressionEvaluationContext>> functions) {
-        return new BasicExpressionFunctionProvider(
+    static <C extends ExpressionEvaluationContext> BasicExpressionFunctionProvider<C> with(final AbsoluteUrl baseUrl,
+                                                                                           final CaseSensitivity nameCaseSensitivity,
+                                                                                           final Set<ExpressionFunction<?, C>> functions) {
+        return new BasicExpressionFunctionProvider<>(
             Objects.requireNonNull(baseUrl, "baseUrl"),
             Objects.requireNonNull(nameCaseSensitivity, "nameCaseSensitivity"),
             Sets.immutable(
@@ -55,15 +55,15 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
 
     private BasicExpressionFunctionProvider(final AbsoluteUrl baseUrl,
                                             final CaseSensitivity nameCaseSensitivity,
-                                            final Set<ExpressionFunction<?, ExpressionEvaluationContext>> functions) {
+                                            final Set<ExpressionFunction<?, C>> functions) {
         if (functions.isEmpty()) {
             throw new IllegalArgumentException("Functions cannot be empty");
         }
 
         this.nameCaseSensitivity = nameCaseSensitivity;
 
-        final Map<ExpressionFunctionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction = Maps.sorted();
-        for (final ExpressionFunction<?, ExpressionEvaluationContext> function : functions) {
+        final Map<ExpressionFunctionName, ExpressionFunction<?, C>> nameToFunction = Maps.sorted();
+        for (final ExpressionFunction<?, C> function : functions) {
             final ExpressionFunctionName name = function.name()
                 .orElseThrow(
                     () -> new IllegalArgumentException("Cannot add unnamed functions to provider")
@@ -101,8 +101,8 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                                 final ProviderContext context) {
+    public ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionSelector selector,
+                                                       final ProviderContext context) {
         Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
 
@@ -113,14 +113,14 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
     }
 
     @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                 final List<?> values,
-                                                                                 final ProviderContext context) {
+    public ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionName name,
+                                                       final List<?> values,
+                                                       final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
-        final ExpressionFunction<?, ExpressionEvaluationContext> function = this.nameToFunction.get(
+        final ExpressionFunction<?, C> function = this.nameToFunction.get(
             name.setCaseSensitivity(this.nameCaseSensitivity)
         );
         if (null == function) {
@@ -129,7 +129,7 @@ final class BasicExpressionFunctionProvider implements ExpressionFunctionProvide
         return function;
     }
 
-    private final Map<ExpressionFunctionName, ExpressionFunction<?, ExpressionEvaluationContext>> nameToFunction;
+    private final Map<ExpressionFunctionName, ExpressionFunction<?, C>> nameToFunction;
 
     @Override
     public ExpressionFunctionInfoSet expressionFunctionInfos() {

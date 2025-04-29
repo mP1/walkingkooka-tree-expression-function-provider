@@ -18,17 +18,19 @@
 package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctions;
 
-public final class TreeExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<TreeExpressionFunctionProvider>,
-    ToStringTesting<TreeExpressionFunctionProvider> {
+public final class TreeExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<TreeExpressionFunctionProvider<ExpressionEvaluationContext>, ExpressionEvaluationContext>,
+    ToStringTesting<TreeExpressionFunctionProvider<ExpressionEvaluationContext>> {
 
     @Test
     public void testExpressionFunctionNode() {
@@ -62,8 +64,8 @@ public final class TreeExpressionFunctionProviderTest implements ExpressionFunct
     }
 
     @Override
-    public TreeExpressionFunctionProvider createExpressionFunctionProvider() {
-        return TreeExpressionFunctionProvider.INSTANCE;
+    public TreeExpressionFunctionProvider<ExpressionEvaluationContext> createExpressionFunctionProvider() {
+        return TreeExpressionFunctionProvider.instance();
     }
 
     @Override
@@ -84,8 +86,8 @@ public final class TreeExpressionFunctionProviderTest implements ExpressionFunct
     // class............................................................................................................
 
     @Override
-    public Class<TreeExpressionFunctionProvider> type() {
-        return TreeExpressionFunctionProvider.class;
+    public Class<TreeExpressionFunctionProvider<ExpressionEvaluationContext>> type() {
+        return Cast.to(TreeExpressionFunctionProvider.class);
     }
 
     @Override
