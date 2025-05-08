@@ -50,7 +50,7 @@ final class MergedMappedExpressionFunctionProvider<C extends ExpressionEvaluatio
         this.mapper = MergedProviderMapper.with(
             infos,
             provider.expressionFunctionInfos(),
-            ExpressionFunctionPluginHelper.INSTANCE
+            ExpressionFunctionPluginHelper.instance(provider.expressionFunctionNameCaseSensitivity())
         );
 
         this.provider = provider;

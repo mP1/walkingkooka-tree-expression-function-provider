@@ -44,7 +44,7 @@ final class FilteredExpressionFunctionProvider<C extends ExpressionEvaluationCon
                                                final ExpressionFunctionInfoSet infos) {
         this.guard = FilteredProviderGuard.with(
             infos.names(),
-            ExpressionFunctionPluginHelper.INSTANCE
+            ExpressionFunctionPluginHelper.instance(provider.expressionFunctionNameCaseSensitivity())
         );
         this.provider = provider;
         this.infos = infos;

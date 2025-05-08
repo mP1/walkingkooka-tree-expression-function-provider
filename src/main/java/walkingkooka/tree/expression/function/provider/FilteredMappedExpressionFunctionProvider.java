@@ -50,7 +50,7 @@ final class FilteredMappedExpressionFunctionProvider<C extends ExpressionEvaluat
         this.mapper = FilteredProviderMapper.with(
             infos,
             provider.expressionFunctionInfos(),
-            ExpressionFunctionPluginHelper.INSTANCE
+            ExpressionFunctionPluginHelper.instance(provider.expressionFunctionNameCaseSensitivity())
         );
 
         this.provider = provider;
