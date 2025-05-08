@@ -141,7 +141,10 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
     @Test
     public void testExpressionFunctionSelectorRenameName() {
         this.expressionFunctionAndCheck(
-            ExpressionFunctionSelector.parse(RENAME_NAME + ""),
+            ExpressionFunctionSelector.parse(
+                RENAME_NAME + "",
+                ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY
+            ),
             CONTEXT,
             function(RENAME_NAME)
         );
@@ -150,7 +153,10 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
     @Test
     public void testExpressionFunctionSelectorProviderName() {
         this.expressionFunctionAndCheck(
-            ExpressionFunctionSelector.parse(PROVIDER_ONLY_NAME + ""),
+            ExpressionFunctionSelector.parse(
+                PROVIDER_ONLY_NAME + "",
+                ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY
+            ),
             CONTEXT,
             function(PROVIDER_ONLY_NAME)
         );
@@ -159,7 +165,10 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
     @Test
     public void testExpressionFunctionSelectorUnknownFails() {
         this.expressionFunctionFails(
-            ExpressionFunctionSelector.parse("unknown"),
+            ExpressionFunctionSelector.parse(
+                "unknown",
+                ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY
+            ),
             CONTEXT
         );
     }

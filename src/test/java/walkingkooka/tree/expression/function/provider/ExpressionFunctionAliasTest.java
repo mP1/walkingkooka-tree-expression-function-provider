@@ -33,7 +33,10 @@ public final class ExpressionFunctionAliasTest implements PluginAliasLikeTesting
     private final static ExpressionFunctionName NAME = ExpressionFunctionName.with("Hello");
 
     private final static Optional<ExpressionFunctionSelector> SELECTOR = Optional.of(
-        ExpressionFunctionSelector.parse("function123")
+        ExpressionFunctionSelector.parse(
+            "function123",
+            ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity
+        )
     );
 
     private final static Optional<AbsoluteUrl> URL = Optional.of(
@@ -87,7 +90,10 @@ public final class ExpressionFunctionAliasTest implements PluginAliasLikeTesting
             ExpressionFunctionAlias.with(
                 ExpressionFunctionName.with("alias1"),
                 Optional.of(
-                    ExpressionFunctionSelector.parse("name1")
+                    ExpressionFunctionSelector.parse(
+                        "name1",
+                        ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY
+                    )
                 ),
                 Optional.of(
                     Url.parseAbsolute("https://example.com")

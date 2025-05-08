@@ -174,7 +174,10 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
     @Test
     public void testExpressionFunctionSelectorLookup1() {
         this.expressionFunctionAndCheck(
-            ExpressionFunctionSelector.parse(NAME1 + ""),
+            ExpressionFunctionSelector.parse(
+                NAME1 + "",
+                CASE_SENSITIVITY
+            ),
             CONTEXT,
             FUNCTION1.setName(
                 Optional.of(
@@ -187,7 +190,10 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
     @Test
     public void testExpressionFunctionSelectorLookup2() {
         this.expressionFunctionAndCheck(
-            ExpressionFunctionSelector.parse(NAME2 + ""),
+            ExpressionFunctionSelector.parse(
+                NAME2 + "",
+                CASE_SENSITIVITY
+            ),
             CONTEXT,
             FUNCTION2.setName(
                 Optional.of(

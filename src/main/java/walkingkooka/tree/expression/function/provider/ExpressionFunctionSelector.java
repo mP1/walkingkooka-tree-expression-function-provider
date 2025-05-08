@@ -20,6 +20,7 @@ package walkingkooka.tree.expression.function.provider;
 import walkingkooka.plugin.PluginSelector;
 import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -43,11 +44,16 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
     /**
      * Parses the given text into a {@link ExpressionFunctionSelector}
      */
-    public static ExpressionFunctionSelector parse(final String text) {
+    public static ExpressionFunctionSelector parse(final String text,
+                                                   final CaseSensitivity caseSensitivity) {
+        Objects.requireNonNull(text, "text");
+        Objects.requireNonNull(caseSensitivity, "caseSensitivity");
+
         return new ExpressionFunctionSelector(
             PluginSelector.parse(
                 text,
-                (n) -> ExpressionFunctionName.with(n).setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity)
+                (n) -> ExpressionFunctionName.with(n)
+                    .setCaseSensitivity(caseSensitivity)
             )
         );
     }
@@ -167,7 +173,7 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
     }
 
     /**
-     * Note it is intentional that the {@link #text()} is not quoted, to ensure {@link #parse(String)} and {@link #toString()}
+     * Note it is intentional that the {@link #text()} is not quoted, to ensure {@link #parse(String, CaseSensitivity)} and {@link #toString()}
      * are roundtrippable.
      */
     @Override
@@ -182,12 +188,41 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
      */
     static ExpressionFunctionSelector unmarshall(final JsonNode node,
                                                  final JsonNodeUnmarshallContext context) {
-        return parse(node.stringOrFail());
+        Objects.requireNonNull(node, "node");
+        Objects.requireNonNull(context, "context");
+
+        String string = node.stringOrFail();
+        CaseSensitivity caseSensitivity = CaseSensitivity.SENSITIVE;
+
+        if (string.charAt(0) == CASE_INSENSITIVE_PREFIX) {
+            caseSensitivity = CaseSensitivity.INSENSITIVE;
+            string = string.substring(1); // remove leading AT-SIGN
+        }
+
+        return parse(
+            string,
+            caseSensitivity
+        );
     }
 
+    /**
+     * Marshall the {@link PluginSelector#text()} adding the {@link #CASE_INSENSITIVE_PREFIX} if it is {@link CaseSensitivity#INSENSITIVE}.
+     */
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        return this.selector.marshall(context);
+        final PluginSelector<ExpressionFunctionName> selector = this.selector;
+
+        String text = selector.text();
+        if (selector.name().caseSensitivity() == CaseSensitivity.INSENSITIVE) {
+            text = CASE_INSENSITIVE_PREFIX + text;
+        }
+
+        return JsonNode.string(text);
     }
+
+    /**
+     * If this character appears at the start of a selector {@link JsonNode} it will be considered {@link CaseSensitivity#INSENSITIVE}.
+     */
+    private final static char CASE_INSENSITIVE_PREFIX = '@';
 
     static {
         JsonNodeContext.register(

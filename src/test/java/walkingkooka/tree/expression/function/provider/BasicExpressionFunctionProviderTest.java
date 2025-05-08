@@ -192,12 +192,15 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
 
     @Test
     public void testExpressionFunctionSelector() {
+        final CaseSensitivity caseSensitivity = CaseSensitivity.INSENSITIVE;
+
         this.expressionFunctionAndCheck(
             this.createExpressionFunctionProvider(
-                CaseSensitivity.INSENSITIVE
+                caseSensitivity
             ),
             ExpressionFunctionSelector.parse(
-                NAME2 + ""
+                NAME2 + "",
+                caseSensitivity
             ),
             CONTEXT,
             FUNCTION2
