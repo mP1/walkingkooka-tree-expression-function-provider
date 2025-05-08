@@ -131,18 +131,22 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
         Objects.requireNonNull(context, "context");
 
         return this.selector.evaluateValueText(
-            ExpressionFunctionSelector::parseName,
+            this::parseName,
             provider::expressionFunction,
             context
         );
     }
 
-    private static Optional<ExpressionFunctionName> parseName(final TextCursor cursor,
-                                                              final ParserContext context) {
+    private Optional<ExpressionFunctionName> parseName(final TextCursor cursor,
+                                                       final ParserContext context) {
         return ExpressionFunctionName.PARSER.apply(
             cursor,
             context
-        ).map(n -> n.setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity));
+        ).map(n -> n.setCaseSensitivity(
+                this.selector.name()
+                    .caseSensitivity()
+            )
+        );
     }
 
     // Object...........................................................................................................
