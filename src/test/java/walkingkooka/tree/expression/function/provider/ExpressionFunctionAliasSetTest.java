@@ -22,6 +22,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.plugin.PluginAliasSetLikeTesting;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -94,11 +95,16 @@ public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeT
 
     @Test
     public void testAliasSelectorWithAlias() {
+        final CaseSensitivity caseSensitivity = ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
+
         this.aliasSelectorAndCheck(
             this.createSet(),
             ExpressionFunctionName.with("custom-alias")
-                .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity),
-            ExpressionFunctionSelector.parse("custom(1)")
+                .setCaseSensitivity(caseSensitivity),
+            ExpressionFunctionSelector.parse(
+                "custom(1)",
+                caseSensitivity
+            )
         );
     }
 

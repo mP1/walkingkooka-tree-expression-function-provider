@@ -119,7 +119,10 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
 
     @Override
     public ExpressionFunctionSelector parseSelector(final String text) {
-        return ExpressionFunctionSelector.parse(text);
+        return ExpressionFunctionSelector.parse(
+            text,
+            this.caseSensitivity
+        );
     }
 
     @Override

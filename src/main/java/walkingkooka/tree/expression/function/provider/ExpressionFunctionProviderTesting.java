@@ -54,7 +54,10 @@ public interface ExpressionFunctionProviderTesting<P extends ExpressionFunctionP
             NullPointerException.class,
             () -> this.createExpressionFunctionProvider()
                 .expressionFunction(
-                    ExpressionFunctionSelector.parse("selector"),
+                    ExpressionFunctionSelector.parse(
+                        "selector",
+                        CaseSensitivity.INSENSITIVE
+                    ),
                     null
                 )
         );

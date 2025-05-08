@@ -18,14 +18,29 @@
 package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.plugin.PluginSelectorLikeTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class ExpressionFunctionSelectorTest implements PluginSelectorLikeTesting<ExpressionFunctionSelector, ExpressionFunctionName> {
+
+    @Test
+    public void testWithNullCaseSensitivityFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> ExpressionFunctionSelector.parse(
+                "hello",
+                null
+            )
+        );
+    }
 
     @Override
     public ExpressionFunctionSelector createPluginSelectorLike(final ExpressionFunctionName name,
@@ -57,7 +72,10 @@ public final class ExpressionFunctionSelectorTest implements PluginSelectorLikeT
 
     @Override
     public ExpressionFunctionSelector parseString(final String text) {
-        return ExpressionFunctionSelector.parse(text);
+        return ExpressionFunctionSelector.parse(
+            text,
+            ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity
+        );
     }
 
     // ClassTesting.....................................................................................................
@@ -75,18 +93,69 @@ public final class ExpressionFunctionSelectorTest implements PluginSelectorLikeT
     // Json.............................................................................................................
 
     @Test
+    public void testExpressionFunctionNameWithAtSignPrefixFails() {
+        final InvalidCharacterException thrown = assertThrows(
+            InvalidCharacterException.class,
+            () -> ExpressionFunctionName.with("@Hello")
+        );
+
+        this.checkEquals(
+            0,
+            thrown.position()
+        );
+    }
+
+    @Test
     public void testMarshall() {
         this.marshallAndCheck(
-            this.createJsonNodeMarshallingValue(),
-            "\"function123 @@\""
+            ExpressionFunctionSelector.parse(
+                "Hello 123@",
+                CaseSensitivity.SENSITIVE
+            ),
+            "\"Hello 123@\""
+        );
+    }
+
+    @Test
+    public void testMarshallCaseInsensitiveFunctionName() {
+        this.marshallAndCheck(
+            ExpressionFunctionSelector.parse(
+                "Hello 123@@@",
+                CaseSensitivity.INSENSITIVE
+            ),
+            "\"@Hello 123@@@\""
         );
     }
 
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-            "\"function123 @@\"",
-            this.createJsonNodeMarshallingValue()
+            "\"function123 123@@\"",
+            ExpressionFunctionSelector.parse(
+                "function123 123@@",
+                CaseSensitivity.SENSITIVE
+            )
+        );
+    }
+
+    @Test
+    public void testUnmarshallCaseInsensitiveFunctionName() {
+        this.unmarshallAndCheck(
+            "\"@function123 @@@\"",
+            ExpressionFunctionSelector.parse(
+                "function123 @@@",
+                CaseSensitivity.INSENSITIVE
+            )
+        );
+    }
+
+    @Test
+    public void testRoundtripCaseInsensitiveFunctionName() {
+        this.marshallRoundTripTwiceAndCheck(
+            ExpressionFunctionSelector.parse(
+                "Hello 123@@@",
+                CaseSensitivity.INSENSITIVE
+            )
         );
     }
 

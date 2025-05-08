@@ -42,11 +42,13 @@ public final class FilteredMappedExpressionFunctionProviderTest implements Expre
 
     private final static AbsoluteUrl URL = Url.parseAbsolute("https://example.com/function123");
 
+    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
+
     private final static ExpressionFunctionName NAME = ExpressionFunctionName.with("different-function-name-123")
-        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(CASE_SENSITIVITY);
 
     private final static ExpressionFunctionName ORIGINAL_NAME = ExpressionFunctionName.with("original-function-123")
-        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(CASE_SENSITIVITY);
 
     private static ExpressionFunction<?, FakeExpressionEvaluationContext> function(final ExpressionFunctionName name) {
         return new FakeExpressionFunction<>() {
@@ -124,7 +126,10 @@ public final class FilteredMappedExpressionFunctionProviderTest implements Expre
     @Test
     public void testExpressionFunctionSelector() {
         this.expressionFunctionAndCheck(
-            ExpressionFunctionSelector.parse(NAME + ""),
+            ExpressionFunctionSelector.parse(
+                NAME + "",
+                CASE_SENSITIVITY
+            ),
             CONTEXT,
             function(NAME)
         );
@@ -133,7 +138,10 @@ public final class FilteredMappedExpressionFunctionProviderTest implements Expre
     @Test
     public void testExpressionFunctionSelectorUnknownFails() {
         this.expressionFunctionFails(
-            ExpressionFunctionSelector.parse("unknown"),
+            ExpressionFunctionSelector.parse(
+                "unknown",
+                ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY
+            ),
             CONTEXT
         );
     }
@@ -190,7 +198,7 @@ public final class FilteredMappedExpressionFunctionProviderTest implements Expre
 
                 @Override
                 public CaseSensitivity expressionFunctionNameCaseSensitivity() {
-                    return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
+                    return CASE_SENSITIVITY;
                 }
 
             }
@@ -199,7 +207,7 @@ public final class FilteredMappedExpressionFunctionProviderTest implements Expre
 
     @Override
     public CaseSensitivity expressionFunctionNameCaseSensitivity() {
-        return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
+        return CASE_SENSITIVITY;
     }
 
     // toString.........................................................................................................

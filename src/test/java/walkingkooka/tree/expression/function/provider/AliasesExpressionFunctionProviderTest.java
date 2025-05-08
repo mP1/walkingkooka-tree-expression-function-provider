@@ -39,20 +39,22 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
 
     private final static String NAME1_STRING = "function1";
 
+    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
+
     private final static ExpressionFunctionName NAME1 = ExpressionFunctionName.with(NAME1_STRING)
-        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(CASE_SENSITIVITY);
 
     private final static ExpressionFunctionInfo INFO1 = ExpressionFunctionInfo.parse("https://example.com/function1 " + NAME1);
 
     private final static ExpressionFunctionName ALIAS2 = ExpressionFunctionName.with("alias2")
-        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(CASE_SENSITIVITY);
 
     private final static ExpressionFunction<?, FakeExpressionEvaluationContext> FUNCTION1 = function(NAME1);
 
     private final static String NAME2_STRING = "function2";
 
     private final static ExpressionFunctionName NAME2 = ExpressionFunctionName.with(NAME2_STRING)
-        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(CASE_SENSITIVITY);
 
     private final static ExpressionFunction<?, FakeExpressionEvaluationContext> FUNCTION2 = function(NAME2);
 
@@ -61,7 +63,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     private final static String NAME3_STRING = "function3";
 
     private final static ExpressionFunctionName NAME3 = ExpressionFunctionName.with(NAME3_STRING)
-        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(CASE_SENSITIVITY);
 
     private final static ExpressionFunction<?, FakeExpressionEvaluationContext> FUNCTION3 = function(NAME3);
 
@@ -72,7 +74,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     private final static String NAME4_STRING = "custom4";
 
     private final static ExpressionFunctionName NAME4 = ExpressionFunctionName.with(NAME4_STRING)
-        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(CASE_SENSITIVITY);
 
     private final static ExpressionFunctionInfo INFO4 = ExpressionFunctionInfo.parse("https://example.com/custom4 " + NAME4);
 
@@ -131,7 +133,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
 
                 @Override
                 public CaseSensitivity expressionFunctionNameCaseSensitivity() {
-                    return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
+                    return CASE_SENSITIVITY;
                 }
             }
         );
@@ -150,7 +152,10 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     @Test
     public void testExpressionFunctionSelectorWithName() {
         this.expressionFunctionAndCheck(
-            ExpressionFunctionSelector.parse(NAME1 + ""),
+            ExpressionFunctionSelector.parse(
+                NAME1 + "",
+                ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY
+            ),
             CONTEXT,
             FUNCTION1
         );
@@ -171,7 +176,10 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     @Test
     public void testExpressionFunctionSelectorWithAlias() {
         this.expressionFunctionAndCheck(
-            ExpressionFunctionSelector.parse(ALIAS2 + ""),
+            ExpressionFunctionSelector.parse(
+                ALIAS2 + "",
+                ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY
+            ),
             CONTEXT,
             FUNCTION2.setName(
                 Optional.of(ALIAS2)
@@ -194,7 +202,10 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     @Test
     public void testExpressionFunctionSelectorWithSelector() {
         this.expressionFunctionAndCheck(
-            ExpressionFunctionSelector.parse(NAME4 + ""),
+            ExpressionFunctionSelector.parse(
+                NAME4 + "",
+                ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY
+            ),
             CONTEXT,
             FUNCTION3.setName(
                 Optional.of(NAME4)
@@ -271,7 +282,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
 
                 @Override
                 public CaseSensitivity expressionFunctionNameCaseSensitivity() {
-                    return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
+                    return CASE_SENSITIVITY;
                 }
             }
         );
@@ -279,7 +290,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
 
     @Override
     public CaseSensitivity expressionFunctionNameCaseSensitivity() {
-        return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
+        return CASE_SENSITIVITY;
     }
 
     // class............................................................................................................
