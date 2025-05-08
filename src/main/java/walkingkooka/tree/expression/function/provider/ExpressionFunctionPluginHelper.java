@@ -47,9 +47,19 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
     ExpressionFunctionAliasSet> {
 
     /**
-     * Singleton
+     * Getter that returns the right {@link ExpressionFunctionPluginHelper} for the given {@link CaseSensitivity}.
      */
-    final static ExpressionFunctionPluginHelper INSTANCE = new ExpressionFunctionPluginHelper(CaseSensitivity.INSENSITIVE);
+    static ExpressionFunctionPluginHelper instance(final CaseSensitivity caseSensitivity) {
+        return CaseSensitivity.SENSITIVE == caseSensitivity ?
+            SENSITIVE :
+            INSENSITIVE;
+    }
+
+    private final static ExpressionFunctionPluginHelper INSENSITIVE = new ExpressionFunctionPluginHelper(CaseSensitivity.INSENSITIVE);
+
+    private final static ExpressionFunctionPluginHelper SENSITIVE = new ExpressionFunctionPluginHelper(CaseSensitivity.SENSITIVE);
+
+    final static ExpressionFunctionPluginHelper INSTANCE = INSENSITIVE;
 
     private ExpressionFunctionPluginHelper(final CaseSensitivity caseSensitivity) {
         super();
