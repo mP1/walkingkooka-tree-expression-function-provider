@@ -255,9 +255,7 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
 
     @Override
     public BasicExpressionFunctionProvider createExpressionFunctionProvider() {
-        return this.createExpressionFunctionProvider(
-            CASE_SENSITIVITY
-        );
+        return this.createExpressionFunctionProvider(CASE_SENSITIVITY);
     }
 
     private BasicExpressionFunctionProvider createExpressionFunctionProvider(final CaseSensitivity caseSensitivity) {
@@ -270,7 +268,7 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
 
     @Override
     public CaseSensitivity expressionFunctionNameCaseSensitivity() {
-        return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
+        return CASE_SENSITIVITY;
     }
 
     // toString.........................................................................................................
