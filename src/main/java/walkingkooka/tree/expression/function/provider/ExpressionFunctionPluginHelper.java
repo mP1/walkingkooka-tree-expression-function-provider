@@ -143,7 +143,8 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
 
     @Override
     public ExpressionFunctionAliasSet aliasSet(final SortedSet<ExpressionFunctionAlias> aliases) {
-        return ExpressionFunctionAliasSet.with(aliases);
+        return ExpressionFunctionAliasSet.empty(this.caseSensitivity)
+            .setElements(aliases);
     }
 
     @Override
