@@ -41,18 +41,20 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class MergedMappedExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<MergedMappedExpressionFunctionProvider<ExpressionEvaluationContext>, ExpressionEvaluationContext>,
     ToStringTesting<MergedMappedExpressionFunctionProvider<ExpressionEvaluationContext>> {
 
+    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
+    
     private final static AbsoluteUrl RENAMED_URL = Url.parseAbsolute("https://example.com/renamed-function111");
 
     private final static ExpressionFunctionName RENAME_NAME = ExpressionFunctionName.with("rename-renamed-function-111")
-        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(CASE_SENSITIVITY);
 
     private final static ExpressionFunctionName RENAME_PROVIDER_NAME = ExpressionFunctionName.with("provider-renamed-function-111")
-        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(CASE_SENSITIVITY);
 
     private final static AbsoluteUrl PROVIDER_ONLY_URL = Url.parseAbsolute("https://example.com/provider-only-function-222");
 
     private final static ExpressionFunctionName PROVIDER_ONLY_NAME = ExpressionFunctionName.with("provider-only-function-222")
-        .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+        .setCaseSensitivity(CASE_SENSITIVITY);
 
     private static ExpressionFunction<?, ExpressionEvaluationContext> function(final ExpressionFunctionName name) {
         return new FakeExpressionFunction<>() {
@@ -132,7 +134,7 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
     public void testExpressionFunctionNameUnknownFails() {
         this.expressionFunctionFails(
             ExpressionFunctionName.with("unknown")
-                .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity),
+                .setCaseSensitivity(CASE_SENSITIVITY),
             VALUES,
             CONTEXT
         );
@@ -240,7 +242,7 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
 
                 @Override
                 public CaseSensitivity expressionFunctionNameCaseSensitivity() {
-                    return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
+                    return CASE_SENSITIVITY;
                 }
             }
         );
@@ -248,7 +250,7 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
 
     @Override
     public CaseSensitivity expressionFunctionNameCaseSensitivity() {
-        return ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
+        return CASE_SENSITIVITY;
     }
 
     // toString.........................................................................................................
