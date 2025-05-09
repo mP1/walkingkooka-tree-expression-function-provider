@@ -22,6 +22,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginAliasLikeTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 
 import java.util.Optional;
@@ -30,12 +31,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ExpressionFunctionAliasTest implements PluginAliasLikeTesting<ExpressionFunctionName, ExpressionFunctionSelector, ExpressionFunctionAlias> {
 
+    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
+    
     private final static ExpressionFunctionName NAME = ExpressionFunctionName.with("Hello");
 
     private final static Optional<ExpressionFunctionSelector> SELECTOR = Optional.of(
         ExpressionFunctionSelector.parse(
             "function123",
-            ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity
+            CASE_SENSITIVITY
         )
     );
 
@@ -103,7 +106,7 @@ public final class ExpressionFunctionAliasTest implements PluginAliasLikeTesting
                 Optional.of(
                     ExpressionFunctionSelector.parse(
                         "name1",
-                        ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY
+                        CASE_SENSITIVITY
                     )
                 ),
                 Optional.of(
@@ -117,7 +120,7 @@ public final class ExpressionFunctionAliasTest implements PluginAliasLikeTesting
     public ExpressionFunctionAlias parseString(final String text) {
         return ExpressionFunctionAlias.parse(
             text,
-            ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY
+            CASE_SENSITIVITY
         );
     }
 
