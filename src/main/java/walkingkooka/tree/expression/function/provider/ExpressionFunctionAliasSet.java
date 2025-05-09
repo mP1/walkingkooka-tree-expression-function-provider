@@ -154,8 +154,13 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
     }
 
     @Override
-    public ExpressionFunctionAliasSet setElementsFailIfDifferent(SortedSet<ExpressionFunctionAlias> sortedSet) {
-        return null;
+    public ExpressionFunctionAliasSet setElementsFailIfDifferent(SortedSet<ExpressionFunctionAlias> aliases) {
+        final ExpressionFunctionAliasSet after = new ExpressionFunctionAliasSet(
+            this.pluginAliasSet.setElementsFailIfDifferent(aliases)
+        );
+        return this.pluginAliasSet.equals(aliases) ?
+            this :
+            after;
     }
 
     @Override
