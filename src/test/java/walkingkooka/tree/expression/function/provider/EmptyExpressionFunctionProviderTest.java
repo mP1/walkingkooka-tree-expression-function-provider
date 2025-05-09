@@ -24,6 +24,7 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class EmptyExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<EmptyExpressionFunctionProvider<FakeExpressionEvaluationContext>, FakeExpressionEvaluationContext> {
@@ -33,6 +34,22 @@ public final class EmptyExpressionFunctionProviderTest implements ExpressionFunc
         assertThrows(
             NullPointerException.class,
             () -> EmptyExpressionFunctionProvider.with(null)
+        );
+    }
+
+    @Test
+    public void testWithCaseInSensitivite() {
+        assertSame(
+            EmptyExpressionFunctionProvider.with(CaseSensitivity.INSENSITIVE),
+            EmptyExpressionFunctionProvider.with(CaseSensitivity.INSENSITIVE)
+        );
+    }
+
+    @Test
+    public void testWithCaseSensitivite() {
+        assertSame(
+            EmptyExpressionFunctionProvider.with(CaseSensitivity.SENSITIVE),
+            EmptyExpressionFunctionProvider.with(CaseSensitivity.SENSITIVE)
         );
     }
 

@@ -17,6 +17,7 @@
 
 package walkingkooka.tree.expression.function.provider;
 
+import walkingkooka.Cast;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -33,11 +34,22 @@ import java.util.Objects;
 final class EmptyExpressionFunctionProvider<C extends ExpressionEvaluationContext> implements ExpressionFunctionProvider<C> {
 
     static <C extends ExpressionEvaluationContext> EmptyExpressionFunctionProvider<C> with(final CaseSensitivity caseSensitivity) {
-        return new EmptyExpressionFunctionProvider<>(
-            Objects.requireNonNull(caseSensitivity, "caseSensitivity")
+        Objects.requireNonNull(caseSensitivity, "caseSensitivity");
+
+        return Cast.to(
+            CaseSensitivity.SENSITIVE == caseSensitivity ?
+                CASE_SENSITIVE :
+                CASE_INSENSITIVE
         );
     }
 
+    private final static EmptyExpressionFunctionProvider<?> CASE_INSENSITIVE = new EmptyExpressionFunctionProvider<>(CaseSensitivity.INSENSITIVE);
+
+    private final static EmptyExpressionFunctionProvider<?> CASE_SENSITIVE = new EmptyExpressionFunctionProvider<>(CaseSensitivity.SENSITIVE);
+
+    /**
+     * Private ctor use factory
+     */
     private EmptyExpressionFunctionProvider(final CaseSensitivity caseSensitivity) {
         super();
         this.caseSensitivity = caseSensitivity;
