@@ -84,7 +84,7 @@ final class TreeExpressionFunctionProvider<C extends ExpressionEvaluationContext
 
     @Override
     public ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                                 final ProviderContext context) {
+                                                       final ProviderContext context) {
         return selector.evaluateValueText(
             this,
             context
@@ -93,8 +93,8 @@ final class TreeExpressionFunctionProvider<C extends ExpressionEvaluationContext
 
     @Override
     public ExpressionFunction<?, C> expressionFunction(final ExpressionFunctionName name,
-                                                                                 final List<?> values,
-                                                                                 final ProviderContext context) {
+                                                       final List<?> values,
+                                                       final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
