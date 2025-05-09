@@ -84,6 +84,17 @@ public final class ExpressionFunctionAliasTest implements PluginAliasLikeTesting
     // parse............................................................................................................
 
     @Test
+    public void testParseWithNullCaseSensitivityFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> ExpressionFunctionAlias.parse(
+                "Hello",
+                null
+            )
+        );
+    }
+
+    @Test
     public void testParse() {
         this.parseStringAndCheck(
             "alias1 name1 https://example.com",
@@ -104,7 +115,10 @@ public final class ExpressionFunctionAliasTest implements PluginAliasLikeTesting
 
     @Override
     public ExpressionFunctionAlias parseString(final String text) {
-        return ExpressionFunctionAlias.parse(text);
+        return ExpressionFunctionAlias.parse(
+            text,
+            ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY
+        );
     }
 
     // Comparable.......................................................................................................

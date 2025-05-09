@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.PluginAliasLike;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 
@@ -29,11 +30,15 @@ import java.util.Optional;
 
 public final class ExpressionFunctionAlias implements PluginAliasLike<ExpressionFunctionName, ExpressionFunctionSelector, ExpressionFunctionAlias> {
 
-    public static ExpressionFunctionAlias parse(final String text) {
+    public static ExpressionFunctionAlias parse(final String text,
+                                                final CaseSensitivity caseSensitivity) {
+        Objects.requireNonNull(text, "text");
+        Objects.requireNonNull(caseSensitivity, "caseSensitivity");
+
         return ExpressionFunctionAlias.with(
             PluginAlias.parse(
                 text,
-                ExpressionFunctionPluginHelper.INSTANCE
+                ExpressionFunctionPluginHelper.instance(caseSensitivity)
             )
         );
     }
