@@ -20,7 +20,6 @@ package walkingkooka.tree.expression.function.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
-import walkingkooka.collect.set.SortedSets;
 import walkingkooka.plugin.PluginAliasSetLikeTesting;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -28,7 +27,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeTesting<ExpressionFunctionName,
@@ -41,21 +39,15 @@ public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeT
     ToStringTesting<ExpressionFunctionAliasSet>,
     JsonNodeMarshallingTesting<ExpressionFunctionAliasSet> {
 
+    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
+    
     // with.............................................................................................................
 
     @Test
-    public void testWithNullFails() {
+    public void testEmptyWithNullCaseSensitivityFails() {
         assertThrows(
             NullPointerException.class,
-            () -> ExpressionFunctionAliasSet.with(null)
-        );
-    }
-
-    @Test
-    public void testWithEmpty() {
-        assertSame(
-            ExpressionFunctionAliasSet.EMPTY,
-            ExpressionFunctionAliasSet.with(SortedSets.empty())
+            () -> ExpressionFunctionAliasSet.empty(null)
         );
     }
 
@@ -64,7 +56,7 @@ public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeT
     @Test
     public void testAliasOrNameWithName() {
         final ExpressionFunctionName abs = ExpressionFunctionName.with("abs")
-            .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity);
+            .setCaseSensitivity(CASE_SENSITIVITY);
 
         this.aliasOrNameAndCheck(
             this.createSet(),
@@ -78,9 +70,9 @@ public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeT
         this.aliasOrNameAndCheck(
             this.createSet(),
             ExpressionFunctionName.with("sum-alias")
-                .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity),
+                .setCaseSensitivity(CASE_SENSITIVITY),
             ExpressionFunctionName.with("sum")
-                .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity)
+                .setCaseSensitivity(CASE_SENSITIVITY)
         );
     }
 
@@ -89,35 +81,36 @@ public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeT
         this.aliasSelectorAndCheck(
             this.createSet(),
             ExpressionFunctionName.with("abs")
-                .setCaseSensitivity(ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity)
+                .setCaseSensitivity(CASE_SENSITIVITY)
         );
     }
 
     @Test
     public void testAliasSelectorWithAlias() {
-        final CaseSensitivity caseSensitivity = ExpressionFunctionPluginHelper.INSTANCE.caseSensitivity;
-
         this.aliasSelectorAndCheck(
             this.createSet(),
             ExpressionFunctionName.with("custom-alias")
-                .setCaseSensitivity(caseSensitivity),
+                .setCaseSensitivity(CASE_SENSITIVITY),
             ExpressionFunctionSelector.parse(
                 "custom(1)",
-                caseSensitivity
+                CASE_SENSITIVITY
             )
         );
     }
 
     @Override
     public ExpressionFunctionAliasSet createSet() {
-        return ExpressionFunctionAliasSet.parse("abs, min, max, custom-alias custom(1) https://example.com/custom , sum-alias sum");
+        return this.parseString("abs, min, max, custom-alias custom(1) https://example.com/custom , sum-alias sum");
     }
 
     // parse............................................................................................................
 
     @Override
     public ExpressionFunctionAliasSet parseString(final String text) {
-        return ExpressionFunctionAliasSet.parse(text);
+        return ExpressionFunctionAliasSet.parse(
+            text,
+            CASE_SENSITIVITY
+        );
     }
 
     // equals...........................................................................................................
@@ -125,13 +118,13 @@ public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeT
     @Test
     public void testEqualsDifferent() {
         this.checkNotEquals(
-            ExpressionFunctionAliasSet.parse("different")
+            this.parseString("different")
         );
     }
 
     @Override
     public ExpressionFunctionAliasSet createObject() {
-        return ExpressionFunctionAliasSet.parse("abs, custom-alias custom(1) https://example.com/custom");
+        return this.parseString("abs, custom-alias custom(1) https://example.com/custom");
     }
 
     // json.............................................................................................................
@@ -147,7 +140,7 @@ public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeT
 
     @Override
     public ExpressionFunctionAliasSet createJsonNodeMarshallingValue() {
-        return ExpressionFunctionAliasSet.parse("alias1 name1, name2, alias3 name3(\"999\") https://example.com/name3");
+        return this.parseString("alias1 name1, name2, alias3 name3(\"999\") https://example.com/name3");
     }
 
     // class............................................................................................................

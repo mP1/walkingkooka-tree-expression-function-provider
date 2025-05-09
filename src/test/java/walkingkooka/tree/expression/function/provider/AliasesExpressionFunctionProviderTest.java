@@ -124,8 +124,11 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     @Test
     public void testWithUnknownFunctionName() {
         AliasesExpressionFunctionProvider.with(
-            ExpressionFunctionAliasSet.parse("unknown-function404"),
-            new FakeExpressionFunctionProvider() {
+            ExpressionFunctionAliasSet.parse(
+                "unknown-function404",
+                CASE_SENSITIVITY
+            ),
+            new FakeExpressionFunctionProvider<>() {
                 @Override
                 public ExpressionFunctionInfoSet expressionFunctionInfos() {
                     return ExpressionFunctionInfoSet.parse("https://example.com/function111 function111");
@@ -232,7 +235,10 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
         );
 
         return AliasesExpressionFunctionProvider.with(
-            ExpressionFunctionAliasSet.parse(aliases),
+            ExpressionFunctionAliasSet.parse(
+                aliases,
+                CASE_SENSITIVITY
+            ),
             new FakeExpressionFunctionProvider<FakeExpressionEvaluationContext>() {
                 @Override
                 public ExpressionFunction<?, FakeExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,

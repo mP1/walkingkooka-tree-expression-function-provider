@@ -21,6 +21,7 @@ import walkingkooka.collect.set.ImmutableSortedSetDefaults;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.plugin.PluginAliasSet;
 import walkingkooka.plugin.PluginAliasSetLike;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -33,6 +34,7 @@ import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.SortedSet;
 
@@ -48,10 +50,25 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
     /**
      * An empty {@link ExpressionFunctionAliasSet}.
      */
-    public final static ExpressionFunctionAliasSet EMPTY = new ExpressionFunctionAliasSet(
+    public static ExpressionFunctionAliasSet empty(final CaseSensitivity caseSensitivity) {
+        Objects.requireNonNull(caseSensitivity, "caseSensitivity");
+
+        return CaseSensitivity.SENSITIVE == caseSensitivity ?
+            EMPTY_CASE_SENSITIVE :
+            EMPTY_CASE_INSENSITIVE;
+    }
+
+    private final static ExpressionFunctionAliasSet EMPTY_CASE_SENSITIVE = new ExpressionFunctionAliasSet(
         PluginAliasSet.with(
             SortedSets.empty(),
-            ExpressionFunctionPluginHelper.INSTANCE
+            ExpressionFunctionPluginHelper.instance(CaseSensitivity.SENSITIVE)
+        )
+    );
+
+    private final static ExpressionFunctionAliasSet EMPTY_CASE_INSENSITIVE = new ExpressionFunctionAliasSet(
+        PluginAliasSet.with(
+            SortedSets.empty(),
+            ExpressionFunctionPluginHelper.instance(CaseSensitivity.INSENSITIVE)
         )
     );
 
@@ -60,18 +77,15 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
      */
     public final static CharacterConstant SEPARATOR = PluginAliasSet.SEPARATOR;
 
-    /**
-     * Factory that creates {@link ExpressionFunctionAliasSet} with the given aliases.
-     */
-    public static ExpressionFunctionAliasSet with(final SortedSet<ExpressionFunctionAlias> aliases) {
-        return EMPTY.setElements(aliases);
-    }
+    public static ExpressionFunctionAliasSet parse(final String text,
+                                                   final CaseSensitivity caseSensitivity) {
+        Objects.requireNonNull(text, "text");
+        Objects.requireNonNull(caseSensitivity, "caseSensitivity");
 
-    public static ExpressionFunctionAliasSet parse(final String text) {
         return new ExpressionFunctionAliasSet(
             PluginAliasSet.parse(
                 text,
-                ExpressionFunctionPluginHelper.INSTANCE
+                ExpressionFunctionPluginHelper.instance(caseSensitivity)
             )
         );
     }
@@ -261,17 +275,33 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        return JsonNode.string(
-            this.pluginAliasSet.text()
-        );
+        String text = this.text();
+
+        if (CaseSensitivity.INSENSITIVE == this.pluginAliasSet.<ExpressionFunctionPluginHelper>helper().caseSensitivity) {
+            text = CASE_INSENSITIVE_PREFIX + text;
+        }
+
+        return JsonNode.string(text);
     }
 
     static ExpressionFunctionAliasSet unmarshall(final JsonNode node,
                                                  final JsonNodeUnmarshallContext context) {
+        String text = node.stringOrFail();
+
+        CaseSensitivity caseSensitivity = CaseSensitivity.SENSITIVE;
+        if (text.length() > 0 && CASE_INSENSITIVE_PREFIX == text.charAt(0)) {
+            text = text.substring(1);
+
+            caseSensitivity = CaseSensitivity.INSENSITIVE;
+        }
+
         return parse(
-            node.stringOrFail()
+            text,
+            caseSensitivity
         );
     }
+
+    private final static char CASE_INSENSITIVE_PREFIX = '@';
 
     static {
         JsonNodeContext.register(
