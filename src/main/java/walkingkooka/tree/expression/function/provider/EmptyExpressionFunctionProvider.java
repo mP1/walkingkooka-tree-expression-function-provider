@@ -38,8 +38,6 @@ final class EmptyExpressionFunctionProvider<C extends ExpressionEvaluationContex
         );
     }
 
-    ;
-
     private EmptyExpressionFunctionProvider(final CaseSensitivity caseSensitivity) {
         super();
         this.caseSensitivity = caseSensitivity;
