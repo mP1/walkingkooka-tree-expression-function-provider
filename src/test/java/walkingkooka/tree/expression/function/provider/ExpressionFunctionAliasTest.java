@@ -98,20 +98,32 @@ public final class ExpressionFunctionAliasTest implements PluginAliasLikeTesting
     }
 
     @Test
-    public void testParse() {
-        this.parseStringAndCheck(
-            "alias1 name1 https://example.com",
+    public void testParseWithCaseSensitive() {
+        this.parseStringAndCheck2(CaseSensitivity.SENSITIVE);
+    }
+
+    @Test
+    public void testParseWithCaseInsensitive() {
+        this.parseStringAndCheck2(CaseSensitivity.INSENSITIVE);
+    }
+
+    private void parseStringAndCheck2(final CaseSensitivity caseSensitivity) {
+        this.checkEquals(
             ExpressionFunctionAlias.with(
                 ExpressionFunctionName.with("alias1"),
                 Optional.of(
                     ExpressionFunctionSelector.parse(
                         "name1",
-                        CASE_SENSITIVITY
+                        caseSensitivity
                     )
                 ),
                 Optional.of(
                     Url.parseAbsolute("https://example.com")
                 )
+            ),
+            ExpressionFunctionAlias.parse(
+                "alias1 name1 https://example.com",
+                caseSensitivity
             )
         );
     }
