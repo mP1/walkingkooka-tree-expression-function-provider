@@ -137,6 +137,24 @@ public final class ExpressionFunctionAliasTest implements PluginAliasLikeTesting
         );
     }
 
+    // equals...........................................................................................................
+
+    @Test
+    public void testEqualsDifferentCaseSensitivity() {
+        this.checkNotEquals(
+            ExpressionFunctionAlias.with(
+                NAME.setCaseSensitivity(CaseSensitivity.SENSITIVE),
+                SELECTOR,
+                URL
+            ),
+            ExpressionFunctionAlias.with(
+                NAME.setCaseSensitivity(CaseSensitivity.INSENSITIVE),
+                SELECTOR,
+                URL
+            )
+        );
+    }
+
     // Comparable.......................................................................................................
 
     @Override
