@@ -20,6 +20,7 @@ package walkingkooka.tree.expression.function.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.PluginAliasSetLikeTesting;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -98,12 +99,72 @@ public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeT
         );
     }
 
+    @Test
+    public void testSetElementsWithCaseSensitive() {
+        this.setElementsAndCheck(CaseSensitivity.SENSITIVE);
+    }
+
+    @Test
+    public void testSetElementsWithCaseInsensitive() {
+        this.setElementsAndCheck(CaseSensitivity.INSENSITIVE);
+    }
+
+    private void setElementsAndCheck(final CaseSensitivity caseSensitivity) {
+        final String text = "hello";
+
+        final ExpressionFunctionAlias alias = ExpressionFunctionAlias.parse(
+            text,
+            caseSensitivity
+        );
+
+        final ExpressionFunctionAlias aliasOppositeCaseSensitivity = ExpressionFunctionAlias.parse(
+            text,
+            caseSensitivity.invert()
+        );
+
+        this.checkEquals(
+            ExpressionFunctionAliasSet.empty(caseSensitivity)
+                .setElements(
+                    Sets.of(alias)
+                ),
+            ExpressionFunctionAliasSet.empty(caseSensitivity)
+                .setElements(
+                    Sets.of(aliasOppositeCaseSensitivity)
+                )
+        );
+    }
+
     @Override
     public ExpressionFunctionAliasSet createSet() {
         return this.parseString("abs, min, max, custom-alias custom(1) https://example.com/custom , sum-alias sum");
     }
 
     // parse............................................................................................................
+
+    @Test
+    public void testParseWithCaseSensitive() {
+        this.parseStringAndCheck2(CaseSensitivity.SENSITIVE);
+    }
+
+    @Test
+    public void testParseWithCaseInsensitive() {
+        this.parseStringAndCheck2(CaseSensitivity.INSENSITIVE);
+    }
+
+    private void parseStringAndCheck2(final CaseSensitivity caseSensitivity) {
+        this.parseStringAndCheck(
+            "hello",
+            ExpressionFunctionAliasSet.empty(caseSensitivity)
+                .setElements(
+                    Sets.of(
+                        ExpressionFunctionAlias.parse(
+                            "hello",
+                            caseSensitivity
+                        )
+                    )
+                )
+        );
+    }
 
     @Override
     public ExpressionFunctionAliasSet parseString(final String text) {
