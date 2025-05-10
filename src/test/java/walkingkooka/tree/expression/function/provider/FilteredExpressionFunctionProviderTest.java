@@ -36,9 +36,13 @@ public final class FilteredExpressionFunctionProviderTest implements ExpressionF
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
+    private final static CaseSensitivity CASE_SENSITIVITY = ExpressionFunctionProviders.expressionFunctions()
+        .expressionFunctionNameCaseSensitivity();
+
     @Test
     public void testExpressionFunctionName() {
-        final ExpressionFunctionName name = ExpressionFunctionName.with("node");
+        final ExpressionFunctionName name = ExpressionFunctionName.with("node")
+            .setCaseSensitivity(CASE_SENSITIVITY);
         final List<?> values = Lists.empty();
 
         this.expressionFunctionAndCheck(
@@ -56,7 +60,8 @@ public final class FilteredExpressionFunctionProviderTest implements ExpressionF
 
     @Test
     public void testExpressionFunctionNameWithFilteredFails() {
-        final ExpressionFunctionName name = ExpressionFunctionName.with("name");
+        final ExpressionFunctionName name = ExpressionFunctionName.with("name")
+            .setCaseSensitivity(CASE_SENSITIVITY);
         final List<?> values = Lists.empty();
 
         this.expressionFunctionAndCheck(
@@ -77,9 +82,13 @@ public final class FilteredExpressionFunctionProviderTest implements ExpressionF
     @Test
     public void testExpressionFunctionInfos() {
         this.expressionFunctionInfosAndCheck(
-            ExpressionFunctionInfoSet.EMPTY.concat(
-                ExpressionFunctionInfo.parse("https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/node node")
-            )
+            ExpressionFunctionInfoSet.empty(CASE_SENSITIVITY)
+                .concat(
+                    ExpressionFunctionInfo.parse(
+                        "https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/node node",
+                        CASE_SENSITIVITY
+                    )
+                )
         );
     }
 
@@ -87,9 +96,13 @@ public final class FilteredExpressionFunctionProviderTest implements ExpressionF
     public FilteredExpressionFunctionProvider createExpressionFunctionProvider() {
         return FilteredExpressionFunctionProvider.with(
             ExpressionFunctionProviders.expressionFunctions(),
-            ExpressionFunctionInfoSet.EMPTY.concat(
-                ExpressionFunctionInfo.parse("https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/node node")
-            )
+            ExpressionFunctionInfoSet.empty(CASE_SENSITIVITY)
+                .concat(
+                    ExpressionFunctionInfo.parse(
+                        "https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/node node",
+                        CASE_SENSITIVITY
+                    )
+                )
         );
     }
 

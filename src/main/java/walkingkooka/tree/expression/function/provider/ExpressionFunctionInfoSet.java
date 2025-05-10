@@ -17,14 +17,18 @@
 
 package walkingkooka.tree.expression.function.provider;
 
+import walkingkooka.Cast;
 import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.PluginInfoSet;
 import walkingkooka.plugin.PluginInfoSetLike;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.tree.expression.ExpressionFunctionName;
+import walkingkooka.tree.json.JsonArray;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -41,32 +45,67 @@ import java.util.function.Predicate;
  */
 public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunctionInfo> implements PluginInfoSetLike<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector, ExpressionFunctionAlias, ExpressionFunctionAliasSet> {
 
-    public final static ExpressionFunctionInfoSet EMPTY = new ExpressionFunctionInfoSet(
+    public static ExpressionFunctionInfoSet empty(final CaseSensitivity caseSensitivity) {
+        Objects.requireNonNull(caseSensitivity, "caseSensitivity");
+
+        return CaseSensitivity.SENSITIVE == caseSensitivity ?
+            EMPTY_CASE_SENSITIVE :
+            EMPTY_CASE_INSENSITIVE;
+    }
+
+    private final static ExpressionFunctionInfoSet EMPTY_CASE_SENSITIVE = new ExpressionFunctionInfoSet(
         PluginInfoSet.with(
-            Sets.<ExpressionFunctionInfo>empty()
-        )
+            Cast.to(
+                Sets.empty()
+            )
+        ),
+        CaseSensitivity.SENSITIVE
     );
 
-    public static ExpressionFunctionInfoSet parse(final String text) {
+    private final static ExpressionFunctionInfoSet EMPTY_CASE_INSENSITIVE = new ExpressionFunctionInfoSet(
+        PluginInfoSet.with(
+            Cast.to(
+                Sets.empty()
+            )
+        ),
+        CaseSensitivity.INSENSITIVE
+    );
+
+    public static ExpressionFunctionInfoSet parse(final String text,
+                                                  final CaseSensitivity caseSensitivity) {
+        Objects.requireNonNull(text, "text");
+        Objects.requireNonNull(caseSensitivity, "caseSensitivity");
+
         return new ExpressionFunctionInfoSet(
             PluginInfoSet.parse(
                 text,
-                ExpressionFunctionInfo::parse
-            )
+                (final String info) -> ExpressionFunctionInfo.parse(
+                    info,
+                    caseSensitivity
+                )
+            ),
+            caseSensitivity
         );
     }
 
-    public static ExpressionFunctionInfoSet with(final Set<ExpressionFunctionInfo> infos) {
+    public static ExpressionFunctionInfoSet with(final Set<ExpressionFunctionInfo> infos,
+                                                 final CaseSensitivity caseSensitivity) {
         Objects.requireNonNull(infos, "infos");
+        Objects.requireNonNull(caseSensitivity, "caseSensitivity");
 
         final PluginInfoSet<ExpressionFunctionName, ExpressionFunctionInfo> pluginInfoSet = PluginInfoSet.with(infos);
         return pluginInfoSet.isEmpty() ?
-            EMPTY :
-            new ExpressionFunctionInfoSet(pluginInfoSet);
+            empty(caseSensitivity) :
+            new ExpressionFunctionInfoSet(
+                pluginInfoSet,
+                caseSensitivity
+            );
     }
 
-    private ExpressionFunctionInfoSet(final PluginInfoSet<ExpressionFunctionName, ExpressionFunctionInfo> pluginInfoSet) {
+    private ExpressionFunctionInfoSet(final PluginInfoSet<ExpressionFunctionName, ExpressionFunctionInfo> pluginInfoSet,
+                                      final CaseSensitivity caseSensitivity) {
         this.pluginInfoSet = pluginInfoSet;
+        this.caseSensitivity = caseSensitivity;
     }
 
     // PluginInfoSetLike................................................................................................
@@ -83,7 +122,8 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
 
     @Override
     public ExpressionFunctionAliasSet aliasSet() {
-        return ExpressionFunctionPluginHelper.INSTANCE.toAliasSet(this);
+        return ExpressionFunctionPluginHelper.instance(this.caseSensitivity)
+            .toAliasSet(this);
     }
 
     @Override
@@ -162,7 +202,8 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
     @Override
     public ExpressionFunctionInfoSet setElements(final Set<ExpressionFunctionInfo> infos) {
         final ExpressionFunctionInfoSet after = new ExpressionFunctionInfoSet(
-            this.pluginInfoSet.setElements(infos)
+            this.pluginInfoSet.setElements(infos),
+            this.caseSensitivity
         );
         return this.pluginInfoSet.equals(infos) ?
             this :
@@ -207,21 +248,71 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
 
     private final PluginInfoSet<ExpressionFunctionName, ExpressionFunctionInfo> pluginInfoSet;
 
+    private final CaseSensitivity caseSensitivity;
+
     // json.............................................................................................................
 
+    // [ "@https://example.com/test-function-1 test-function-1", "@https://example.com/test-function-2 test-function-2" ]
+    // [ "@" ]
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        return context.marshallCollection(this);
+        JsonArray json;
+
+        final boolean caseInsensitive = CaseSensitivity.INSENSITIVE == this.caseSensitivity;
+
+        if(caseInsensitive && this.isEmpty()) {
+            json = EMPTY_CASE_INSENSITIVE_ARRAY;
+        } else {
+            json = context.marshallCollection(this)
+                .cast(JsonArray.class);
+//
+//            if(CaseSensitivity.INSENSITIVE == this.caseSensitivity) {
+//                json = json.insertChild(
+//                    0,
+//                    INSENSITIVE
+//                );
+//            }
+        }
+
+        return json;
     }
+
+    private final static JsonString INSENSITIVE = JsonNode.string("@");
+
+    private final static JsonArray EMPTY_CASE_INSENSITIVE_ARRAY = JsonNode.array()
+        .appendChild(INSENSITIVE);
 
     // @VisibleForTesting
     static ExpressionFunctionInfoSet unmarshall(final JsonNode node,
                                                 final JsonNodeUnmarshallContext context) {
-        return with(
-            context.unmarshallSet(
-                node,
-                ExpressionFunctionInfo.class
-            )
-        );
+        JsonArray array = node.cast(JsonArray.class);
+
+        ExpressionFunctionInfoSet expressionFunctionInfos;
+        if(array.isEmpty()) {
+            expressionFunctionInfos = EMPTY_CASE_SENSITIVE;
+        } else {
+            CaseSensitivity caseSensitivity = CaseSensitivity.SENSITIVE;
+            String first = array.get(0)
+                .stringOrFail();
+            if(first.equals("@")) {
+                caseSensitivity = CaseSensitivity.INSENSITIVE;
+
+                expressionFunctionInfos = empty(caseSensitivity);
+            } else {
+                if(first.startsWith("@")) {
+                    caseSensitivity = CaseSensitivity.INSENSITIVE;
+                }
+
+                expressionFunctionInfos = with(
+                    context.unmarshallSet(
+                        array,
+                        ExpressionFunctionInfo.class
+                    ),
+                    caseSensitivity
+                );
+            }
+        }
+
+        return expressionFunctionInfos;
     }
 
     static {

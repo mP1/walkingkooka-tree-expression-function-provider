@@ -104,7 +104,7 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
         assertThrows(
             NullPointerException.class,
             () -> MergedMappedExpressionFunctionProvider.with(
-                ExpressionFunctionInfoSet.EMPTY,
+                ExpressionFunctionInfoSet.empty(CASE_SENSITIVITY),
                 null
             )
         );
@@ -198,7 +198,8 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
                         RENAMED_URL,
                         RENAME_NAME
                     )
-                )
+                ),
+                CASE_SENSITIVITY
             ),
             new FakeExpressionFunctionProvider<>() {
 
@@ -236,7 +237,8 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
                                 PROVIDER_ONLY_URL,
                                 PROVIDER_ONLY_NAME
                             )
-                        )
+                        ),
+                        CASE_SENSITIVITY
                     );
                 }
 

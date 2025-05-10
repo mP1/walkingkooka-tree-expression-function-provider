@@ -22,20 +22,28 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.PluginInfo;
 import walkingkooka.plugin.PluginInfoLike;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.Objects;
+
 public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFunctionInfo, ExpressionFunctionName>,
     HateosResource<ExpressionFunctionName> {
 
-    public static ExpressionFunctionInfo parse(final String text) {
+    public static ExpressionFunctionInfo parse(final String text,
+                                               final CaseSensitivity caseSensitivity) {
+        Objects.requireNonNull(text, "text");
+        Objects.requireNonNull(caseSensitivity, "caseSensitivity");
+
         return new ExpressionFunctionInfo(
             PluginInfo.parse(
                 text,
-                ExpressionFunctionName::with
+                (final String name) -> ExpressionFunctionName.with(name)
+                    .setCaseSensitivity(caseSensitivity)
             )
         );
     }
@@ -116,15 +124,32 @@ public final class ExpressionFunctionInfo implements PluginInfoLike<ExpressionFu
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        return JsonNode.string(this.toString());
+        String string = this.toString();
+
+        if (this.pluginInfo.name().caseSensitivity() == CaseSensitivity.INSENSITIVE) {
+            string = CASE_INSENSITIVE_PREFIX + string;
+        }
+
+        return JsonNode.string(string);
     }
 
     static ExpressionFunctionInfo unmarshall(final JsonNode node,
                                              final JsonNodeUnmarshallContext context) {
+        String string = node.stringOrFail();
+
+        CaseSensitivity caseSensitivity = CaseSensitivity.SENSITIVE;
+        if (string.charAt(0) == CASE_INSENSITIVE_PREFIX) {
+            caseSensitivity = CaseSensitivity.INSENSITIVE;
+            string = string.substring(1);
+        }
+
         return ExpressionFunctionInfo.parse(
-            node.stringOrFail()
+            string,
+            caseSensitivity
         );
     }
+
+    private final static char CASE_INSENSITIVE_PREFIX = '@';
 
     static {
         JsonNodeContext.register(

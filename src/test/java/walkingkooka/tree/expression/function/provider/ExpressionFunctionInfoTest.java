@@ -21,11 +21,19 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginInfoLikeTesting;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 public final class ExpressionFunctionInfoTest implements PluginInfoLikeTesting<ExpressionFunctionInfo, ExpressionFunctionName> {
+
+    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
+
+    @Override
+    public void testParseStaticMethod() {
+        throw new UnsupportedOperationException();
+    }
 
     @Test
     public void testParseInvalidCharacterInNameFails() {
@@ -40,12 +48,14 @@ public final class ExpressionFunctionInfoTest implements PluginInfoLikeTesting<E
     @Test
     public void testSetNameWithDifferent() {
         final AbsoluteUrl url = Url.parseAbsolute("https://example/function123");
-        final ExpressionFunctionName different = ExpressionFunctionName.with("different");
+        final ExpressionFunctionName different = ExpressionFunctionName.with("different")
+            .setCaseSensitivity(CASE_SENSITIVITY);
 
         this.setNameAndCheck(
             ExpressionFunctionInfo.with(
                 url,
                 ExpressionFunctionName.with("original-function-name")
+                    .setCaseSensitivity(CASE_SENSITIVITY)
             ),
             different,
             ExpressionFunctionInfo.with(
@@ -71,7 +81,10 @@ public final class ExpressionFunctionInfoTest implements PluginInfoLikeTesting<E
 
     @Override
     public ExpressionFunctionInfo parseString(final String text) {
-        return ExpressionFunctionInfo.parse(text);
+        return ExpressionFunctionInfo.parse(
+            text,
+            CASE_SENSITIVITY
+        );
     }
 
     @Override

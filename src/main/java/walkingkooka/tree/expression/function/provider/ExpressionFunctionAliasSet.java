@@ -310,6 +310,6 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
             ExpressionFunctionAliasSet::marshall,
             ExpressionFunctionAliasSet.class
         );
-        ExpressionFunctionInfoSet.EMPTY.size(); // trigger static init and json marshall/unmarshall registry
+        ExpressionFunctionInfoSet.empty(ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY); // trigger static init and json marshall/unmarshall registry
     }
 }

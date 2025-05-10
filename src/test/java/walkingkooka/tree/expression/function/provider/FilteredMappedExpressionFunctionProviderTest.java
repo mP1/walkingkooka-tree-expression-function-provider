@@ -98,7 +98,7 @@ public final class FilteredMappedExpressionFunctionProviderTest implements Expre
         assertThrows(
             NullPointerException.class,
             () -> FilteredMappedExpressionFunctionProvider.with(
-                ExpressionFunctionInfoSet.EMPTY,
+                ExpressionFunctionInfoSet.empty(CASE_SENSITIVITY),
                 null
             )
         );
@@ -159,12 +159,13 @@ public final class FilteredMappedExpressionFunctionProviderTest implements Expre
     @Override
     public FilteredMappedExpressionFunctionProvider createExpressionFunctionProvider() {
         return FilteredMappedExpressionFunctionProvider.with(
-            ExpressionFunctionInfoSet.EMPTY.concat(
-                ExpressionFunctionInfo.with(
-                    URL,
-                    NAME
-                )
-            ),
+            ExpressionFunctionInfoSet.empty(CASE_SENSITIVITY)
+                .concat(
+                    ExpressionFunctionInfo.with(
+                        URL,
+                        NAME
+                    )
+                ),
             new FakeExpressionFunctionProvider<FakeExpressionEvaluationContext>() {
 
                 @Override
@@ -188,12 +189,13 @@ public final class FilteredMappedExpressionFunctionProviderTest implements Expre
 
                 @Override
                 public ExpressionFunctionInfoSet expressionFunctionInfos() {
-                    return ExpressionFunctionInfoSet.EMPTY.concat(
-                        ExpressionFunctionInfo.with(
-                            URL,
-                            ORIGINAL_NAME
-                        )
-                    );
+                    return ExpressionFunctionInfoSet.empty(CASE_SENSITIVITY)
+                        .concat(
+                            ExpressionFunctionInfo.with(
+                                URL,
+                                ORIGINAL_NAME
+                            )
+                        );
                 }
 
                 @Override

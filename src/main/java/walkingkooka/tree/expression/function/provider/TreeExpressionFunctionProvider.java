@@ -57,7 +57,8 @@ final class TreeExpressionFunctionProvider<C extends ExpressionEvaluationContext
                 nameToExpressionFunctionInfo(ExpressionFunctions.node()),
                 nameToExpressionFunctionInfo(ExpressionFunctions.nodeName()),
                 nameToExpressionFunctionInfo(ExpressionFunctions.typeName())
-            )
+            ),
+            CaseSensitivity.SENSITIVE
         );
     }
 

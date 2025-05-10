@@ -59,8 +59,6 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
 
     private final static ExpressionFunctionPluginHelper SENSITIVE = new ExpressionFunctionPluginHelper(CaseSensitivity.SENSITIVE);
 
-    final static ExpressionFunctionPluginHelper INSTANCE = INSENSITIVE;
-
     private ExpressionFunctionPluginHelper(final CaseSensitivity caseSensitivity) {
         super();
         this.caseSensitivity = caseSensitivity;
@@ -100,7 +98,10 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
 
     @Override
     public ExpressionFunctionInfo parseInfo(final String text) {
-        return ExpressionFunctionInfo.parse(text);
+        return ExpressionFunctionInfo.parse(
+            text,
+            this.caseSensitivity
+        );
     }
 
     @Override
@@ -114,7 +115,10 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
 
     @Override
     public ExpressionFunctionInfoSet infoSet(final Set<ExpressionFunctionInfo> infos) {
-        return ExpressionFunctionInfoSet.with(infos);
+        return ExpressionFunctionInfoSet.with(
+            infos,
+            this.caseSensitivity
+        );
     }
 
     @Override
