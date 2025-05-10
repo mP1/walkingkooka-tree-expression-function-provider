@@ -33,7 +33,8 @@ public final class ExpressionFunctionAliasTest implements PluginAliasLikeTesting
 
     private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
     
-    private final static ExpressionFunctionName NAME = ExpressionFunctionName.with("Hello");
+    private final static ExpressionFunctionName NAME = ExpressionFunctionName.with("Hello")
+        .setCaseSensitivity(CASE_SENSITIVITY);
 
     private final static Optional<ExpressionFunctionSelector> SELECTOR = Optional.of(
         ExpressionFunctionSelector.parse(
