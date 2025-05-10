@@ -36,7 +36,7 @@ public final class ExpressionFunctionPluginHelperTest implements PluginHelperTes
 
     @Override
     public ExpressionFunctionPluginHelper createPluginHelper() {
-        return ExpressionFunctionPluginHelper.INSTANCE;
+        return ExpressionFunctionPluginHelper.instance(ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY);
     }
 
     @Override

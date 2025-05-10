@@ -44,7 +44,10 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     private final static ExpressionFunctionName NAME1 = ExpressionFunctionName.with(NAME1_STRING)
         .setCaseSensitivity(CASE_SENSITIVITY);
 
-    private final static ExpressionFunctionInfo INFO1 = ExpressionFunctionInfo.parse("https://example.com/function1 " + NAME1);
+    private final static ExpressionFunctionInfo INFO1 = ExpressionFunctionInfo.parse(
+        "https://example.com/function1 " + NAME1,
+        CASE_SENSITIVITY
+    );
 
     private final static ExpressionFunctionName ALIAS2 = ExpressionFunctionName.with("alias2")
         .setCaseSensitivity(CASE_SENSITIVITY);
@@ -58,7 +61,10 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
 
     private final static ExpressionFunction<?, FakeExpressionEvaluationContext> FUNCTION2 = function(NAME2);
 
-    private final static ExpressionFunctionInfo INFO2 = ExpressionFunctionInfo.parse("https://example.com/function2 " + NAME2);
+    private final static ExpressionFunctionInfo INFO2 = ExpressionFunctionInfo.parse(
+        "https://example.com/function2 " + NAME2,
+        CASE_SENSITIVITY
+    );
 
     private final static String NAME3_STRING = "function3";
 
@@ -67,7 +73,10 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
 
     private final static ExpressionFunction<?, FakeExpressionEvaluationContext> FUNCTION3 = function(NAME3);
 
-    private final static ExpressionFunctionInfo INFO3 = ExpressionFunctionInfo.parse("https://example.com/function3 " + NAME3);
+    private final static ExpressionFunctionInfo INFO3 = ExpressionFunctionInfo.parse(
+        "https://example.com/function3 " + NAME3,
+        CASE_SENSITIVITY
+    );
 
     private final static String VALUE3 = "Value3";
 
@@ -76,7 +85,10 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     private final static ExpressionFunctionName NAME4 = ExpressionFunctionName.with(NAME4_STRING)
         .setCaseSensitivity(CASE_SENSITIVITY);
 
-    private final static ExpressionFunctionInfo INFO4 = ExpressionFunctionInfo.parse("https://example.com/custom4 " + NAME4);
+    private final static ExpressionFunctionInfo INFO4 = ExpressionFunctionInfo.parse(
+        "https://example.com/custom4 " + NAME4,
+        CASE_SENSITIVITY
+    );
 
     private static ExpressionFunction<?, FakeExpressionEvaluationContext> function(final ExpressionFunctionName name) {
         return new FakeExpressionFunction<>() {
@@ -128,10 +140,13 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
                 "unknown-function404",
                 CASE_SENSITIVITY
             ),
-            new FakeExpressionFunctionProvider<>() {
+            new FakeExpressionFunctionProvider() {
                 @Override
                 public ExpressionFunctionInfoSet expressionFunctionInfos() {
-                    return ExpressionFunctionInfoSet.parse("https://example.com/function111 function111");
+                    return ExpressionFunctionInfoSet.parse(
+                        "https://example.com/function111 function111",
+                        CASE_SENSITIVITY
+                    );
                 }
 
                 @Override
@@ -282,7 +297,8 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
                             INFO1,
                             INFO2,
                             INFO3
-                        )
+                        ),
+                        CASE_SENSITIVITY
                     );
                 }
 

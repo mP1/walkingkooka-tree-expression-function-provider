@@ -57,7 +57,7 @@ final class EmptyExpressionFunctionProvider<C extends ExpressionEvaluationContex
 
     @Override
     public ExpressionFunctionInfoSet expressionFunctionInfos() {
-        return ExpressionFunctionInfoSet.EMPTY;
+        return ExpressionFunctionInfoSet.empty(this.caseSensitivity);
     }
 
     @Override

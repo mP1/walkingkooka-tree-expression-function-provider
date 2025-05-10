@@ -45,7 +45,7 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
 
     private final static AbsoluteUrl BASE_URL = Url.parseAbsolute("https://example.com/base/");
 
-    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
+    private final static CaseSensitivity CASE_SENSITIVITY = ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY;
 
     private final static ExpressionFunctionName NAME1 = ExpressionFunctionName.with("testExpressionFunction1")
         .setCaseSensitivity(CASE_SENSITIVITY);
@@ -186,7 +186,11 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
             NAME2.setCaseSensitivity(caseSensitivity),
             VALUES,
             CONTEXT,
-            FUNCTION2
+            FUNCTION2.setName(
+                Optional.of(
+                    NAME2.setCaseSensitivity(caseSensitivity)
+                )
+            )
         );
     }
 
@@ -203,7 +207,11 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
                 caseSensitivity
             ),
             CONTEXT,
-            FUNCTION2
+            FUNCTION2.setName(
+                Optional.of(
+                    NAME2.setCaseSensitivity(caseSensitivity)
+                )
+            )
         );
     }
 

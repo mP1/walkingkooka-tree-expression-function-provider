@@ -125,7 +125,8 @@ final class ExpressionFunctionProviderCollection<C extends ExpressionEvaluationC
     @Override
     public ExpressionFunctionInfoSet expressionFunctionInfos() {
         return ExpressionFunctionInfoSet.with(
-            this.providers.infos()
+            this.providers.infos(),
+            this.expressionFunctionNameCaseSensitivity
         );
     }
 

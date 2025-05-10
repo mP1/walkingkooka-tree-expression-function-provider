@@ -110,7 +110,7 @@ public interface ExpressionFunctionProviderTesting<P extends ExpressionFunctionP
             () -> selector.toString()
         );
 
-        final CaseSensitivity expressionFunctionNameCaseSensitivity = this.expressionFunctionNameCaseSensitivity();
+        final CaseSensitivity expressionFunctionNameCaseSensitivity = provider.expressionFunctionNameCaseSensitivity();
         this.checkEquals(
             expressionFunctionNameCaseSensitivity,
             function.name()
@@ -232,7 +232,12 @@ public interface ExpressionFunctionProviderTesting<P extends ExpressionFunctionP
             UnsupportedOperationException.class,
             () -> this.createExpressionFunctionProvider()
                 .expressionFunctionInfos()
-                .add(ExpressionFunctionInfo.parse("https://example.com/" + this.getClass().getName() + " " + this.getClass().getSimpleName()))
+                .add
+                    (ExpressionFunctionInfo.parse(
+                            "https://example.com/" + this.getClass().getName() + " " + this.getClass().getSimpleName(),
+                            ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY
+                        )
+                    )
         );
     }
 
@@ -250,7 +255,8 @@ public interface ExpressionFunctionProviderTesting<P extends ExpressionFunctionP
         this.expressionFunctionInfosAndCheck(
             provider,
             ExpressionFunctionInfoSet.with(
-                Sets.of(expected)
+                Sets.of(expected),
+                provider.expressionFunctionNameCaseSensitivity()
             )
         );
     }

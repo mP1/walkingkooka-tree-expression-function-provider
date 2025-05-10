@@ -99,7 +99,8 @@ final class BasicExpressionFunctionProvider<C extends ExpressionEvaluationContex
                             );
                         }
                     ).collect(Collectors.toCollection(SortedSets::tree))
-            )
+            ),
+            nameCaseSensitivity
         );
     }
 

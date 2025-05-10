@@ -23,6 +23,7 @@ import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginInfoSetLikeTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -31,6 +32,18 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTesting<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector, ExpressionFunctionAlias, ExpressionFunctionAliasSet>,
     ClassTesting<ExpressionFunctionInfoSet> {
+
+    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
+
+    @Override
+    public void testEmpty() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testEmptyConcatText() {
+        throw new UnsupportedOperationException();
+    }
 
     @Test
     public void testImmutableSet() {
@@ -47,16 +60,19 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
         final ExpressionFunctionInfo info1 = ExpressionFunctionInfo.with(
             Url.parseAbsolute("https://example.com/function1"),
             ExpressionFunctionName.with("function1")
+                .setCaseSensitivity(CASE_SENSITIVITY)
         );
 
         final ExpressionFunctionInfo info2 = ExpressionFunctionInfo.with(
             Url.parseAbsolute("https://example.com/function2"),
             ExpressionFunctionName.with("function2")
+                .setCaseSensitivity(CASE_SENSITIVITY)
         );
 
         final ExpressionFunctionInfo info3 = ExpressionFunctionInfo.with(
             Url.parseAbsolute("https://example.com/function3"),
             ExpressionFunctionName.with("function3")
+                .setCaseSensitivity(CASE_SENSITIVITY)
         );
 
         this.deleteAndCheck(
@@ -65,14 +81,16 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
                     info1,
                     info2,
                     info3
-                )
+                ),
+                CASE_SENSITIVITY
             ),
             info1,
             ExpressionFunctionInfoSet.with(
                 Sets.of(
                     info2,
                     info3
-                )
+                ),
+                CASE_SENSITIVITY
             )
         );
     }
@@ -81,7 +99,10 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
 
     @Override
     public ExpressionFunctionInfoSet parseString(final String text) {
-        return ExpressionFunctionInfoSet.parse(text);
+        return ExpressionFunctionInfoSet.parse(
+            text,
+            CASE_SENSITIVITY
+        );
     }
 
     @Override
@@ -96,7 +117,8 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
         return ExpressionFunctionInfoSet.with(
             Sets.of(
                 this.info()
-            )
+            ),
+            CASE_SENSITIVITY
         );
     }
 
@@ -111,22 +133,34 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
     // json.............................................................................................................
 
     @Test
-    public void testMarshallEmpty() {
+    public void testMarshallEmptyCaseSensitive() {
         this.marshallAndCheck(
-            ExpressionFunctionInfoSet.with(Sets.empty()),
+            ExpressionFunctionInfoSet.empty(CaseSensitivity.SENSITIVE),
             JsonNode.array()
         );
     }
 
     @Test
-    public void testMarshallNotEmpty() {
+    public void testMarshallEmptyCaseInsensitive() {
+        this.marshallAndCheck(
+            ExpressionFunctionInfoSet.empty(CaseSensitivity.INSENSITIVE),
+            JsonNode.parse("[ \"@\" ]")
+        );
+    }
+
+    @Test
+    public void testMarshallNotEmptyCaseSensitive() {
+        final CaseSensitivity caseSensitivity = CaseSensitivity.SENSITIVE;
+
         final ExpressionFunctionInfoSet set = ExpressionFunctionInfoSet.with(
             Sets.of(
                 ExpressionFunctionInfo.with(
                     Url.parseAbsolute("https://example.com/1"),
                     ExpressionFunctionName.with("test-function-1")
+                        .setCaseSensitivity(caseSensitivity)
                 )
-            )
+            ),
+            caseSensitivity
         );
 
         this.marshallAndCheck(
@@ -137,7 +171,26 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
         );
     }
 
-    // json............................................................................................................
+    @Test
+    public void testMarshallNotEmptyCaseInsensitive() {
+        final ExpressionFunctionInfoSet set = ExpressionFunctionInfoSet.with(
+            Sets.of(
+                ExpressionFunctionInfo.with(
+                    Url.parseAbsolute("https://example.com/1"),
+                    ExpressionFunctionName.with("test-function-1")
+                        .setCaseSensitivity(CaseSensitivity.INSENSITIVE)
+                )
+            ),
+            CaseSensitivity.INSENSITIVE
+        );
+
+        this.marshallAndCheck(
+            set,
+            "[\n" +
+                "  \"@https://example.com/1 test-function-1\"\n" +
+                "]"
+        );
+    }
 
     @Override
     public ExpressionFunctionInfoSet unmarshall(final JsonNode node,
@@ -155,12 +208,15 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
                 ExpressionFunctionInfo.with(
                     Url.parseAbsolute("https://example.com/test-function-1"),
                     ExpressionFunctionName.with("test-function-1")
+                        .setCaseSensitivity(CASE_SENSITIVITY)
                 ),
                 ExpressionFunctionInfo.with(
                     Url.parseAbsolute("https://example.com/test-function-2"),
                     ExpressionFunctionName.with("test-function-2")
+                        .setCaseSensitivity(CASE_SENSITIVITY)
                 )
-            )
+            ),
+            CASE_SENSITIVITY
         );
     }
 
