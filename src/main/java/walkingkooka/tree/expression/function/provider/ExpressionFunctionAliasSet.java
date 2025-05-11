@@ -257,6 +257,11 @@ public final class ExpressionFunctionAliasSet extends AbstractSet<ExpressionFunc
     }
 
     @Override
+    public void elementCheck(final ExpressionFunctionAlias alias) {
+        Objects.requireNonNull(alias, "alias");
+    }
+
+    @Override
     public String text() {
         return this.pluginAliasSet.text();
     }
