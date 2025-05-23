@@ -71,13 +71,17 @@ final class BasicExpressionFunctionProvider<C extends ExpressionEvaluationContex
                 .orElseThrow(
                     () -> new IllegalArgumentException("Cannot add unnamed functions to provider")
                 );
-            nameToFunction.put(
+            final ExpressionFunction<?, ?> duplicate = nameToFunction.put(
                 name.setCaseSensitivity(nameCaseSensitivity),
                 function.setName(
                     function.name()
                         .map(n -> n.setCaseSensitivity(nameCaseSensitivity))
                 )
             );
+
+            if(null != duplicate) {
+                throw new IllegalArgumentException("Duplicate function " + name);
+            }
         }
 
         this.nameToFunction = nameToFunction;
