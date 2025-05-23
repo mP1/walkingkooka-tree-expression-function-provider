@@ -121,6 +121,90 @@ public final class BasicExpressionFunctionProviderTest implements ExpressionFunc
         );
     }
 
+    @Test
+    public void testWithDuplicateFunctionCaseSensitiveFails() {
+        final IllegalArgumentException thrown = assertThrows(
+            IllegalArgumentException.class,
+            () -> BasicExpressionFunctionProvider.with(
+                BASE_URL,
+                CaseSensitivity.SENSITIVE,
+                Sets.of(
+                    new FakeExpressionFunction<>() {
+                        @Override
+                        public Optional<ExpressionFunctionName> name() {
+                            return Optional.of(
+                                ExpressionFunctionName.with("A1")
+                            );
+                        }
+                    },
+                    new FakeExpressionFunction<>() {
+                        @Override
+                        public Optional<ExpressionFunctionName> name() {
+                            return Optional.of(
+                                ExpressionFunctionName.with("B2")
+                            );
+                        }
+                    },
+                    new FakeExpressionFunction<>() {
+                        @Override
+                        public Optional<ExpressionFunctionName> name() {
+                            return Optional.of(
+                                ExpressionFunctionName.with("A1")
+                            );
+                        }
+                    }
+                )
+            )
+        );
+
+        this.checkEquals(
+            "Duplicate function A1",
+            thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testWithDuplicateFunctionCaseInsensitiveFails() {
+        final IllegalArgumentException thrown = assertThrows(
+            IllegalArgumentException.class,
+            () -> BasicExpressionFunctionProvider.with(
+                BASE_URL,
+                CaseSensitivity.INSENSITIVE,
+                Sets.of(
+                    new FakeExpressionFunction<>() {
+                        @Override
+                        public Optional<ExpressionFunctionName> name() {
+                            return Optional.of(
+                                ExpressionFunctionName.with("A1")
+                            );
+                        }
+                    },
+                    new FakeExpressionFunction<>() {
+                        @Override
+                        public Optional<ExpressionFunctionName> name() {
+                            return Optional.of(
+                                ExpressionFunctionName.with("B2")
+                            );
+                        }
+                    },
+                    new FakeExpressionFunction<>() {
+                        @Override
+                        public Optional<ExpressionFunctionName> name() {
+                            return Optional.of(
+                                ExpressionFunctionName.with("a1")
+                            );
+                        }
+                    }
+                )
+            )
+        );
+
+        this.checkEquals(
+            "Duplicate function a1",
+            thrown.getMessage()
+        );
+    }
+
     private final static List<?> VALUES = Lists.empty();
 
     @Test
