@@ -263,13 +263,6 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
         } else {
             json = context.marshallCollection(this)
                 .cast(JsonArray.class);
-//
-//            if(CaseSensitivity.INSENSITIVE == this.caseSensitivity) {
-//                json = json.insertChild(
-//                    0,
-//                    INSENSITIVE
-//                );
-//            }
         }
 
         return json;
