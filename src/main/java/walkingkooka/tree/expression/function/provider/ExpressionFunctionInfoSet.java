@@ -18,7 +18,6 @@
 package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.Cast;
-import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.PluginInfoSet;
@@ -88,7 +87,7 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
         );
     }
 
-    public static ExpressionFunctionInfoSet with(final Set<ExpressionFunctionInfo> infos,
+    public static ExpressionFunctionInfoSet with(final Collection<ExpressionFunctionInfo> infos,
                                                  final CaseSensitivity caseSensitivity) {
         Objects.requireNonNull(infos, "infos");
         Objects.requireNonNull(caseSensitivity, "caseSensitivity");
@@ -191,7 +190,7 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
     }
 
     @Override
-    public ImmutableSet<ExpressionFunctionInfo> setElementsFailIfDifferent(final Set<ExpressionFunctionInfo> infos) {
+    public ExpressionFunctionInfoSet setElementsFailIfDifferent(final Collection<ExpressionFunctionInfo> infos) {
         return this.setElements(
             this.pluginInfoSet.setElementsFailIfDifferent(
                 infos
@@ -200,7 +199,7 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
     }
 
     @Override
-    public ExpressionFunctionInfoSet setElements(final Set<ExpressionFunctionInfo> infos) {
+    public ExpressionFunctionInfoSet setElements(final Collection<ExpressionFunctionInfo> infos) {
         final ExpressionFunctionInfoSet after = new ExpressionFunctionInfoSet(
             this.pluginInfoSet.setElements(infos),
             this.caseSensitivity
