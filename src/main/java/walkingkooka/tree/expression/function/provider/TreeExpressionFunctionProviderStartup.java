@@ -31,7 +31,12 @@ public final class TreeExpressionFunctionProviderStartup implements PublicStatic
         TreeJsonStartup.init();
 
         // register json marshallers/unmarshallers.
+        ExpressionFunctionAliasSet.empty(CaseSensitivity.SENSITIVE);
         ExpressionFunctionInfoSet.empty(CaseSensitivity.SENSITIVE);
+        ExpressionFunctionSelector.parse(
+            "Hello",
+            CaseSensitivity.SENSITIVE
+        );
     }
 
     public static void init() {
