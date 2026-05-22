@@ -177,6 +177,16 @@ public final class ExpressionFunctionSelectorTest implements PluginSelectorLikeT
         );
     }
 
+    // HasContentType...................................................................................................
+
+    @Test
+    public void testContentType() {
+        this.contentTypeAndCheck(
+            this.createObject(),
+            "application/json+walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector"
+        );
+    }
+
     // type name........................................................................................................
 
     @Override

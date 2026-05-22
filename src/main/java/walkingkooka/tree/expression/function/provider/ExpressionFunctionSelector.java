@@ -17,6 +17,8 @@
 
 package walkingkooka.tree.expression.function.provider;
 
+import walkingkooka.net.header.HasContentType;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.plugin.PluginSelector;
 import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.plugin.ProviderContext;
@@ -231,6 +233,15 @@ public final class ExpressionFunctionSelector implements PluginSelectorLike<Expr
             ExpressionFunctionSelector::marshall,
             ExpressionFunctionSelector.class
         );
+    }
+
+    // HasContentType...................................................................................................
+
+    public final static MediaType CONTENT_TYPE = HasContentType.json(ExpressionFunctionSelector.class);
+
+    @Override
+    public Optional<MediaType> contentType() {
+        return Optional.of(CONTENT_TYPE);
     }
 
     // TreePrintable....................................................................................................
