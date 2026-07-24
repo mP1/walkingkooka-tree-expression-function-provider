@@ -27,7 +27,6 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctions;
-import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.List;
 import java.util.Objects;
@@ -123,7 +122,7 @@ final class TreeExpressionFunctionProvider<C extends ExpressionEvaluationContext
                 function = ExpressionFunctions.typeName();
                 break;
             default:
-                throw new UnknownExpressionFunctionException(name);
+                throw name.unknownExpressionFunctionException();
         }
 
         return Cast.to(function);

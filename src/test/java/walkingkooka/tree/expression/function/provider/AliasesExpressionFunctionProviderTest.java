@@ -29,7 +29,6 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
-import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.List;
 import java.util.Objects;
@@ -284,7 +283,7 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
                             function = FUNCTION3;
                             break;
                         default:
-                            throw new UnknownExpressionFunctionException(name);
+                            throw name.unknownExpressionFunctionException();
                     }
 
                     return function;
