@@ -27,7 +27,6 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.List;
 import java.util.Map;
@@ -132,7 +131,7 @@ final class BasicExpressionFunctionProvider<C extends ExpressionEvaluationContex
             name.setCaseSensitivity(this.nameCaseSensitivity)
         );
         if (null == function) {
-            throw new UnknownExpressionFunctionException(name);
+            throw name.unknownExpressionFunctionException();
         }
         return function;
     }

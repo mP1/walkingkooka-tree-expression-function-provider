@@ -23,7 +23,6 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.List;
 import java.util.Objects;
@@ -66,9 +65,8 @@ final class EmptyExpressionFunctionProvider<C extends ExpressionEvaluationContex
         Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
 
-        throw new UnknownExpressionFunctionException(
-            selector.name()
-        );
+        throw selector.name()
+            .unknownExpressionFunctionException();
     }
 
     @Override
@@ -79,7 +77,7 @@ final class EmptyExpressionFunctionProvider<C extends ExpressionEvaluationContex
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
-        throw new UnknownExpressionFunctionException(name);
+        throw name.unknownExpressionFunctionException();
     }
 
     @Override
