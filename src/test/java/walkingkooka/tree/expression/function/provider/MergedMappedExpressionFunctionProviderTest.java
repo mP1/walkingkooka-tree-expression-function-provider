@@ -261,7 +261,7 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
     public void testToString() {
         this.toStringAndCheck(
             this.createExpressionFunctionProvider(),
-            "https://example.com/provider-only-function-222 provider-only-function-222,https://example.com/renamed-function111 rename-renamed-function-111"
+            "https://example.com/provider-only-function-222 provider-only-function-222, https://example.com/renamed-function111 rename-renamed-function-111"
         );
     }
 
