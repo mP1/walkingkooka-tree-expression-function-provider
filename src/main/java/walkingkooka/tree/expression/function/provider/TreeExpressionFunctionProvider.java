@@ -23,6 +23,8 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -34,7 +36,8 @@ import java.util.Objects;
 /**
  * A {@link ExpressionFunctionProvider} for {@link ExpressionFunctions}.
  */
-final class TreeExpressionFunctionProvider<C extends ExpressionEvaluationContext> implements ExpressionFunctionProvider<C> {
+final class TreeExpressionFunctionProvider<C extends ExpressionEvaluationContext> implements ExpressionFunctionProvider<C>,
+    TreePrintable {
 
     /**
      * Type safe getter.
@@ -142,5 +145,21 @@ final class TreeExpressionFunctionProvider<C extends ExpressionEvaluationContext
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                this.expressionFunctionInfos(),
+                printer
+            );
+        }
+        printer.outdent();
     }
 }

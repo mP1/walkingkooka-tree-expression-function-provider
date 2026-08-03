@@ -83,6 +83,20 @@ public final class TreeExpressionFunctionProviderTest implements ExpressionFunct
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+            this.createExpressionFunctionProvider(),
+            "TreeExpressionFunctionProvider\n" +
+                "  ExpressionFunctionInfoSet\n" +
+                "    https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/name name\n" +
+                "    https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/node node\n" +
+                "    https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/typeName typeName\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override
