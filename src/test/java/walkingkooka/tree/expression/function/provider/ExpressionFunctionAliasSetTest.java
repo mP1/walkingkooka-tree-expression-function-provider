@@ -25,7 +25,7 @@ import walkingkooka.plugin.PluginAliasSetLikeTesting;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -38,7 +38,7 @@ public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeT
     ExpressionFunctionAliasSet>,
     HashCodeEqualsDefinedTesting2<ExpressionFunctionAliasSet>,
     ToStringTesting<ExpressionFunctionAliasSet>,
-    JsonNodeMarshallingTesting<ExpressionFunctionAliasSet> {
+    JsonNodeMarshallerTesting<ExpressionFunctionAliasSet> {
 
     private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
     
