@@ -22,7 +22,6 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -102,10 +101,5 @@ public final class TreeExpressionFunctionProviderTest implements ExpressionFunct
     @Override
     public Class<TreeExpressionFunctionProvider<ExpressionEvaluationContext>> type() {
         return Cast.to(TreeExpressionFunctionProvider.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

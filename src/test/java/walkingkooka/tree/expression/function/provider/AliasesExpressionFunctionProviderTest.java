@@ -23,7 +23,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
@@ -319,10 +318,5 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
     @Override
     public Class<AliasesExpressionFunctionProvider<FakeExpressionEvaluationContext>> type() {
         return Cast.to(AliasesExpressionFunctionProvider.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
