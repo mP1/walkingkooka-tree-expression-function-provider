@@ -27,7 +27,6 @@ import walkingkooka.net.Url;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
@@ -263,10 +262,5 @@ public final class ExpressionFunctionProviderCollectionTest implements Expressio
     @Override
     public Class<ExpressionFunctionProviderCollection<FakeExpressionEvaluationContext>> type() {
         return Cast.to(ExpressionFunctionProviderCollection.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

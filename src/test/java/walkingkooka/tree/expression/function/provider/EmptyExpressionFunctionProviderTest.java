@@ -19,7 +19,6 @@ package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
@@ -68,10 +67,5 @@ public final class EmptyExpressionFunctionProviderTest implements ExpressionFunc
     @Override
     public Class<EmptyExpressionFunctionProvider<FakeExpressionEvaluationContext>> type() {
         return Cast.to(EmptyExpressionFunctionProvider.class);
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
