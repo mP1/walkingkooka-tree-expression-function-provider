@@ -254,9 +254,10 @@ public interface ExpressionFunctionProviderTesting<P extends ExpressionFunctionP
                                                  final ExpressionFunctionInfo... expected) {
         this.expressionFunctionInfosAndCheck(
             provider,
-            ExpressionFunctionInfoSet.with(
-                Sets.of(expected),
+            ExpressionFunctionInfoSet.empty(
                 provider.expressionFunctionNameCaseSensitivity()
+            ).setElements(
+                Sets.of(expected)
             )
         );
     }

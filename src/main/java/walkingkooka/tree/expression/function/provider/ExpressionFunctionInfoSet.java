@@ -87,20 +87,6 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
         );
     }
 
-    public static ExpressionFunctionInfoSet with(final Collection<ExpressionFunctionInfo> infos,
-                                                 final CaseSensitivity caseSensitivity) {
-        Objects.requireNonNull(infos, "infos");
-        Objects.requireNonNull(caseSensitivity, "caseSensitivity");
-
-        final PluginInfoSet<ExpressionFunctionName, ExpressionFunctionInfo> pluginInfoSet = PluginInfoSet.with(infos);
-        return pluginInfoSet.isEmpty() ?
-            empty(caseSensitivity) :
-            new ExpressionFunctionInfoSet(
-                pluginInfoSet,
-                caseSensitivity
-            );
-    }
-
     private ExpressionFunctionInfoSet(final PluginInfoSet<ExpressionFunctionName, ExpressionFunctionInfo> pluginInfoSet,
                                       final CaseSensitivity caseSensitivity) {
         this.pluginInfoSet = pluginInfoSet;
@@ -200,13 +186,23 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
 
     @Override
     public ExpressionFunctionInfoSet setElements(final Collection<ExpressionFunctionInfo> infos) {
-        final ExpressionFunctionInfoSet after = new ExpressionFunctionInfoSet(
-            this.pluginInfoSet.setElements(infos),
-            this.caseSensitivity
-        );
-        return this.pluginInfoSet.equals(infos) ?
-            this :
-            after;
+        ExpressionFunctionInfoSet after;
+
+        if (infos instanceof ExpressionFunctionInfoSet) {
+            after = (ExpressionFunctionInfoSet) infos;
+        } else {
+            after = new ExpressionFunctionInfoSet(
+                this.pluginInfoSet.setElements(infos),
+                this.caseSensitivity
+            );
+            after = after.isEmpty() ?
+                empty(this.caseSensitivity) :
+                this.equals(after) ?
+                    this :
+                    after;
+        }
+
+        return after;
     }
 
     @Override
@@ -294,13 +290,13 @@ public final class ExpressionFunctionInfoSet extends AbstractSet<ExpressionFunct
                     caseSensitivity = CaseSensitivity.INSENSITIVE;
                 }
 
-                expressionFunctionInfos = with(
-                    context.unmarshallSet(
-                        array,
-                        ExpressionFunctionInfo.class
-                    ),
-                    caseSensitivity
-                );
+                expressionFunctionInfos = empty(caseSensitivity)
+                    .setElements(
+                        context.unmarshallSet(
+                            array,
+                            ExpressionFunctionInfo.class
+                        )
+                    );
             }
         }
 

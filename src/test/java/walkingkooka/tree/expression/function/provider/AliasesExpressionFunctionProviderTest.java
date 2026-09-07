@@ -290,14 +290,14 @@ public final class AliasesExpressionFunctionProviderTest implements ExpressionFu
 
                 @Override
                 public ExpressionFunctionInfoSet expressionFunctionInfos() {
-                    return ExpressionFunctionInfoSet.with(
-                        Sets.of(
-                            INFO1,
-                            INFO2,
-                            INFO3
-                        ),
-                        CASE_SENSITIVITY
-                    );
+                    return ExpressionFunctionInfoSet.empty(CASE_SENSITIVITY)
+                        .setElements(
+                            Sets.of(
+                                INFO1,
+                                INFO2,
+                                INFO3
+                            )
+                        );
                 }
 
                 @Override

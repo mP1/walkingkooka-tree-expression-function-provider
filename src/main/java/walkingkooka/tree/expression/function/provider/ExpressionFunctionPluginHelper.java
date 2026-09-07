@@ -115,10 +115,10 @@ final class ExpressionFunctionPluginHelper implements PluginHelper<ExpressionFun
 
     @Override
     public ExpressionFunctionInfoSet infoSet(final Set<ExpressionFunctionInfo> infos) {
-        return ExpressionFunctionInfoSet.with(
-            infos,
-            this.caseSensitivity
-        );
+        return ExpressionFunctionInfoSet.empty(this.caseSensitivity)
+            .setElements(
+                infos
+            );
     }
 
     @Override

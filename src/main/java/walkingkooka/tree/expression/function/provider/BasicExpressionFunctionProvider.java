@@ -85,26 +85,26 @@ final class BasicExpressionFunctionProvider<C extends ExpressionEvaluationContex
 
         this.nameToFunction = nameToFunction;
 
-        this.expressionFunctionInfos = ExpressionFunctionInfoSet.with(
-            Sets.readOnly(
-                functions.stream()
-                    .map(
-                        f -> {
-                            final ExpressionFunctionName name = f.name()
-                                .get();
-                            return ExpressionFunctionInfo.with(
-                                baseUrl.appendPath(
-                                    UrlPath.parse(
-                                        name.value()
-                                    )
-                                ),
-                                name.setCaseSensitivity(nameCaseSensitivity)
-                            );
-                        }
-                    ).collect(Collectors.toCollection(SortedSets::tree))
-            ),
-            nameCaseSensitivity
-        );
+        this.expressionFunctionInfos = ExpressionFunctionInfoSet.empty(nameCaseSensitivity)
+            .setElements(
+                Sets.readOnly(
+                    functions.stream()
+                        .map(
+                            f -> {
+                                final ExpressionFunctionName name = f.name()
+                                    .get();
+                                return ExpressionFunctionInfo.with(
+                                    baseUrl.appendPath(
+                                        UrlPath.parse(
+                                            name.value()
+                                        )
+                                    ),
+                                    name.setCaseSensitivity(nameCaseSensitivity)
+                                );
+                            }
+                        ).collect(Collectors.toCollection(SortedSets::tree))
+                )
+            );
     }
 
     @Override
