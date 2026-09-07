@@ -18,6 +18,7 @@
 package walkingkooka.tree.expression.function.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginInfoSetLikeTesting;
@@ -97,11 +98,26 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
 
     @Test
     public void testSetElementsWithEmpty() {
-        assertSame(
-            ExpressionFunctionInfoSet.empty(CASE_SENSITIVITY),
-            ExpressionFunctionInfoSet.empty(CASE_SENSITIVITY).setElements(
-                Sets.empty()
-            )
+        this.setElementsWithEmptyAndCheck(CaseSensitivity.SENSITIVE);
+    }
+
+    @Test
+    public void testSetElementsWithEmpty2() {
+        this.setElementsWithEmptyAndCheck(CaseSensitivity.INSENSITIVE);
+    }
+
+    private void setElementsWithEmptyAndCheck(final CaseSensitivity caseSensitivity) {
+        this.setElementsAndCheck(
+            ExpressionFunctionInfoSet.empty(caseSensitivity)
+                .concat(
+                    ExpressionFunctionInfo.with(
+                        Url.parseAbsolute("https://example.com/function1"),
+                        ExpressionFunctionName.with("function1")
+                            .setCaseSensitivity(caseSensitivity)
+                    )
+                ),
+            Lists.empty(),
+            ExpressionFunctionInfoSet.empty(caseSensitivity)
         );
     }
 
