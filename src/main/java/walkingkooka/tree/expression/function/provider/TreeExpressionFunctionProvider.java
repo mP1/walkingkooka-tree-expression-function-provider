@@ -108,19 +108,19 @@ final class TreeExpressionFunctionProvider<C extends ExpressionEvaluationContext
 
         switch (name.value()) {
             case "name":
-                checkNoValues(copy);
+                this.noParameterCheck(copy);
 
                 function = ExpressionFunctions.nodeName();
                 break;
             case "node":
-                checkNoValues(copy);
+                this.noParameterCheck(copy);
 
                 function = Cast.to(
                     ExpressionFunctions.node()
                 );
                 break;
             case "typeName":
-                checkNoValues(copy);
+                this.noParameterCheck(copy);
 
                 function = ExpressionFunctions.typeName();
                 break;
@@ -129,12 +129,6 @@ final class TreeExpressionFunctionProvider<C extends ExpressionEvaluationContext
         }
 
         return Cast.to(function);
-    }
-
-    private void checkNoValues(final List<?> values) {
-        if (false == values.isEmpty()) {
-            throw new IllegalArgumentException("Got " + values.size() + " expected 0");
-        }
     }
 
     @Override
