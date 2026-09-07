@@ -191,15 +191,15 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
     @Override
     public MergedMappedExpressionFunctionProvider createExpressionFunctionProvider() {
         return MergedMappedExpressionFunctionProvider.with(
-            ExpressionFunctionInfoSet.with(
-                Sets.of(
-                    ExpressionFunctionInfo.with(
-                        RENAMED_URL,
-                        RENAME_NAME
+            ExpressionFunctionInfoSet.empty(CASE_SENSITIVITY)
+                .setElements(
+                    Sets.of(
+                        ExpressionFunctionInfo.with(
+                            RENAMED_URL,
+                            RENAME_NAME
+                        )
                     )
                 ),
-                CASE_SENSITIVITY
-            ),
             new FakeExpressionFunctionProvider<>() {
 
                 @Override
@@ -226,19 +226,19 @@ public final class MergedMappedExpressionFunctionProviderTest implements Express
 
                 @Override
                 public ExpressionFunctionInfoSet expressionFunctionInfos() {
-                    return ExpressionFunctionInfoSet.with(
-                        Sets.of(
-                            ExpressionFunctionInfo.with(
-                                RENAMED_URL,
-                                RENAME_PROVIDER_NAME
-                            ),
-                            ExpressionFunctionInfo.with(
-                                PROVIDER_ONLY_URL,
-                                PROVIDER_ONLY_NAME
+                    return ExpressionFunctionInfoSet.empty(CASE_SENSITIVITY)
+                        .setElements(
+                            Sets.of(
+                                ExpressionFunctionInfo.with(
+                                    RENAMED_URL,
+                                    RENAME_PROVIDER_NAME
+                                ),
+                                ExpressionFunctionInfo.with(
+                                    PROVIDER_ONLY_URL,
+                                    PROVIDER_ONLY_NAME
+                                )
                             )
-                        ),
-                        CASE_SENSITIVITY
-                    );
+                        );
                 }
 
                 @Override

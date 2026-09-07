@@ -76,21 +76,31 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
         );
 
         this.deleteAndCheck(
-            ExpressionFunctionInfoSet.with(
-                Sets.of(
-                    info1,
-                    info2,
-                    info3
+            ExpressionFunctionInfoSet.empty(CASE_SENSITIVITY)
+                .setElements(
+                    Sets.of(
+                        info1,
+                        info2,
+                        info3
+                    )
                 ),
-                CASE_SENSITIVITY
-            ),
             info1,
-            ExpressionFunctionInfoSet.with(
-                Sets.of(
-                    info2,
-                    info3
-                ),
-                CASE_SENSITIVITY
+            ExpressionFunctionInfoSet.empty(CASE_SENSITIVITY)
+                .setElements(
+                    Sets.of(
+                        info2,
+                        info3
+                    )
+                )
+        );
+    }
+
+    @Test
+    public void testSetElementsWithEmpty() {
+        assertSame(
+            ExpressionFunctionInfoSet.empty(CASE_SENSITIVITY),
+            ExpressionFunctionInfoSet.empty(CASE_SENSITIVITY).setElements(
+                Sets.empty()
             )
         );
     }
@@ -114,12 +124,12 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
 
     @Override
     public ExpressionFunctionInfoSet createSet() {
-        return ExpressionFunctionInfoSet.with(
-            Sets.of(
-                this.info()
-            ),
-            CASE_SENSITIVITY
-        );
+        return ExpressionFunctionInfoSet.empty(CASE_SENSITIVITY)
+            .setElements(
+                Sets.of(
+                    this.info()
+                )
+            );
     }
 
     @Override
@@ -152,16 +162,16 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
     public void testMarshallNotEmptyCaseSensitive() {
         final CaseSensitivity caseSensitivity = CaseSensitivity.SENSITIVE;
 
-        final ExpressionFunctionInfoSet set = ExpressionFunctionInfoSet.with(
-            Sets.of(
-                ExpressionFunctionInfo.with(
-                    Url.parseAbsolute("https://example.com/1"),
-                    ExpressionFunctionName.with("test-function-1")
-                        .setCaseSensitivity(caseSensitivity)
+        final ExpressionFunctionInfoSet set = ExpressionFunctionInfoSet.empty(caseSensitivity)
+            .setElements(
+                Sets.of(
+                    ExpressionFunctionInfo.with(
+                        Url.parseAbsolute("https://example.com/1"),
+                        ExpressionFunctionName.with("test-function-1")
+                            .setCaseSensitivity(caseSensitivity)
+                    )
                 )
-            ),
-            caseSensitivity
-        );
+            );
 
         this.marshallAndCheck(
             set,
@@ -173,16 +183,16 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
 
     @Test
     public void testMarshallNotEmptyCaseInsensitive() {
-        final ExpressionFunctionInfoSet set = ExpressionFunctionInfoSet.with(
-            Sets.of(
-                ExpressionFunctionInfo.with(
-                    Url.parseAbsolute("https://example.com/1"),
-                    ExpressionFunctionName.with("test-function-1")
-                        .setCaseSensitivity(CaseSensitivity.INSENSITIVE)
+        final ExpressionFunctionInfoSet set = ExpressionFunctionInfoSet.empty(CaseSensitivity.INSENSITIVE)
+            .setElements(
+                Sets.of(
+                    ExpressionFunctionInfo.with(
+                        Url.parseAbsolute("https://example.com/1"),
+                        ExpressionFunctionName.with("test-function-1")
+                            .setCaseSensitivity(CaseSensitivity.INSENSITIVE)
+                    )
                 )
-            ),
-            CaseSensitivity.INSENSITIVE
-        );
+            );
 
         this.marshallAndCheck(
             set,
@@ -203,21 +213,21 @@ public final class ExpressionFunctionInfoSetTest implements PluginInfoSetLikeTes
 
     @Override
     public ExpressionFunctionInfoSet createJsonNodeMarshallingValue() {
-        return ExpressionFunctionInfoSet.with(
-            Sets.of(
-                ExpressionFunctionInfo.with(
-                    Url.parseAbsolute("https://example.com/test-function-1"),
-                    ExpressionFunctionName.with("test-function-1")
-                        .setCaseSensitivity(CASE_SENSITIVITY)
-                ),
-                ExpressionFunctionInfo.with(
-                    Url.parseAbsolute("https://example.com/test-function-2"),
-                    ExpressionFunctionName.with("test-function-2")
-                        .setCaseSensitivity(CASE_SENSITIVITY)
+        return ExpressionFunctionInfoSet.empty(CASE_SENSITIVITY)
+            .setElements(
+                Sets.of(
+                    ExpressionFunctionInfo.with(
+                        Url.parseAbsolute("https://example.com/test-function-1"),
+                        ExpressionFunctionName.with("test-function-1")
+                            .setCaseSensitivity(CASE_SENSITIVITY)
+                    ),
+                    ExpressionFunctionInfo.with(
+                        Url.parseAbsolute("https://example.com/test-function-2"),
+                        ExpressionFunctionName.with("test-function-2")
+                            .setCaseSensitivity(CASE_SENSITIVITY)
+                    )
                 )
-            ),
-            CASE_SENSITIVITY
-        );
+            );
     }
 
     // Class............................................................................................................

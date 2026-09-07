@@ -54,14 +54,14 @@ final class TreeExpressionFunctionProvider<C extends ExpressionEvaluationContext
     private TreeExpressionFunctionProvider() {
         super();
 
-        this.infos = ExpressionFunctionInfoSet.with(
-            Sets.of(
-                nameToExpressionFunctionInfo(ExpressionFunctions.node()),
-                nameToExpressionFunctionInfo(ExpressionFunctions.nodeName()),
-                nameToExpressionFunctionInfo(ExpressionFunctions.typeName())
-            ),
-            CaseSensitivity.SENSITIVE
-        );
+        this.infos = ExpressionFunctionInfoSet.empty(CaseSensitivity.SENSITIVE)
+            .setElements(
+                Sets.of(
+                    nameToExpressionFunctionInfo(ExpressionFunctions.node()),
+                    nameToExpressionFunctionInfo(ExpressionFunctions.nodeName()),
+                    nameToExpressionFunctionInfo(ExpressionFunctions.typeName())
+                )
+            );
     }
 
     private static ExpressionFunctionInfo nameToExpressionFunctionInfo(final ExpressionFunction<?, ?> function) {
