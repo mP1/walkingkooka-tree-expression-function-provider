@@ -60,6 +60,7 @@ final class TreeExpressionFunctionProvider<C extends ExpressionEvaluationContext
                     nameToExpressionFunctionInfo(ExpressionFunctions.debug()),
                     nameToExpressionFunctionInfo(ExpressionFunctions.error()),
                     nameToExpressionFunctionInfo(ExpressionFunctions.info()),
+                    nameToExpressionFunctionInfo(ExpressionFunctions.log()),
                     nameToExpressionFunctionInfo(ExpressionFunctions.node()),
                     nameToExpressionFunctionInfo(ExpressionFunctions.nodeName()),
                     nameToExpressionFunctionInfo(ExpressionFunctions.typeName()),
