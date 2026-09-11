@@ -57,6 +57,7 @@ final class TreeExpressionFunctionProvider<C extends ExpressionEvaluationContext
         this.infos = ExpressionFunctionInfoSet.empty(CaseSensitivity.SENSITIVE)
             .setElements(
                 Sets.of(
+                    nameToExpressionFunctionInfo(ExpressionFunctions.debug()),
                     nameToExpressionFunctionInfo(ExpressionFunctions.node()),
                     nameToExpressionFunctionInfo(ExpressionFunctions.nodeName()),
                     nameToExpressionFunctionInfo(ExpressionFunctions.typeName())
