@@ -94,6 +94,7 @@ public final class TreeExpressionFunctionProviderTest implements ExpressionFunct
                 "    https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/error error\n" +
                 "    https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/info info\n" +
                 "    https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/log log\n" +
+                "    https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/loggingLevel loggingLevel\n" +
                 "    https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/name name\n" +
                 "    https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/node node\n" +
                 "    https://github.com/mP1/walkingkooka-tree-expression-function-provider/ExpressionFunction/typeName typeName\n" +
