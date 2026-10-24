@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginAliasLikeTesting;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 
@@ -171,10 +170,5 @@ public final class ExpressionFunctionAliasTest implements PluginAliasLikeTesting
     @Override
     public Class<ExpressionFunctionAlias> type() {
         return ExpressionFunctionAlias.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 }
