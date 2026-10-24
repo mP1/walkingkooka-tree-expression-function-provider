@@ -20,7 +20,6 @@ package walkingkooka.tree.expression.function.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.plugin.PluginSelectorLikeTesting;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -76,18 +75,6 @@ public final class ExpressionFunctionSelectorTest implements PluginSelectorLikeT
             text,
             ExpressionFunctionName.DEFAULT_CASE_SENSITIVITY
         );
-    }
-
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public Class<ExpressionFunctionSelector> type() {
-        return ExpressionFunctionSelector.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
     }
 
     // Json.............................................................................................................
@@ -187,7 +174,12 @@ public final class ExpressionFunctionSelectorTest implements PluginSelectorLikeT
         );
     }
 
-    // type name........................................................................................................
+    // Class............................................................................................................
+
+    @Override
+    public Class<ExpressionFunctionSelector> type() {
+        return ExpressionFunctionSelector.class;
+    }
 
     @Override
     public String typeNamePrefix() {
