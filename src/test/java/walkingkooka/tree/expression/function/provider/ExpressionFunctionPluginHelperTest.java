@@ -18,7 +18,6 @@
 package walkingkooka.tree.expression.function.provider;
 
 import walkingkooka.plugin.PluginHelperTesting;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 
 public final class ExpressionFunctionPluginHelperTest implements PluginHelperTesting<ExpressionFunctionPluginHelper,
@@ -49,10 +48,5 @@ public final class ExpressionFunctionPluginHelperTest implements PluginHelperTes
     @Override
     public Class<ExpressionFunctionPluginHelper> type() {
         return ExpressionFunctionPluginHelper.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
