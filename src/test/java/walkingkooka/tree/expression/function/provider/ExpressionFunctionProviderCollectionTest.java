@@ -38,7 +38,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ExpressionFunctionProviderCollectionTest implements ExpressionFunctionProviderTesting<ExpressionFunctionProviderCollection<FakeExpressionEvaluationContext>, FakeExpressionEvaluationContext>,
-    ToStringTesting<ExpressionFunctionProviderCollection<FakeExpressionEvaluationContext>> {
+    ToStringTesting {
 
     private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
 

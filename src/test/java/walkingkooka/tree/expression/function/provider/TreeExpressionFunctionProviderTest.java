@@ -29,7 +29,7 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctions;
 
 public final class TreeExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<TreeExpressionFunctionProvider<ExpressionEvaluationContext>, ExpressionEvaluationContext>,
-    ToStringTesting<TreeExpressionFunctionProvider<ExpressionEvaluationContext>> {
+    ToStringTesting {
 
     @Test
     public void testExpressionFunctionNode() {

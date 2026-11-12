@@ -38,7 +38,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MergedMappedExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<MergedMappedExpressionFunctionProvider<ExpressionEvaluationContext>, ExpressionEvaluationContext>,
-    ToStringTesting<MergedMappedExpressionFunctionProvider<ExpressionEvaluationContext>> {
+    ToStringTesting {
 
     private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
     

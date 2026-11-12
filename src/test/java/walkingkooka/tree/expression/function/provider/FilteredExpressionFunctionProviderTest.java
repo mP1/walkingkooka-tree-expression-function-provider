@@ -31,7 +31,7 @@ import walkingkooka.tree.expression.function.ExpressionFunctions;
 import java.util.List;
 
 public final class FilteredExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<FilteredExpressionFunctionProvider<ExpressionEvaluationContext>, ExpressionEvaluationContext>,
-    ToStringTesting<FilteredExpressionFunctionProvider<ExpressionEvaluationContext>> {
+    ToStringTesting {
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
