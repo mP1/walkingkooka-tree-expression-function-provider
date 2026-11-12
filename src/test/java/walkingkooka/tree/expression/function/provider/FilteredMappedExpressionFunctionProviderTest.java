@@ -37,7 +37,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class FilteredMappedExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<FilteredMappedExpressionFunctionProvider<FakeExpressionEvaluationContext>, FakeExpressionEvaluationContext>,
-    ToStringTesting<FilteredMappedExpressionFunctionProvider<FakeExpressionEvaluationContext>> {
+    ToStringTesting {
 
     private final static AbsoluteUrl URL = Url.parseAbsolute("https://example.com/function123");
 

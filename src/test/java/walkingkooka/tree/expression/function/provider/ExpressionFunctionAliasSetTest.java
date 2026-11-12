@@ -37,7 +37,7 @@ public final class ExpressionFunctionAliasSetTest implements PluginAliasSetLikeT
     ExpressionFunctionAlias,
     ExpressionFunctionAliasSet>,
     HashCodeEqualsDefinedTesting2<ExpressionFunctionAliasSet>,
-    ToStringTesting<ExpressionFunctionAliasSet>,
+    ToStringTesting,
     JsonNodeMarshallerTesting<ExpressionFunctionAliasSet> {
 
     private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;

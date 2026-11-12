@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicExpressionFunctionProviderTest implements ExpressionFunctionProviderTesting<BasicExpressionFunctionProvider<FakeExpressionEvaluationContext>, FakeExpressionEvaluationContext>,
-    ToStringTesting<BasicExpressionFunctionProvider<FakeExpressionEvaluationContext>> {
+    ToStringTesting {
 
     private final static AbsoluteUrl BASE_URL = Url.parseAbsolute("https://example.com/base/");
 
